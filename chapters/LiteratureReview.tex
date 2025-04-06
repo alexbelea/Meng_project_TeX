@@ -1,74 +1,9 @@
 \chapter{LiteratureReview}
 
-\section{Literature review}
-This literature review was conducted to support the following key design objectives: developing a Position Sensitive Detector and creating a holistic architectural approach for the CubeSat system. The existing literature is summarised and where results are compared.
-
-\subsection{CubeSat Design}
-Puig-Suari, Turner and Ahlgren published an IEEE paper in 2001 with the help of their students at California Polytechnic State University exploring a need for micro satellites for use by universities in an ever-expanding space programme. They provide as a solution a standard satellite form-factor that will bring down the cost of both manufacture and deployment of satellites by smaller entities: the CubeSat. The paper identifies a key component for the success of this form factor a need for a standard CubeSat deployer mechanism which can deploy several satellites safely and develop such a platform, called Poly Picosatellite Orbital Deployer or P-POD. They point out the need and provide microsatellite size and shape of the CubeSat form factor.
-
-Sai balaji et al. performed a study using MATLAB simulation of several attitude control algorithms to look at the ability to control a CubeSat of size 1U. They also simulated sensors such as sun sensors, magnetometer, and gyroscope. They concluded that it is possible to operate the satellite using a magnetorquer type actuator and an array of mathematical models and algorithms: it would take 2000 seconds for a 1U satellite to stabilize at 505km, 98° degree attitude in orbit with the methods utilized by them.
-
-Incentivised by the rapidly increasing use of LEO, Lopez‑Calle and Franco perform a quantitative comparative study on the catastrophic failure of CubeSats and Nanosats from radiation exposure due to the harsh environment of space versus failure due to collisions in the increasingly busy Low Earth Orbit (LEO). The authors concluded that while sustained damage and damage protection from radiation exposure used to be and currently still is the most crucial factor in protecting LEO microsatellites, increasingly the risk of debris collisions is becoming more important and will become the most important in the following 50 to 70 years. The authors conclude that microsatellite designers need to move their focus more towards defence from debris impacts as these, even if not resulting in catastrophic failure of the satellite, they will impact the attitude of the satellite.
-
-\subsection{PSD enabled Sun Sensor}
-The need for position estimation based on light sources preceded current requirements in microsatellites. Qian, Wang, Busch-Vishniac and Buckman describe in 1993 a position sensitive detector (PSD) method using a single two-dimensional lateral-effect PSD capable of keeping track of multiple light sources at the same time. Their method of tracking multiple light sources involves modulating each light source, LEDs, of interest to a different frequency. They succeeded in correctly tracking two light sources modulated at 10kHz and the other at 5kHz. They point out that the light sources can correctly be tracked even in the presence of background light and that several light sources can be tracked, with the only restrictions being the bandwidth of the PSD and the sampling time of the sample and hold device being used. Although their method of tracking several lights might be out of scope of a sun sensor, the methods of design may be of some use to the design of a PSD. 
-
-Similarly, Guanghui and his colleagues developed the AirLink-E100 system which makes use of a PSD and describe it in a 2007 paper. This system is not directly related to sun sensing; however, their finding may be of some use. In a position sensor on earth, they point out, due to background light the PSD does not work with the precision necessary. They introduce methods of achieving better precision using analogue and digital signal processing. They modulate the light to be sensed, in this instance a laser, with a square wave, in essence turning the laser on and off. This allows for sensing of the background noise (when the laser is off) and subtracting the noise from the next time period when the laser is on. The authors conclude that this is a sound method of filtering out background noise in PSD devices where the light source can be modulated.
-
-Building on this and other work, Ortega, Lopez-Rodriguez, Ricart et al. describe in a 2010 paper a miniaturized two axis sensor with a $\pm$60° FOV, totalling 120°, and angle accuracy better than 0.15°. Their method is directly aimed at sun sensing. They not only design, fabricate and characterize the sensor, but also successfully integrate it in a Spanish nano-satellite NANOSAT-1B. The team used monolithically integrated silicon photodiodes in a crystalline silicon substrate protected by a glass cover. The entire size of the sensor is 3cm $\times$ 3cm and weighs in at just 24 grams. The NANOSAT-1B which launched in 2009 contained three of these sensors. 
-
-Ortega et al.'s research directly aligns with the paper's objectives, rendering their work highly relevant, and was replicated by Dwik and Somasundaram's research modelling and simulating a PSD using MATLAB. The authors point out the superiority of PSD over Charge-Coupled Devices (CCDs) because of the higher resolution and rapid response time. The researchers modelled two-dimensional photodiode arrays providing four output currents using included photodiode element in MATLAB. They also modelled simplified versions with single diode and one-dimensional array. They conclude that a PSD using photodiodes is a viable method of detecting the location of a light source from the current change readings of the diodes. They point out that for use in a fully working Acquisition, Tracking and Pointing (APT) system, further work is necessary that is not covered in their paper, such as signal conditioning. 
-
-Furthering the previous work, Delgado et al. showed in a 2013 paper the design, fabrication and characterization of a solar sensor that takes advantage of subdivision of the field of view (FOV) into 4 quadrants. The research team was able to develop high-precision sensors with an FOV of $\pm$60° and fine resolution of 0.05° while providing a coarse resolution of 0.5°. This high precision is achieved by splitting the sensor into four sub sensors, each concentrating on a different range of angles. They named the technology Sensosol and the paper states it will be used onboard the SeoSat satellite from Inta corporation.
-
-\subsection{Mechanical design and analysis}
-Although the CubeSat specifications are strict in reference to size and shape of nanosatellites that aim to respect these specifications, it allows the freedom for designers to choose many characteristics. Therefore, mechanical analysis is required, with a focus on thermal and structural characteristics. To this end, Ullah, Rehman, Bari and Reyneri published a paper in 2017 raising the struggle of heat dissipation in CubeSats due to their small size not allowing the installation of heat-dissipating radiators. The team considered all thermal resistances of the CubeSat panels either as separate layers or similar materials combined in their simulation. They conducted both simulation and real measurements of the AraMiS-C1 satellite developed by the Torino Polytechnic and found that the simulated model correctly aligned with real world measurements. They conclude that their model can therefore be used to model any microsatellite following the CubeSat standard. They also concluded that the thermal resistance measured was exceptionally low and therefore could be safely used on satellites to be deployed. 
-
-Similarly, Raslan, Michna and Ciarcia performed a thermal simulation of a CubeSat in a 2019 paper. Their goal was to discover the required framework to maintain the thermal stability of a CubeSat in orbit, with the overarching goal of creating a CubeSat that will contain a mammalian tissue sample for gathering experimental data of the effects of microgravity and space radiation on the sample. The CubeSat, therefore, must be able to maintain a very narrow range of temperatures without large fluctuations so that the experiment remains valid. They aim to find external coating materials and attitude control that limit these fluctuations. The mission will involve a 6U sized CubeSat containing a biohousing. With a black-chrome plated metal coating in combination with solar panels on the sun exposed side the team was able to maintain 37 degrees with only 2 degrees deviation in the biohousing. The other sides of the satellite all were covered in solar panels in the simulation. They conclude that they have identified a suitable single-coat material that in combination with PID attitude control algorithms is able to maintain the temperature within an admissible range. They also conclude that this can be done for a wide range of orbits and exposure time. They point out future research will focus on finding other coat types that maintain temperature without attitude control as changing attitude to maintain temperature consumes satellite power, which is a valuable resource.
-
-Concentrating on the structural resistance of the CubeSats, Dhariwal, Singh and Kushwaha performed a structural analysis using ANSYS software and released their findings in a 2023 paper analysing the structural behaviour of 1U CubeSats under various loads, static, modal random vibration, and shock loads. The team claims their paper establishes a methodological framework for CubeSat structural analysis and can be used for future work. They conclude that because the stress applied to the aluminium alloy 6061 used did not go above the yield strength, it is safe to assume the material operated safely and can be used on the CubeSats structure. They also conclude that their analysis was accurate and point out a need for a physical test on a real 1U CubeSat structure.
-
-This review of carefully selected research papers serves as a robust foundation for the work that is to be conducted in this project. The critical insights and methodology described for thermal and structural analysis of CubeSats by the teams' previous work, as well as CubeSat designs and PSD sensor work conducted as mentioned above, is important and helpful for the project's successful contribution to this research.
-
-\subsection{Photodiode simulation and signal analysis}
-A paper by Fueda et al. released in 2017 investigates the received power characteristics of commercially available photodiodes used as receivers in visible light communication (VLC) systems with a line-of-sight (LOS) channel. The authors used MATLAB simulation to analyse how various parameters affect the received power, including:
-
-\begin{itemize}
-    \item Transmitter semi-angle (half power)
-    \item Distance between transmitter and receiver
-    \item Room size
-    \item Receiver field-of-view (FOV)
-    \item Optical filter gain
-    \item Lens refractive index
-\end{itemize}
-
-They also point out 6 key considerations when choosing a photodiode for visible light communication (VLC) applications:
-
-\begin{enumerate}
-    \item Surface area: A larger surface area (e.g. 10mm x 10mm) can support mobility in the VLC system, but this needs to be balanced against the impact on cut-off frequency and susceptibility to ambient light noise.
-    
-    \item Generated short current: The photodiode should generate sufficient current ($>\mu$A) when exposed to light, as this affects the required gain and bandwidth of the amplifier circuit.
-    
-    \item Wavelength detection capabilities: The photodiode needs to be sensitive to the visible light spectrum (380nm to 780nm) for VLC applications.
-    
-    \item Cut-off frequency: A high cut-off frequency (in the GHz range) supports high-speed data transfer, but this often requires sacrificing a larger surface area.
-    
-    \item Rise time: Fast rise time (in the nanosecond range) is also desirable for high-speed VLC, but again this trades off with surface area.
-    
-    \item Dark current and junction capacitance: The photodiode should have low dark current and low junction capacitance to minimize noise and maximize response time.
-\end{enumerate}
-
-The paper notes that it is difficult to find a single commercially available photodiode that optimizes all 6 of these factors simultaneously. This often requires making trade-offs or using custom photodiode designs for the specific VLC application.
-
-The results show that factors like distance, room size, FOV, and LED power have a linear relationship with the received power at the photodiode. Additionally, the optical filter gain and lens index play an important role in determining the received power characteristics.
-
-The authors note that this study was limited to the LoS channel and does not take into consideration indirect illumination.
-
-Nathanael A. Fortune writes a paper in 2021 meant to help scientists with common signal processing tasks when handling experimental data. The paper provides examples of using the Numerical Python (Numpy) and Scientific Python (SciPy) packages, as well as interactive Jupyter Notebooks, to accomplish tasks such as interpolation, smoothing, propagation of uncertainty, curve fitting, plotting functions and data, and determining the goodness of fit. The goal is to enable an interactive, exploratory approach to data analysis while ensuring the original data is freely available and the resulting analysis is readily reproducible. The paper includes sample Jupyter notebooks containing the Python code used to carry out these tasks, which can be used as templates for analysing new data. This paper should prove useful in the numerical simulation of the PSD sensor.
-
-\subsection{IoT communication enhancement with LEO satellites}
-The use of LEO satellites, including microsatellites, can be extended to the current expansion of Internet of Things (IoT) devices. To this end, Koukis and Tsaoussidis investigated the use of satellites for IoT sensors and devices. They created simulations using OMNeT++ software and real sensor data from Smart Santander testbed. They concluded that their initial hypothesis was correct, and an increase of LEO satellites is inversely proportional to ping loss and round-trip time of packets sent between a LEO constellation and IoT equipment on the ground. They also concluded that the placement of ground stations led to improved communication even with a lower number of satellites. They close by saying they did notice instances where signal was deteriorated, and that further work is necessary.
-
-% When you're ready to add citations and bibliography, you can add:
-% \bibliographystyle{ieeetr}  % or another appropriate style
-% \bibliography{references}    % references.bib is your BibTeX file
+% Include each section from separate files
+\input{chapters/LiteratureReview/CubeSatDesign}
+\input{chapters/LiteratureReview/PSDEnabledSunSensor}
+\input{chapters/LiteratureReview/MechanicalDesignAndAnalysis}
+\input{chapters/LiteratureReview/PhotodiodeSimulationAndSignalAnalysis}
+\input{chapters/LiteratureReview/IoTCommunicationEnhancementWithLEOSatellites}
+% test 
