@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{report}
+
+% Essential packages
+\usepackage[utf8]{inputenc}     % Input encoding
+\usepackage[T1]{fontenc}        % Font encoding
+\usepackage{graphicx}           % For images
+\usepackage{amsmath,amssymb}    % For math equations
+\usepackage[hidelinks]{hyperref}% For clickable links in PDF
+\usepackage{booktabs}           % For professional tables
+\usepackage{listings}           % For code listings
+\usepackage{setspace}           % For line spacing
+\usepackage[margin=2.5cm]{geometry} % Page margins
+\usepackage{titlesec}           % For customizing section titles            
+\usepackage[numbers,sort&compress]{natbib} % For references in bib format
+\usepackage{xcolor}             % make it pretty
+\usepackage{float}              % needed for placing images where you want them
+\usepackage{caption}
+\usepackage{pgf}
+\usepackage{url}
+
+
+
+% TikZ packages for flowchart
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, backgrounds}
+
+% Define styles for TikZ
+\tikzset{
+  block/.style = {rectangle, draw, fill=blue!20, 
+                  text width=8em, text centered, rounded corners, minimum height=2em},
+  line/.style = {draw, -latex'},
+  cloud/.style = {draw, ellipse, fill=red!20, minimum height=2em},
+  group/.style = {draw, inner sep=0.3cm, rounded corners, fill=blue!5, label={#1}},
+}
+
+% Python code listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=Python
+}
+
+% C code listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{cstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+
+
+% Set the default style for listings
+\lstset{style=pythonstyle}
+
+% Redifine the chapter format to remove Chapter 1 2 etc
+\titleformat{\chapter}[hang]
+{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
+
+% Define title page information
+\title{
+    {\LARGE\textbf{GLASGOW CALEDONIAN UNIVERSITY}} \\
+    \vspace{1.5cm}
+    {\LARGE Image Processing and Machine Vision} \\
+    \vspace{0.5cm}
+    {\LARGE MMH623545-24-B-GLAS} \\
+    \vspace{1.5cm}
+    {\LARGE\textbf{UK Coins Classification using Convolution Neural Networks}} \\
+    \vspace{0.5cm}
+    {\large word count: 2137} \\
+}
+
+\author{
+    by Alexandru Belea \\
+    Student ID: S1919206
+}
+
+\date{
+    Date: \today
+}
+
+% Document begins
+\begin{document}
+
+% Set line spacing to 1.5
+\onehalfspacing
+
+% Create fancy title page
+\begin{titlepage}
+    \maketitle
+    \thispagestyle{empty}
+\end{titlepage}
+
+% Table of contents page
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
+
+% List of figures
+\listoffigures
+\thispagestyle{empty}
+\clearpage
+% Include chapters
+\input{chapters/abstract}
+\input{chapters/introduction}
+\input{chapters/Methodology}
+\input{chapters/results}
+\input{chapters/Conclusions}
+
+
+% Bibliography 
+\bibliographystyle{IEEEtran}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{bibliography/references}
+
+
+% % Appendix
+% \chapter*{Appendix}
+% \addcontentsline{toc}{chapter}{Appendix}
+% % Appendix content here
+% \section{Full Code}
+% %\lstinputlisting[language=Matlab]{matlab_code.m}
+
+\end{document}

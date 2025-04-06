@@ -1,0 +1,78 @@
+% try generating flowcharts as svg in Claude 
+% and edit with inkscape instead of this.
+% but claude did generate this one so might 
+% be useful too but you can't easily make
+% small repairs in inkscape
+
+
+% CNN Transfer Learning Flowchart - Compact Multi-Column Layout
+% \begin{figure}[htbp]
+
+\centering
+\resizebox{\textwidth}{!}{ % Scale to fit width while maintaining aspect ratio
+\begin{tikzpicture}[node distance=0.8cm and 1.5cm, auto]
+    % Define a smaller block style
+    \tikzset{
+      block/.style = {rectangle, draw, fill=blue!20, 
+                      text width=7em, text centered, rounded corners, minimum height=1.8em, font=\small},
+    }
+    
+    % Brazilian model training - Column 1
+    \node [block] (brazildata) {Download Brazilian coins dataset};
+    \node [block, below=of brazildata] (extract) {Extract dataset};
+    \node [block, below=of extract] (setup) {Setup directories};
+    \node [block, below=of setup] (define) {Define train/val dirs};
+    \node [block, below=of define] (create) {Create CNN architecture};
+    \node [block, below=of create] (compile) {Compile the CNN};
+    \node [block, below=of compile] (train) {Train model};
+    \node [block, below=of train] (trained) {Model trained (5 classes)};
+    
+    % Transfer learning - Column 2 (Middle)
+    \node [block, right=2.5cm of brazildata] (freeze) {Freeze all layers};
+    \node [block, below=of freeze] (replace) {Replace final layers};
+    \node [block, below=of replace] (add) {Add regularization and dropout};
+    \node [block, below=of add] (output) {New output layer (8 classes)};
+    \node [block, below=of output] (finaltrain) {Train and fine-tune};
+    \node [block, below=of finaltrain] (inference) {Perform inference on new coins};
+    
+    % UK data preparation - Column 3 (Right)
+    \node [block, right=2.5cm of freeze] (ukdata) {Download UK coins dataset};
+    \node [block, below=of ukdata] (ukextract) {Extract UK dataset};
+    \node [block, below=of ukextract] (uksetup) {Setup UK directories};
+    \node [block, below=of uksetup] (ukgen) {Create data generators (80/20 split)};
+    
+    % Connect all nodes with arrows
+    \path [line] (brazildata) -- (extract);
+    \path [line] (extract) -- (setup);
+    \path [line] (setup) -- (define);
+    \path [line] (define) -- (create);
+    \path [line] (create) -- (compile);
+    \path [line] (compile) -- (train);
+    \path [line] (train) -- (trained);
+    
+    \path [line] (ukdata) -- (ukextract);
+    \path [line] (ukextract) -- (uksetup);
+    \path [line] (uksetup) -- (ukgen);
+    
+    % Connect the columns
+    \path [line] (trained) -- node[midway, above] {Transfer} (freeze);
+    \path [line] (ukgen) |- (finaltrain);
+    
+    % Connect middle column
+    \path [line] (freeze) -- (replace);
+    \path [line] (replace) -- (add);
+    \path [line] (add) -- (output);
+    \path [line] (output) -- (finaltrain);
+    \path [line] (finaltrain) -- (inference);
+    
+    % Group boxes to show different stages with smaller padding
+    \begin{pgfonlayer}{background}
+        \node[group={[yshift=0.3cm]above:Brazilian Model Training}, fit={(brazildata) (extract) (setup) (define) (create) (compile) (train) (trained)}, inner sep=0.2cm] {};
+        \node[group={[yshift=0.3cm]above:UK Data Preparation}, fit={(ukdata) (ukextract) (uksetup) (ukgen)}, inner sep=0.2cm] {};
+        \node[group={[yshift=0.3cm]above:Transfer Learning}, fit={(freeze) (replace) (add) (output) (finaltrain) (inference)}, inner sep=0.2cm] {};
+    \end{pgfonlayer}
+\end{tikzpicture}
+}
+% \caption{CNN Transfer Learning Flowchart: Brazilian to UK Coins}
+% \label{fig:cnn-flowchart}
+% \end{figure}
