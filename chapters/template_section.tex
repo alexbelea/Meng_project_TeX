@@ -1,0 +1,39 @@
+% template.tex
+% ensure to add \chapter{path to this tex} to methodology or reults tex 
+\section{Template Section}
+This section...
+
+% Include a flowchart - THIS IS FOR LATEX FLOWCHARTS ONLY, SEE BELOW FOR IMAGES
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{ % Scale to 80% of original size
+        \input{figures/methodology/your_flowchart_here}
+    }
+    \caption{System Design Overview Flowchart}
+    \label{fig:decriptiveLabel44} % descriptive to call in text with \ref{fig:decriptiveLabel44}
+\end{figure}
+
+% Include a figure
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/methodology/system_architecture.jpg} % change {path}
+    \caption{System Architecture Diagram}       % change {caption}
+    \label{fig:example_unique_label}            % change label - used for reference in text
+\end{figure}                             % for example: see in Figure~\ref{example label}
+
+% for formating code either pythonstyle or cstyle (so far colors identical so makes no difference)
+\begin{lstlisting}[style=cstyle, caption=Relevant Caption, label=lst:unique_label]
+    # Your code here
+    \end{lstlisting}    
+
+\subsection{Functional Requirements}
+% Your content here
+
+\subsection{System Architecture}
+As shown in Figure~\ref{fig:example_label} the system architecture consists of various components.
+
+% for formating code either pythonstyle or cstyle (so far colors identical so makes no difference)
+\begin{lstlisting}[style=cstyle, caption=Relevant Caption, label=lst:unique_label]
+# Your code here
+\end{lstlisting}
+
