@@ -1,2 +1,5 @@
 # Set default behavior to automatically normalize line endings
 * text=auto eol=crlf
+
+# inform git the pdf is binary for merging
+main.pdf binary merge=binary
