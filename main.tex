@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper]{scrreprt}
 
 % Essential packages
 \usepackage[utf8]{inputenc}     % Input encoding
@@ -11,7 +11,7 @@
 \usepackage{listings}           % For code listings
 \usepackage{setspace}           % For line spacing
 \usepackage[margin=2.5cm, top=2cm, includehead, headheight=14pt, headsep=10pt]{geometry} % Page margins
-\usepackage{titlesec}           % For customizing section titles            
+%\usepackage{titlesec}           % For customizing section titles            
 \usepackage[numbers,sort&compress]{natbib} % For references in bib format
 \usepackage{xcolor}             % make it pretty
 \usepackage{float}              % needed for placing images where you want them
@@ -19,6 +19,7 @@
 \usepackage{pgf}
 \usepackage{url}
 \usepackage{enumitem}           % enumerate 
+% Comment out the darkmode line for final PDF
 \usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
 
 
@@ -93,9 +94,9 @@
 % Set the default style for listings
 \lstset{style=pythonstyle}
 
-% Redifine the chapter format to remove Chapter 1 2 etc
-\titleformat{\chapter}[hang]
-{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
+% % Redifine the chapter format to remove Chapter 1 2 etc
+% \titleformat{\chapter}[hang]
+% {\normalfont\huge\bfseries}{\thechapter.}{1em}{}
 
 % Include title page
 \input{title.tex}
@@ -136,7 +137,7 @@
 
 % Bibliography 
 \bibliographystyle{IEEEtran}
-\addcontentsline{toc}{chapter}{Bibliography}
+\KOMAoption{bibliography}{totoc}  % KOMA-Script way to add to ToC
 \bibliography{bibliography/references}
 
 

@@ -28,22 +28,12 @@
 % other subsections
 \subsection{Functional Requirements}
 % Your content here
-
-\subsection{Design Approach}
-% Your content here
-
-% \subsection{System Architecture}
-% As shown in Figure~\ref{fig:decriptiveLabel22} the system architecture consists of various components.
-
-
-
-
 The output signal from the photodiode array is required to be converted to digital form for post processing. This requirement was filled by designing a Digital Acquisition System (DAQ) capable of recording the signal from the four photodiode circuits simultaneously.
 The choice of design was conceived by analyzing the analog signal and deciding some basic requirements of the Analog to Digital converter the DAQ must posses. 
 \paragraph{Analog Signal Characteristics}
 The analog signal has the following properties:
 \begin{itemize}
-    \item The signal is between 0 and 5 Volts, as the TIA and post amplification was designed specifically for this output.
+    \item The signal is four channel and between 0 and 5 Volts, as the TIA and post amplification was designed specifically for this output.
     \item Close to DC frequency, ie. static in nature, due to light intensity remaining static under most tests. One test performed at 0.2Hz meaning still close enough to continuous, with the light completing a semicircular arc. 
     \item Later in testing it was found that the signal would have a noise of 400mVpp at a frequency fluctuating from 160kHz to 180kHz from the RED testbench power supply, as pictured in Figure~\ref{fig:sigNoise}.
 \end{itemize}
@@ -55,7 +45,8 @@ The analog signal has the following properties:
     \label{fig:sigNoise}
 \end{figure}
 
-
+\subsection{Design Approach}
+The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultanously and in sync, meant that the AD
 
 \subsubsection{Arduino Code}
 Introduce Code
