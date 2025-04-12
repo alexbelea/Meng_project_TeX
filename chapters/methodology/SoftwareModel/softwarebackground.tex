@@ -1,4 +1,5 @@
-\section{Introduction}
+\section{Software Model}
+\subsection{Introduction}
 A Python model was constructed to provide a simulation of the movement and intersection of rays from a movable source to evaluate sensor performance and compare these results with practical experiments.
 The model allows for a number of configurable parameters:
 \begin{itemize}
@@ -9,7 +10,7 @@ The model allows for a number of configurable parameters:
 Affording flexibility for the model to simulate any sensor topology under a variety of conditions.
 
 % State the theory
-\section{Theory and Concept}
+\subsection{Theory and Concept}
 % Ray projection
 The system is modelled in 3D space, consisting of planes and lines. 
 Each line is defined by vectors representing position and normal direction, $ \vec{A} = (a,b,c)$ and $ \vec{u} = (\alpha, \beta, \gamma)$.
@@ -28,5 +29,6 @@ For any given combination of source plane, and sensor plane, the $t$ parameter i
 
 \begin{equation}
     t = \frac{\vec{n} \cdot \vec{P} - \vec{n} \cdot \vec{A}}{\vec{n} \cdot \vec{u}}
-    \label{Line-Plane Intersection}
+    \label{eq:Line_Plane_Intersection}
 \end{equation}
+% comment
