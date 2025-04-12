@@ -29,13 +29,15 @@
 \subsection{Functional Requirements}
 % Your content here
 The output signal from the photodiode array is required to be converted to digital form for post processing. This requirement is filled by designing a Digital Acquisition System (DAQ) capable of recording the signal from the four photodiode circuits simultaneously.
-The choice of design was conceived by analyzing the analog signal and determining some basic requirements of the Analog to Digital converter the DAQ must possess. 
+The choice of design was conceived by analyzing the analog signal and determining some basic requirements of the Analog to Digital Converter (ADC) the DAQ must possess. 
+%
+% ANALOG SIGNAL CHARACTERISTICS
+%
 \paragraph{Analog Signal Characteristics}
-
 \begin{itemize}
     \item The signal is four channel and between 0 and 5 Volts, as the TIA and post amplification was designed specifically for this output.
-    \item Close to DC frequency, i.e., static in nature, due to light intensity remaining static under most tests. One test is performed at 0.2Hz, which is still close enough to continuous, with the light completing a semicircular arc. 
-    \item Later in testing it was found that the signal has a noise of 400mVpp at a frequency fluctuating from 160kHz to 180kHz from the RED testbench power supply, as pictured in Figure~\ref{fig:sigNoise}.
+    \item Close to DC frequency, i.e., static in nature, due to light intensity remaining static under most tests. One test is performed at 0.2Hz, which is still still very low frequency, with the light completing a semicircular arc once in 130 seconds (26 positions of 5 seconds each). 
+    \item Later in testing it was found that the signal is impacted by interference of 400mVpp at a frequency fluctuating from 160kHz to 180kHz from the RED testbench power supply, as pictured in Figure~\ref{fig:sigNoise}.
 \end{itemize}
 % for figures
 \begin{figure}[htbp] 
@@ -44,11 +46,14 @@ The choice of design was conceived by analyzing the analog signal and determinin
     \caption{Signal Noise Analysis, oscilloscope AC coupled}
     \label{fig:sigNoise}
 \end{figure}
+%
+%     CSV DATA STRUCTURE
+%
+\paragraph{CSV Data Structure and Format Specification}is as follows:
 
-\paragraph{CSV Data Structure and Format Specification}
 The output of the DAQ is to be saved in Comma Separated Values (CSV) file format, with columns as follows: Sample, Time(ms), A0(V), A1(V), A2(V), A3(V). This allows for easy post-processing and plotting.
 \subsection{Design Approach}
-The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultanously and in sync, meant that the AD
+The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultanously and in sync, meant two things: the Sampling Rate could be quite low due to Nyquist theorem telling us that the sampling rate must be at least twice the frequency of the signal being sampled, in order to maintain the original signal without aliasing~\cite[p. 146]{RefWorks:schafer2013discrete-time}. Therefore a low performing ADC is acceptable.
 
 \subsubsection{Arduino Code}
 Introduce Code
