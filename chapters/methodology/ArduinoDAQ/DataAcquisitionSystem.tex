@@ -63,6 +63,88 @@ The Arduino-based DAQ will require both a C++ program written for the Arduino it
 
 \subsubsection{Arduino Code}
 The Arduino Code which uses the Arduino ADC is formed of the setup() function triggered once at the start/reset of the device and a standard contnuous loop triggered after setup comletes. Inside the loop, two if statements check for instructions from the PC script. The recording time limit is hardcoded as a global function. Figure~\ref{fig:arduinoPseudoCodeFlowchart} shows the algorithm that checks for Serial data in, waits for a command to start recording, and if recording time has reached the preset limit, it stops recoring, sends the last values to the Python script on the PC and a "recording\_stopped" command. The pseudocode used while designing the Arduino side of the DAQ system, is available in Listing~\ref{lst:arduinoPseudoCode}. The final code is available in Appendix \ref{subsec:arduinoCppcode}.
+\paragraph{The Atmega328P} does not have a separate ADC clock input, therefore the CPU clock is used by first dividing by a default rate of 128, this divider is changed to 16 by changing bits 2-0 to 100, as per~\cite[p.219]{RefWorks:atmel2015atmega328p}. This increases the clock speed available to the ADC for a higher sampling rate. This results in a 1MHz clock signal to the ADC (16MHz/16) which seemed needed when dealing with multiplexing four analog inputs to a single ADC. The process is as follows:
+
+
+Original ADC Clock Speed (with default prescaler of 128):
+\begin{equation} \label{origclk}
+  \begin{split}
+f_\text{ADC-default} = \frac{f_\text{CPU}}{Prescaler_\text{default}} = \frac{16 \text{ MHz}}{128} = 125 \text{ kHz}
+  \end{split}
+\end{equation}
+\addequation{Default ADC Clock Frequency Calculation}
+
+Optimized ADC Clock Speed (with modified prescaler of 16):
+\begin{equation} \label{optimizedclk}
+  \begin{split}
+f_\text{ADC-optimized} = \frac{f_\text{CPU}}{Prescaler_\text{optimized}} = \frac{16 \text{ MHz}}{16} = 1 \text{ MHz}
+\end{split}
+\end{equation}
+\addequation{Optimized ADC Clock Frequency Calculation}
+
+Conversion Time Calculations:
+ADC requires approximately 13 clock cycles for each conversion~\cite[p.208]{RefWorks:atmel2015atmega328p}
+Optimized ADC Clock Speed (with modified prescaler of 16):
+\begin{equation} \label{optimCLKspeed}
+  \begin{split}
+T_\text{conversion-default} = 13 \times \frac{1}{f_\text{ADC-default}} = 13 \times \frac{1}{125 \text{ kHz}} \approx 104 \text{ $\mu$s}
+  \end{split}
+\end{equation}
+\addequation{Default ADC Conversion Time}
+
+\begin{equation} \label{optimCLKspeed2}
+  \begin{split}
+T_\text{conversion-optimized} = 13 \times \frac{1}{f_\text{ADC-optimized}} = 13 \times \frac{1}{1 \text{ MHz}} \approx 13 \text{ $\mu$s}
+  \end{split}
+\end{equation}
+\addequation{Optimized ADC Conversion Time}
+
+Time required to sample all 4 analog inputs:
+\begin{equation} \label{T4analogIn}
+  \begin{split}
+T_\text{4channels-default} = 4 \times T_\text{conversion-default} = 4 \times 104 \text{ $\mu$s} \approx 416 \text{ $\mu$s}
+\end{split}
+\end{equation}
+\addequation{Total Sampling Time for 4 Channels (Default)}
+
+\begin{equation} \label{T4analogIn2}
+  \begin{split}
+T_\text{4channels-optimized} = 4 \times T_\text{conversion-optimized} = 4 \times 13 \text{ $\mu$s} \approx 52 \text{ $\mu$s}
+\end{split}
+\end{equation}
+\addequation{Total Sampling Time for 4 Channels (Optimized)}
+
+Maximum theoretical sampling frequency for all 4 channels:
+\begin{equation} \label{Tmax4ch}
+  \begin{split}
+f_\text{sampling-max-default} = \frac{1}{T_\text{4channels-default}} = \frac{1}{416 \text{ $\mu$s}} \approx 2.4 \text{ kHz}
+\end{split}
+\end{equation}
+\addequation{Maximum Theoretical Sampling Frequency (Default)}
+
+\begin{equation} \label{Tmax4ch2}
+  \begin{split}
+f_\text{sampling-max-optimized} = \frac{1}{T_\text{4channels-optimized}} = \frac{1}{52 \text{ $\mu$s}} \approx 19.2 \text{ kHz}
+\end{split}
+\end{equation}
+\addequation{Maximum Theoretical Sampling Frequency (Optimized)}
+
+Actual limited sampling frequency (based on minSampleInterval = 2ms):
+\begin{equation} \label{Tlim2ms}
+  \begin{split}
+f_\text{sampling-actual} = \frac{1}{2 \text{ ms}} = 500 \text{ Hz} \text{ per channel}
+\end{split}
+\end{equation}
+\addequation{Actual Limited Sampling Frequency}
+
+Effective data rate across all channels:
+\begin{equation} \label{EffectiveDATArate}
+  \begin{split}
+\text{Data Rate} = 4 \text{ channels} \times 500 \text{ Hz} = 2000 \text{ samples/second}
+\end{split}
+\end{equation}
+\addequation{Total Effective Data Rate}
+
 \subsubsection{Python Script}
 The digitized signal must be interpreted and saved on the PC. This is done via a python script
 % Flowchart Arduino Code
