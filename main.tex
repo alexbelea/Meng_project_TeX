@@ -6,7 +6,7 @@
 \usepackage{graphicx}           % For images
 \usepackage{wrapfig}            % to place figures on the side of text
 \usepackage{amsmath,amssymb}    % For math equations
-\usepackage[hidelinks]{hyperref}% For clickable links in PDF
+%\usepackage[hidelinks]{hyperref}% For clickable links in PDF
 \usepackage{booktabs}           % For professional tables
 \usepackage{listings}           % For code listings
 \usepackage{setspace}           % For line spacing
@@ -17,10 +17,10 @@
 \usepackage{float}              % needed for placing images where you want them
 \usepackage{caption}
 \usepackage{pgf}
-\usepackage{url}
+\usepackage[hyphens]{url}       % break URLs with hyphen in Bibliography
 \usepackage{enumitem}           % enumerate ie. numbered bullet points
 % Comment out the darkmode line for final PDF
-\usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
+%\usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
 
 
 
@@ -140,11 +140,17 @@
 \bibliography{bibliography/references}
 
 
-% % Appendix
-% \chapter*{Appendix}
-% \addcontentsline{toc}{chapter}{Appendix}
-% % Appendix content here
-% \section{Full Code}
-% %\lstinputlisting[language=Matlab]{matlab_code.m}
+% Appendix
+\appendix
+\chapter{Appendix - DAQ Code}
+\input{appendix/AppendixA.tex}
+
+\chapter{Appendix - Software Model Code}
+\input{appendix/AppendixB.tex}
+%  appendix content in separate file^
+
+\chapter{Further Appendix}
+\input{appendix/AppendixC.tex}
+
 
 \end{document}
