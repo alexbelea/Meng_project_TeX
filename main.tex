@@ -6,7 +6,6 @@
 \usepackage{graphicx}           % For images
 \usepackage{wrapfig}            % to place figures on the side of text
 \usepackage{amsmath,amssymb}    % For math equations
-\usepackage[hidelinks]{hyperref}% For clickable links in PDF
 \usepackage{booktabs}           % For professional tables
 \usepackage{listings}           % For code listings
 \usepackage{setspace}           % For line spacing
@@ -17,17 +16,21 @@
 \usepackage{float}              % needed for placing images where you want them
 \usepackage{caption}
 \usepackage{pgf}
-\usepackage{url}
+\usepackage[hyphens]{url}       % break URLs with hyphen in Bibliography
 \usepackage{enumitem}           % enumerate ie. numbered bullet points
 % Comment out the darkmode line for final PDF
 \usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
 
-
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
 
 
 % TikZ packages for flowchart
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, fit, backgrounds}
+
+% Enable hyperlinks in Lists - keep as last package to load
+\usepackage[hidelinks]{hyperref}% For clickable links in PDF
 
 % Define styles for TikZ
 \tikzset{
@@ -37,6 +40,22 @@
   cloud/.style = {draw, ellipse, fill=red!20, minimum height=2em},
   group/.style = {draw, inner sep=0.3cm, rounded corners, fill=blue!5, label={#1}},
 }
+
+%%    ~~~  For list of Equations   ~~~
+% use tocbasic package included with KOMA-Script
+\DeclareNewTOC[
+  type=equation,
+  types=equations,
+  name=Equation,
+  listname=List of Equations
+]{loe}
+\setuptoc{loe}{numberwidth=23pt}
+% command to add entries to the equation list:
+\newcommand{\addequation}[1]{%
+  \addxcontentsline{loe}{equation}{\protect\numberline{\theequation}#1}%
+}
+
+
 
 % Python code listing style
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -121,6 +140,11 @@
 % List of figures
 \listoffigures
 \thispagestyle{empty}
+
+% List of Equations
+\listofequations
+
+
 \clearpage
 % Include chapters
 % Add your chapters here or inside the sub-files
@@ -140,11 +164,17 @@
 \bibliography{bibliography/references}
 
 
-% % Appendix
-% \chapter*{Appendix}
-% \addcontentsline{toc}{chapter}{Appendix}
-% % Appendix content here
-% \section{Full Code}
-% %\lstinputlisting[language=Matlab]{matlab_code.m}
+% Appendix
+\appendix
+\chapter{Appendix - DAQ Code}
+\input{appendix/AppendixA.tex}
+
+\chapter{Appendix - Software Model Code}
+\input{appendix/AppendixB.tex}
+%  appendix content in separate file^
+
+\chapter{Further Appendix}
+\input{appendix/AppendixC.tex}
+
 
 \end{document}

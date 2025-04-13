@@ -28,7 +28,7 @@
 % other subsections
 \subsection{Functional Requirements}
 % Your content here
-The output signal from the photodiode array is required to be converted to digital form for post processing. This requirement is filled by designing a Digital Acquisition System (DAQ) capable of recording the signal from the four photodiode circuits simultaneously.
+The output signal from the photodiode array amplifier is required to be converted to digital form for post-processing. This requirement is filled by designing a Digital Acquisition System (DAQ) capable of recording the signal from the four photodiode circuits simultaneously.
 The choice of design was conceived by analyzing the analog signal and determining some basic requirements of the Analog to Digital Converter (ADC) the DAQ must possess. 
 %
 % ANALOG SIGNAL CHARACTERISTICS
@@ -39,7 +39,7 @@ The choice of design was conceived by analyzing the analog signal and determinin
     \item Close to DC frequency, i.e., static in nature, due to light intensity remaining static under most tests. One test is performed at 0.2Hz, which is still still very low frequency, with the light completing a semicircular arc once in 130 seconds (26 positions of 5 seconds each). 
     \item Later in testing it was found that the signal is impacted by interference of 400mVpp at a frequency fluctuating from 160kHz to 180kHz from the RED testbench power supply, as pictured in Figure~\ref{fig:sigNoise}.
 \end{itemize}
-% for figures
+% Noise figure
 \begin{figure}[htbp] 
     \centering
     \includegraphics[width=0.4\textwidth]{chapters/methodology/ArduinoDAQ/signal_noise.png}
@@ -51,7 +51,7 @@ The choice of design was conceived by analyzing the analog signal and determinin
 %
 \paragraph{CSV Data Structure and Format Specification}is as follows:
 
-The output of the DAQ is to be saved in Comma Separated Values (CSV) file format, with columns as follows: Sample, Time(ms), A0(V), A1(V), A2(V), A3(V). This allows for easy post-processing and plotting.
+The output of the DAQ is to be saved in Comma Separated Values (CSV) file format, with columns as follows: Sample(nr.), Time(ms), A0(V), A1(V), A2(V), A3(V). This allows for easy post-processing and plotting.
 \subsection{Design Approach}
 The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultanously and in sync, meant two things: the Sampling Rate could be quite low due to Nyquist theorem telling us that the sampling rate must be at least twice the frequency of the signal being sampled, in order to maintain the original signal without aliasing~\cite[p. 146]{RefWorks:schafer2013discrete-time}. Therefore a low performing ADC is acceptable for a signal changing at under 1Hz. And secondly, the DAQ must support sampling from at least four analog inputs. These requirements meant that a cheap Arduino based DAQ could fit perfectly the needs of the project: it is powered by the Atmega328P which has an included ADC of 15 ksps~\cite[p.205]{RefWorks:atmel2015atmega328p}. And the Arduino Nano has four analog inputs. 
 \subsubsection{Arduino Programming}
@@ -62,7 +62,107 @@ The Arduino-based DAQ will require both a C++ program written for the Arduino it
 
 
 \subsubsection{Arduino Code}
-Introduce Code
+The Arduino Code which uses the Arduino ADC is formed of the setup() function triggered once at the start/reset of the device and a standard contnuous loop triggered after setup comletes. Inside the loop, two if statements check for instructions from the PC script. The recording time limit is hardcoded as a global function. Figure~\ref{fig:arduinoPseudoCodeFlowchart} shows the algorithm as a Flowchart that checks for Serial data in, waits for a command to start recording, and if recording time has reached the preset limit, it stops recoring, sends the last values to the Python script on the PC and a "recording\_stopped" command. A FSM diagram is also available in Figure~\ref{fig:arduinoFSM}. The pseudocode used while designing the Arduino side of the DAQ system, is available in Listing~\ref{lst:arduinoPseudoCode}. The final code is available in Appendix \ref{subsec:arduinoCppcode}.
+\paragraph{The Atmega328P} does not have a separate ADC clock input, therefore the CPU clock is used by first dividing by a default rate of 128, this divider is changed to 16 by changing bits 2-0 to 100, as per~\cite[p.219]{RefWorks:atmel2015atmega328p}. This increases the clock speed available to the ADC for a higher sampling rate. This results in a 1MHz clock signal to the ADC (16MHz/16) which seemed needed when dealing with multiplexing four analog inputs to a single ADC. The process is as follows:
+
+
+Original ADC Clock Speed (with default prescaler of 128):
+\begin{equation} \label{origclk}
+  \begin{split}
+f_\text{ADC-default} = \frac{f_\text{CPU}}{Prescaler_\text{default}} = \frac{16 \text{ MHz}}{128} = 125 \text{ kHz}
+  \end{split}
+\end{equation}
+\addequation{Default ADC Clock Frequency Calculation}
+
+Optimized ADC Clock Speed (with modified prescaler of 16):
+\begin{equation} \label{optimizedclk}
+  \begin{split}
+f_\text{ADC-optimized} = \frac{f_\text{CPU}}{Prescaler_\text{optimized}} = \frac{16 \text{ MHz}}{16} = 1 \text{ MHz}
+\end{split}
+\end{equation}
+\addequation{Optimized ADC Clock Frequency Calculation}
+
+Conversion Time Calculations:
+ADC requires approximately 13 clock cycles for each conversion~\cite[p.208]{RefWorks:atmel2015atmega328p}
+Optimized ADC Clock Speed (with modified prescaler of 16):
+\begin{equation} \label{optimCLKspeed}
+  \begin{split}
+T_\text{conversion-default} = 13 \times \frac{1}{f_\text{ADC-default}} = 13 \times \frac{1}{125 \text{ kHz}} \approx 104 \text{ $\mu$s}
+  \end{split}
+\end{equation}
+\addequation{Default ADC Conversion Time}
+
+\begin{equation} \label{optimCLKspeed2}
+  \begin{split}
+T_\text{conversion-optimized} = 13 \times \frac{1}{f_\text{ADC-optimized}} = 13 \times \frac{1}{1 \text{ MHz}} \approx 13 \text{ $\mu$s}
+  \end{split}
+\end{equation}
+\addequation{Optimized ADC Conversion Time}
+
+Time required to sample all 4 analog inputs:
+\begin{equation} \label{T4analogIn}
+  \begin{split}
+T_\text{4channels-default} = 4 \times T_\text{conversion-default} = 4 \times 104 \text{ $\mu$s} \approx 416 \text{ $\mu$s}
+\end{split}
+\end{equation}
+\addequation{Total Sampling Time for 4 Channels (Default)}
+
+\begin{equation} \label{T4analogIn2}
+  \begin{split}
+T_\text{4channels-optimized} = 4 \times T_\text{conversion-optimized} = 4 \times 13 \text{ $\mu$s} \approx 52 \text{ $\mu$s}
+\end{split}
+\end{equation}
+\addequation{Total Sampling Time for 4 Channels (Optimized)}
+
+Maximum theoretical sampling frequency for all 4 channels:
+\begin{equation} \label{Tmax4ch}
+  \begin{split}
+f_\text{sampling-max-default} = \frac{1}{T_\text{4channels-default}} = \frac{1}{416 \text{ $\mu$s}} \approx 2.4 \text{ kHz}
+\end{split}
+\end{equation}
+\addequation{Maximum Theoretical Sampling Frequency (Default)}
+
+\begin{equation} \label{Tmax4ch2}
+  \begin{split}
+f_\text{sampling-max-optimized} = \frac{1}{T_\text{4channels-optimized}} = \frac{1}{52 \text{ $\mu$s}} \approx 19.2 \text{ kHz}
+\end{split}
+\end{equation}
+\addequation{Maximum Theoretical Sampling Frequency (Optimized)}
+
+Actual limited sampling frequency (based on minSampleInterval = 2ms):
+\begin{equation} \label{Tlim2ms}
+  \begin{split}
+f_\text{sampling-actual} = \frac{1}{2 \text{ ms}} = 500 \text{ Hz} \text{ per channel}
+\end{split}
+\end{equation}
+\addequation{Actual Limited Sampling Frequency}
+
+Effective data rate across all channels:
+\begin{equation} \label{EffectiveDATArate}
+  \begin{split}
+\text{Data Rate} = 4 \text{ channels} \times 500 \text{ Hz} = 2000 \text{ samples/second}
+\end{split}
+\end{equation}
+\addequation{Total Effective Data Rate}
+In real testing the actual sampling rate was closer to 330Hz for 5 second recordings or 100Hz for a 2 minute recording - after some investigation the only explanation was the relativly small size of the transmission buffer implemented by the Serial C++ library. The buffer is of only 64 bytes, and when it fills, the function Serial.write() (used by println() ) will block the write untill there is space in the buffer[ref:arduino.cc/serial.write]. As our line of text is quite long "498,5000,0.059,0.054,0.073" for example has 26 characters (last line of a 5 second recording). For larger recording length, where the first and second column, Sample and Time, can get quite large, the sampling rate decreased considerably, but was kept constant (around 10ms for a 2 minute recording). Presumably due to optimization in the Arduino Serial Hardware/Software or compiler, it remains constant at 10ms. However this was not investigated further as for our near-DC signal, even 10ms was a fast enough sampling rate for our DC-like signal.
+
+
+% Flowchart Arduino Code
+\begin{figure}[p] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/flowchart_Arduino_code.png}
+    \caption{Flowchart Arduino DAQ C++ program}
+    \label{fig:arduinoPseudoCodeFlowchart}
+\end{figure}
+
+% FSM Arduino LOOP
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+  \centering
+  \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/arduino_loop_FSM.png}
+  \caption{FSM Arduino C++ LOOP}
+  \label{fig:arduinoFSM}
+\end{figure}
+
 %%% Arduino CPP pseudocode
 \begin{lstlisting}[style=cstyle, caption=Arduino DAQ PseudoCode, label=lst:arduinoPseudoCode]
   recordingDuration = 5000 // for how long to record in milliseconds
@@ -75,7 +175,7 @@ Introduce Code
 
   // Infrom PC listening on Serial Connection: Arduino is ready to record
   Serial.print("Arduino_DAQ_Ready")
-
+  // enter the loop 
   void loop(){
     //listen for command from PC script:
       String command = Serial.read()
@@ -121,20 +221,14 @@ Introduce Code
     // tell PC recording finished
     Serial.println("Recording_finished")
     }
-  }
-  \end{lstlisting}
-% Arduino code flowchart
-\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
-  \centering
-  \includegraphics[width=0.6\textwidth]{chapters/methodology/ArduinoDAQ/flowchart_Arduino_code.png} % change {path}
-  \caption{Flowchart of C++ code on Arduino DAQ}      
-  \label{fig:daq_arduino_code}           
-\end{figure}                            
-\paragraph{Sampling Rate}
+}
+\end{lstlisting}
+
+\paragraph{Sampling Rate Details}
 Several factors restrict the sampling rate:
 
 \subparagraph{Sample Interval Setting}
-The most direct limitation is the \texttt{sampleInterval} constant set to 2ms in the code, which means samples are taken no more frequently than every 2 milliseconds (500 Hz theoretical maximum).
+The most direct limitation is the \texttt{sampleInterval} constant set to 2ms in the code. It was meant to avoid having random sampling rates based on the number of computations required. This means samples are taken no more frequently than every 2 milliseconds (500 Hz theoretical maximum) of all four channels. The "jump" to sample the next channel is not limited in the code, but it will take 13 clock cycles, (ie. around 13µs at 1MHz ADC clock) to switch to the next channel.
 
 \subparagraph{ADC Prescaler Configuration}
 The ADC prescaler is set to 16 (from the default of 128) with this line:
@@ -143,8 +237,6 @@ ADCSRA = (ADCSRA & 0xF8) | 0x04;
 \end{verbatim}
 This increases the ADC clock to 16MHz/16 = 1MHz. With each conversion taking 13 ADC clock cycles, the theoretical maximum sampling rate is about 76.9kHz for a single channel.
 
-\subparagraph{Multiple Channel Reading}
-Since the system reads from 4 analog inputs sequentially, the effective per-channel sampling rate is reduced by approximately a factor of 4.
 
 \subparagraph{Serial Transmission Overhead}
 Each sample requires formatting and sending data over serial:
@@ -153,15 +245,74 @@ String dataString = String(sampleCount) + "," + String(elapsedTime);
 // ... format and add voltage values ...
 Serial.println(dataString);
 \end{verbatim}
-This string creation and serial transmission takes considerable time.
+This string creation and serial transmission takes some time to process as mentioned earlier.
 
 \subparagraph{Serial Baud Rate}
 The code uses 115200 bps, which limits how quickly data can be transmitted. Each sample in this format might be around 30-40 bytes, which means \texttildelow 3000-3800 samples/second theoretical maximum throughput.
 
 \subparagraph{String Operations}
-The use of the Arduino \texttt{String} class is memory-intensive and can cause fragmentation over time, potentially causing slowdowns.
+The use of the Arduino \texttt{String} class is memory-intensive and can cause fragmentation over time, potentially causing the slowdowns noticed during testing with larger timeframes (and longer strings).
 
-\subparagraph{Loop Cycle Time}
-Other operations in the main loop consume processing time.
+%
+%   Python Script section
+%
+\subsubsection{Python Script}
+The digitized signal must be interpreted and saved on the PC. This is done via a python script which listens to the Serial port from the arduino. The signal then also required cleaning from RF interference discovered during testing. In Figure~\ref{fig:pythonFlowchart} a flowchart is produced showing the way the script works: after initial setup that sets up the Serial Communication, the script waits for a "DAQ\_READY" signal from the Arduino. Once this is received, a csv file is created and the script sends a "START" signal which the Arduino interprets and starts sampling and sending the data. The script receives each line and saves it in the new CSV, and continues to record data until the Arduino sends a "RECORDING\_COMPLETE" signal - which will happen when the recordingDuration is reached. At this point the python script  performs the following post-processing steps:
 
-The dominant limiting factor in this implementation is likely the combination of the explicit 2ms sample interval and the serial communication overhead. Higher sampling rates would require optimizing the data transmission format, possibly using binary rather than text formatting, and reducing the sample interval.
+\paragraph{The filter\_and\_save\_data()} function' purpose is mainly to correctly interpret the CSV. It takes a csv with the raw voltage values, saves them into a Pandas DataFrame for easier manipulation and sends each channel to the apply\_lowpass\_filter() function which will be described below. filter\_and\_save\_data().
+
+% Flowchart of Python Script
+\begin{figure}[ptb] 
+  \centering
+  \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/python_serial_receive.jpg}
+  \caption{Python Script Flowchart}
+  \label{fig:pythonFlowchart}
+\end{figure}
+
+%%% Python Filter and save data pseudocode
+\begin{lstlisting}[style=cstyle, caption=Python filter\_and\_save\_data() PseudoCode, label=lst:pythonFilterAndSave]
+  FUNCTION filter_and_save_data(filename)
+  // Load data from CSV file into a table structure
+  data_table = READ_CSV(filename)
+  
+  // Clean the data by converting text to numbers
+  FOR EACH column IN data_table
+      CONVERT column values to numeric type
+      IF conversion fails for any value
+          REPLACE with NaN (Not a Number)
+  END FOR
+  
+  // Remove any rows containing NaN values
+  REMOVE all rows with NaN values from data_table
+  
+  // Calculate sampling frequency
+  time_differences = CALCULATE differences between consecutive time values
+  typical_time_difference = FIND median of time_differences
+  sampling_frequency = 1000.0 / typical_time_difference  // Convert ms to Hz
+  
+  // Process each data channel
+  channel_list = ["A0(V)", "A1(V)", "A2(V)", "A3(V)"]
+  
+  FOR EACH channel_name IN channel_list
+      IF channel_name EXISTS in data_table
+          filtered_values = APPLY_LOWPASS_FILTER(original_values, sampling_frequency)
+          ADD new column named channel_name + "_filtered" with filtered_values
+      END IF
+  END FOR
+  
+  // Save results to new file
+  new_filename = REMOVE_EXTENSION(filename) + "_filtered.csv"
+  WRITE data_table TO new_filename
+  
+  RETURN new_filename
+END FUNCTION
+\end{lstlisting}
+
+\paragraph{The }
+
+\subsection{Testing Strategy}
+The testing was done incrementally with each new version of the program, many tests were carried out as the development was dependent on both C++ code on the Arduino and the Python script on the PC to somewhat work together. At first the C++ program was tested by listening to the output in the Serial Monitor of the Arduino IDE and sending commands the same way. Debug println() lines were used to ensure the loop on the Arduino was in the correct state. Once the C++ program seemed to somewhat work as intended, the Python script was implemented to send / receive. 
+
+\subsection{Evaluation of design}
+It worked ok. [TO FINISHTO FINISHTO FINISHTO FINISHTO FINISH]
+
