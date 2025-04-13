@@ -275,7 +275,7 @@ The digitized signal must be interpreted and saved on the PC. This is done via a
   // Load data from CSV file into a table structure
   data_table = READ_CSV(filename)
   
-  // Clean the data by converting text to numbers
+  // Streamline the data by converting text to numbers
   FOR EACH column IN data_table
       CONVERT column values to numeric type
       IF conversion fails for any value
@@ -308,7 +308,41 @@ The digitized signal must be interpreted and saved on the PC. This is done via a
 END FUNCTION
 \end{lstlisting}
 
-\paragraph{The }
+\paragraph{The apply\_lowpass\_filter()} function was created and integrated into the script once it was observed that the RED testbench used was introducing noise as seen in Figure~\ref{fig:sigNoise}. The benefit of using an already built testbench that could place the light at exact positions repeatedly, meant it would make sense to accept the noise and just filter the data, as the signal of interest was very low frequency while the noise was around 170kHz. The filter could be relativly simple, due to the large frequency difference beteween noise and signal. A 4th order filter was deemed acceptable and a low cut-off frequency of 2Hz was used for the static readings. This was increased to 5Hz for the test involving light location at a frequency of 0.2Hz - to ensure the transition is sharp. The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} using the scipy.signal.freqz() method. The actual implementation uses filtfilt() which applies the filter twice, effectively doubling the filter order. This affects the transition steepness and phase response. The Discrete-Time Transfer Function is reproduced in Figure\ref{DTFT-TF}
+
+%% APPLY_LOW_PASS_FILTER ()
+\begin{lstlisting}[style=cstyle, caption=Python apply\_lowpass\_filter() PseudoCode, label=lst:pythonLowPassFilter]
+  FUNCTION apply_lowpass_filter(data, sampling_rate)
+    // set hardcoded filter values
+     cutoff_freq = 2;
+     filter_order = 4;
+    // calculate Nyquist Frequency and Normalized cut_off
+    nyquist = 0.5 * sampling_rate;
+    norm_cutoff = cutoff_freq / nyquist;
+    // generate numerator b and denominator a polinomials 
+    b, a = signal.butter(filter_order, norm_cutoff, filterType = LOW);
+    // filter the data
+    filtered_data = filter(b,a,data);
+
+    return filtered_data;
+
+\end{lstlisting}
+
+
+\begin{equation} \label{DTFT-TF}
+  \begin{split}
+    H(e^{j\omega}) = \frac{b[0] + b[1]e^{-j\omega} + b[2]e^{-j2\omega} + b[3]e^{-j3\omega} + b[4]e^{-j4\omega}}{a[0] + a[1]e^{-j\omega} + a[2]e^{-j2\omega} + a[3]e^{-j3\omega} + a[4]e^{-j4\omega}}
+  \end{split}
+\end{equation}
+\addequation{Frequency Response of 4th-order Butterworth low-pass filter with 2.0 Hz cutoff}
+
+% Filter Response (applied once)
+\begin{figure}[htbp] 
+  \centering
+  \includegraphics[width=1\textwidth]{chapters/methodology/ArduinoDAQ/filter_response.png}
+  \caption{Frequency Response of 4-pole Butterworth Low-Pass Filter (Cutoff: 2.0 Hz, Order: 4, Fs: 500 Hz)}
+  \label{fig:filterResponse}
+\end{figure}
 
 \subsection{Testing Strategy}
 The testing was done incrementally with each new version of the program, many tests were carried out as the development was dependent on both C++ code on the Arduino and the Python script on the PC to somewhat work together. At first the C++ program was tested by listening to the output in the Serial Monitor of the Arduino IDE and sending commands the same way. Debug println() lines were used to ensure the loop on the Arduino was in the correct state. Once the C++ program seemed to somewhat work as intended, the Python script was implemented to send / receive. 
