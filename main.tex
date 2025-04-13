@@ -19,7 +19,7 @@
 \usepackage[hyphens]{url}       % break URLs with hyphen in Bibliography
 \usepackage{enumitem}           % enumerate ie. numbered bullet points
 % Comment out the darkmode line for final PDF
-%\usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
+\usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
 
 \usepackage{chngcntr}
 \counterwithout{equation}{chapter}
@@ -28,6 +28,8 @@
 % TikZ packages for flowchart
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows, positioning, fit, backgrounds}
+
+% Enable hyperlinks in Lists - keep as last package to load
 \usepackage[hidelinks]{hyperref}% For clickable links in PDF
 
 % Define styles for TikZ

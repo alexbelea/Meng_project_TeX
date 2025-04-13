@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Styles -->
+  <style>
+    .state {
+      fill: #e6f2ff;
+      stroke: #3399ff;
+      stroke-width: 2;
+      rx: 20;
+      ry: 20;
+    }
+    .start-state {
+      fill: #d4edda;
+      stroke: #28a745;
+    }
+    .arrow {
+      stroke: #666;
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrowhead);
+    }
+    .label {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      fill: #333;
+    }
+    .state-label {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      fill: #333;
+      text-anchor: middle;
+    }
+    .action-label {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      fill: #666;
+      font-style: italic;
+    }
+  </style>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+    </marker>
+  </defs>
+  
+  <!-- States -->
+  <rect class="state start-state" x="400" y="80" width="140" height="90" />
+  <text class="state-label" x="470" y="120">READY</text>
+  <text class="action-label" x="470" y="145">Waiting for</text>
+  <text class="action-label" x="470" y="165">START command</text>
+  
+  <rect class="state" x="180" y="300" width="140" height="90" />
+  <text class="state-label" x="250" y="335">RECORDING</text>
+  <text class="action-label" x="250" y="360">Collecting data</text>
+  <text class="action-label" x="250" y="380">every 2ms</text>
+  
+  <rect class="state" x="600" y="300" width="180" height="90" />
+  <text class="state-label" x="690" y="335">COMPLETED</text>
+  <text class="action-label" x="690" y="360">Recording duration</text>
+  <text class="action-label" x="690" y="380">reached (5000ms)</text>
+  
+  <!-- Arrows -->
+  <!-- READY to RECORDING -->
+  <path class="arrow" d="M 400 125 H 100 V 345 H 180" />
+  <text class="label" x="120" y="200">Serial receives "START"</text>
+  <text class="label" x="120" y="225">Send "RECORDING_STARTED"</text>
+  
+  <!-- RECORDING to COMPLETED -->
+  <path class="arrow" d="M 320 345 H 600" />
+  <text class="label" x="460" y="325">elapsedTime > recordingDuration</text>
+  
+  <!-- COMPLETED to READY -->
+  <path class="arrow" d="M 690 300 V 170 C 690 140 660 125 600 125 H 540" />
+  <text class="label" x="650" y="200">Send "RECORDING_COMPLETE"</text>
+  <text class="label" x="650" y="225">Send "END_OF_DATA"</text>
+  
+  <!-- RECORDING self-loop -->
+  <path class="arrow" d="M 180 320 H 120 C 80 320 80 370 120 370 H 180" />
+  <text class="label" x="55" y="440">currentTime - lastSampleTime >= sampleInterval</text>
+  <text class="label" x="55" y="465">Send CSV data: "sampleCount,elapsedTime,v1,v2,v3,v4"</text>
+  
+  <!-- Initial state indicator -->
+  <circle cx="470" cy="40" r="10" fill="#28a745" />
+  <path class="arrow" d="M 470 50 V 80" />
+</svg>
