@@ -144,9 +144,10 @@ Effective data rate across all channels:
 \end{split}
 \end{equation}
 \addequation{Total Effective Data Rate}
+In real testing the actual sampling rate was closer to 330Hz for 5 second recordings or 100Hz for a 2 minute recording - after some investigation the only explanation was the relativly small size of the transmission buffer implemented by the Serial C++ library. The buffer is of only 64 bytes, and when it fills, the function Serial.write() (used by println() ) will block the write untill there is space in the buffer. As our line of text is quite long "498,5000,0.059,0.054,0.073" for example has 26 characters (last line of a 5 second recording). For larger recording length, where the first and second column, Sample and Time, can get quite large, the sampling rate decreased considerably, but was kept constant (around 10ms for a 2 minute recording). Presumably due to optimization in the Arduino Serial Hardware/Software. However this was not investigated further as for our near-DC signal, even 10ms was a fast enough sampling rate.
 
 \subsubsection{Python Script}
-The digitized signal must be interpreted and saved on the PC. This is done via a python script
+The digitized signal must be interpreted and saved on the PC. This is done via a python script which listens to the Serial port from the arduino.
 % Flowchart Arduino Code
 \begin{figure}[p] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
     \centering
