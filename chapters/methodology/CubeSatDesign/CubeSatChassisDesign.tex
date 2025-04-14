@@ -21,7 +21,55 @@
 %     \caption{System Design Overview Flowchart}
 %     \label{fig:decriptiveLabel22} % descriptive to call in text with \ref{fig:decriptiveLabel22}
 % \end{figure}
+For the purposes of visualization, there were 2 potential designs for the CubeSat chassis. The CubeSat chassis were design dependant on where the PCB would be mounted. The first CubeSat chassis design was taken from GrabCAD.com and an aperture is mounted to this design to show where they would be mounted. The second CubeSat chassis was based on a design found online and recreated as much as possible, however this did not have any measurements given so dimensions were assumed.
 
 \subsection{CubeSat Chassis Design 1}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/methodology/CubeSatDesign/Fig1CAD.png}
+    \caption{Front view of the first CubeSat chassis design}
+    \label{fig:cubesat-chassis1-front}
+    \end{figure}
+
+    \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/methodology/CubeSatDesign/Fig2CAD.png}
+    \caption{Angular view of the first CubeSat chassis design}
+    \label{fig:cubesat-chassis1-angle}
+    \end{figure}
+
+    The first design taken from \url{https://grabcad.com/library/cubesat-1u-5} as seen in Figure~\ref{fig:cubesat-chassis1-front} has exposed holes made to allow for easy removal, the circular holes at the centre are to let the light to expose to the aperture where the PCB photodiodes are located. The software used to show these are AutoCAD Inventor, with a different angle and the aperture shown in Figure~\ref{fig:cubesat-chassis1-angle}.
+
+
 \subsection{CubeSat Chassis Design 2}
+The second hypothetical design is a much more basic skeleton frame made to house the aperture as seen below in Figure~\ref{fig:cubesat-chassis2-front} and Figure~\ref{fig:cubesat-chassis2-angle}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{chapters/methodology/CubeSatDesign/Fig3Real.jpg}
+\caption{Front view of 1U Cubesat Skeleton Chassis}
+\label{fig:cubesat-chassis2-front}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\textwidth]{chapters/methodology/CubeSatDesign/Fig4Real.jpg}
+\caption{Angular view of 1U Cubesat Skeleton Chassis}
+\label{fig:cubesat-chassis2-angle}
+\end{figure}
+
+This was recreated in inventor with rough estimation on the thickness of the PCBs and skeletons itself and the apertures. The PCBs are mounted on top of each other compared to being the aperture housing the PCB mounted on each side of the CubeSat, the PCB cannot be more than 96$\times$96 mm. As seen below in Figure~\ref{fig:cubesat-chassis2-without-pcb} and Figure~\ref{fig:cubesat-chassis2-with-aperture}, are the CubeSat Chassis with and without the PCBs, additional angles and drawings are found in the appendix.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{chapters/methodology/CubeSatDesign/Fig5CAD.png}
+\caption{Second chassis design without PCBs}
+\label{fig:cubesat-chassis2-without-pcb}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{chapters/methodology/CubeSatDesign/Fig6CAD.png}
+\caption{Chassis with the aperture}
+\label{fig:cubesat-chassis2-with-aperture}
+\end{figure}
