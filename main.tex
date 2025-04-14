@@ -18,7 +18,13 @@
 \usepackage{caption}
 \usepackage{pgf}
 \usepackage[hyphens]{url}       % break URLs with hyphen in Bibliography
-\usepackage{enumitem}           % enumerate ie. numbered bullet points
+\usepackage{enumitem}           % enumerate ie. numbered bullet points 
+% create tables!
+\usepackage{threeparttable}    
+\usepackage{booktabs}         % For professional table formatting
+\usepackage{siunitx}          % For SI units and number formatting
+\usepackage{multirow}         % For merging rows
+
 % Comment out the darkmode line for final PDF
 %\usepackage{xcolor} \pagecolor[rgb]{0,0,0} \color[rgb]{1,1,1} % DARKMODE PDF 
 
@@ -142,8 +148,15 @@
 \listoffigures
 \thispagestyle{empty}
 
+% List of tables
+\listoftables
+\thispagestyle{empty}
+
 % List of Equations
 \listofequations
+
+% List of Tables
+
 
 
 \clearpage

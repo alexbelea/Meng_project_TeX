@@ -66,3 +66,196 @@ This section provides an overview of the xyz.
 %     \caption{System Design Overview Flowchart}
 %     \label{fig:decriptiveLabel11} % descriptive to call in text with \ref{fig:decriptiveLabel}
 % \end{figure}
+
+
+
+%
+%           TABLES!!! (just copy paste the one you need 
+%      into CLaude with a picture of whatever data you need lol)
+%
+
+% % Required packages
+% \usepackage{threeparttable}   % For table footnotes
+% \usepackage{booktabs}         % For professional table formatting
+% \usepackage{siunitx}          % For SI units and number formatting
+% \usepackage{multirow}         % For merging rows
+% \usepackage{amsmath}          % For mathematical notation
+% \usepackage{caption}          % For customizing captions
+
+
+
+% % Basic Example for S5971 Photodiode
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{S5971 Photodiode Specifications}
+%     \label{tab:photodiode}
+    
+%     \begin{tabular}{|l|c|}
+%       \hline
+%       \textbf{Parameter} & \textbf{Value} \\
+%       \hline
+%       Spectral response range ($\lambda$) & 320 to 1060 nm \\
+%       \hline
+%       Peak sensitivity wavelength ($\lambda_p$) & 920 nm \\
+%       \hline
+%       Photosensitivity S (A/W) at $\lambda_p$ & 0.64 \\
+%       \hline
+%       Photosensitivity S (A/W) at 780 nm & 0.55 \\
+%       \hline
+%       Photosensitivity S (A/W) at 830 nm & 0.6 \\
+%       \hline
+%       Short circuit current Isc & 1.0 $\mu$A \\
+%       \hline
+%       Dark current Id (Typical) & 0.07 nA\tnote{a} \\
+%       \hline
+%       Dark current Id (Maximum) & 1 nA\tnote{a} \\
+%       \hline
+%       Cutoff frequency fc & 0.1 GHz\tnote{a} \\
+%       \hline
+%       Terminal capacitance Ct (f=1 MHz) & 3 pF\tnote{a} \\
+%       \hline
+%       Noise equivalent power NEP ($V_R$=10 V, $\lambda$=$\lambda_p$) & 7.4 $\times$ 10$^{-15}$ W/Hz$^{1/2}$ \\
+%       \hline
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item[a] $V_R$ = 10 V
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+% % Template table with booktabs style (professional, no vertical lines)
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{Professional Table Template (booktabs style)}
+%     \label{tab:template_booktabs}
+    
+%     \begin{tabular}{lcc}  % Adjust column specifications as needed (l=left, c=center, r=right)
+%       \toprule
+%       \textbf{Parameter} & \textbf{Value} & \textbf{Units} \\
+%       \midrule
+%       Entry 1 & 123 & mm \\
+%       Entry 2 & 45.6\tnote{a} & V \\
+%       Entry 3 & 7.89\tnote{b} & A \\
+%       Entry with range & 10--20 & $\Omega$ \\
+%       Entry with uncertainty & $1.23 \pm 0.45$ & W \\
+%       \bottomrule
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item[a] First note explanation.
+%       \item[b] Second note explanation.
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+% % Traditional table with vertical lines
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{Traditional Table Template (with vertical lines)}
+%     \label{tab:template_traditional}
+    
+%     \begin{tabular}{|l|c|c|}
+%       \hline
+%       \textbf{Parameter} & \textbf{Value} & \textbf{Units} \\
+%       \hline
+%       Entry 1 & 123 & mm \\
+%       \hline
+%       Entry 2 & 45.6\tnote{a} & V \\
+%       \hline
+%       Entry 3 & 7.89\tnote{b} & A \\
+%       \hline
+%       Entry with range & 10--20 & $\Omega$ \\
+%       \hline
+%       Entry with uncertainty & $1.23 \pm 0.45$ & W \\
+%       \hline
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item[a] First note explanation.
+%       \item[b] Second note explanation.
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+% % Scientific notation example using siunitx
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{Scientific Notation Example (using siunitx)}
+%     \label{tab:template_scientific}
+    
+%     \begin{tabular}{l S[table-format=1.2e-1] l}
+%       \toprule
+%       \textbf{Parameter} & {\textbf{Value}} & \textbf{Units} \\
+%       \midrule
+%       Capacitance & 1.23e-12 & \si{\farad} \\
+%       Resistance & 4.56e6 & \si{\ohm} \\
+%       Current & 7.89e-3 & \si{\ampere} \\
+%       Voltage & 2.34e1 & \si{\volt} \\
+%       \bottomrule
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item Note: All measurements taken at room temperature (25°C).
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+% % Multiple column headers example
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{Multiple Column Headers Example}
+%     \label{tab:template_multicolumn}
+    
+%     \begin{tabular}{lcccc}
+%       \toprule
+%       \multirow{2}{*}{\textbf{Parameter}} & \multicolumn{4}{c}{\textbf{Values at Different Temperatures}} \\
+%       \cmidrule(lr){2-5}
+%       & \textbf{25°C} & \textbf{50°C} & \textbf{75°C} & \textbf{100°C} \\
+%       \midrule
+%       Resistance ($\Omega$) & 100 & 110 & 120 & 130 \\
+%       Current (mA) & 5.0 & 4.8 & 4.6 & 4.4 \\
+%       Power (mW) & 2.5 & 2.53 & 2.54 & 2.51 \\
+%       \bottomrule
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item Test conditions: Constant voltage supply of 5V.
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}
+
+% % Color-coded table example
+% \usepackage{colortbl}  % Add this to preamble
+% \begin{table}[htbp]
+%   \centering
+%   \begin{threeparttable}
+%     \caption{Color-Coded Table Example}
+%     \label{tab:template_color}
+    
+%     \begin{tabular}{lccc}
+%       \toprule
+%       \textbf{Parameter} & \cellcolor{green!20}\textbf{Good} & \cellcolor{yellow!20}\textbf{Acceptable} & \cellcolor{red!20}\textbf{Poor} \\
+%       \midrule
+%       Efficiency (\%) & \cellcolor{green!20}$>$95 & \cellcolor{yellow!20}85--95 & \cellcolor{red!20}$<$85 \\
+%       Noise (dB) & \cellcolor{green!20}$<$30 & \cellcolor{yellow!20}30--40 & \cellcolor{red!20}$>$40 \\
+%       Temperature (°C) & \cellcolor{green!20}20--35 & \cellcolor{yellow!20}35--45 & \cellcolor{red!20}$>$45 \\
+%       \bottomrule
+%     \end{tabular}
+    
+%     \begin{tablenotes}
+%       \small
+%       \item Rating system for evaluating device performance.
+%     \end{tablenotes}
+%   \end{threeparttable}
+% \end{table}

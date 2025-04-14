@@ -23,7 +23,45 @@ This section provides an overview of the Prototype Development Lifecycle.
 %%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
 \subsubsection*{Theoretical Design}
 \begin{itemize}
-  \item Research photodiode technology options and selection criteria
+  \item Photodiodes were researched and several options were found, most of which were quite expensive, such as 2D PSD type sensors like the Hamamatsu S5990 but were both prohibitivly expensive and surface mount, which would have been harder to prototype but would allow for much higher resolutions, while also complicating the project. A decision was made to base the project on 1D photodiodes, and four Hamamatsu S5971 were purchased, which offered a good compromise in price and specifications: for under £10 a piece, the s5971 has the following specifications:
+\end{itemize}
+\begin{table}[h]
+  \centering
+  \caption{S5971 Photodiode Specifications}
+  \begin{tabular}{|l|c|}
+  \hline
+  \textbf{Parameter} & \textbf{Value} \\
+  \hline
+  Spectral response range ($\lambda$) & 320 to 1060 nm \\
+  \hline
+  Peak sensitivity wavelength ($\lambda_p$) & 920 nm \\
+  \hline
+  Photosensitivity S (A/W) at $\lambda_p$ & 0.64 \\
+  \hline
+  Photosensitivity S (A/W) at 780 nm & 0.55 \\
+  \hline
+  Photosensitivity S (A/W) at 830 nm & 0.6 \\
+  \hline
+  Short circuit current Isc & 1.0 $\mu$A \\
+  \hline
+  Dark current Id (Typical) & 0.07 nA$^{*3}$ \\
+  \hline
+  Dark current Id (Maximum) & 1 nA$^{*3}$ \\
+  \hline
+  Cutoff frequency fc & 0.1 GHz$^{*3}$ \\
+  \hline
+  Terminal capacitance Ct (f=1 MHz) & 3 pF$^{*3}$ \\
+  \hline
+  Noise equivalent power NEP ($V_R$=10 V, $\lambda$=$\lambda_p$) & 7.4 $\times$ 10$^{-15}$ W/Hz$^{1/2}$ \\
+  \hline
+  \end{tabular}
+  \begin{tablenotes}
+  \small
+  \item[*3] $V_R$ = 10 V
+  \end{tablenotes}
+  \end{table}
+\begin{itemize}
+  \item 
   \item Model sun sensor geometry and aperture design
   \item Determine optimal photodiode placement for coverage and accuracy
   \item Develop mathematical models for sun vector determination
