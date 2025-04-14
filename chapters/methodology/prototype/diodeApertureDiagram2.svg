@@ -1,0 +1,51 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f5f5f5" />
+  
+  <!-- Photodiodes - T-shaped arrangement -->
+  <!-- A0 - Left of horizontal bar -->
+  <circle cx="140" cy="140" r="25" fill="#999" stroke="#333" stroke-width="2" />
+  <circle cx="140" cy="140" r="18" fill="#6495ED" stroke="#333" stroke-width="1" />
+  
+  <!-- A1 - Right of horizontal bar -->
+  <circle cx="260" cy="140" r="25" fill="#999" stroke="#333" stroke-width="2" />
+  <circle cx="260" cy="140" r="18" fill="#6495ED" stroke="#333" stroke-width="1" />
+  
+  <!-- A2 - Middle of vertical bar -->
+  <circle cx="200" cy="200" r="25" fill="#999" stroke="#333" stroke-width="2" />
+  <circle cx="200" cy="200" r="18" fill="#6495ED" stroke="#333" stroke-width="1" />
+  
+  <!-- A3 - Bottom of vertical bar -->
+  <circle cx="200" cy="280" r="25" fill="#999" stroke="#333" stroke-width="2" />
+  <circle cx="200" cy="280" r="18" fill="#6495ED" stroke="#333" stroke-width="1" />
+  
+  <!-- Apertures (Black Rectangles) -->
+  <!-- A0 Aperture -->
+  <rect x="100" y="120" width="70" height="40" fill="#222" />
+  
+  <!-- A1 Aperture -->
+  <rect x="230" y="120" width="70" height="40" fill="#222" />
+  
+  <!-- A2 Aperture -->
+  <rect x="180" y="170" width="40" height="50" fill="#222" />
+  
+  <!-- A3 Aperture -->
+  <rect x="180" y="260" width="40" height="50" fill="#222" />
+  
+  <!-- Labels -->
+  <!-- A0 Label -->
+  <text x="80" y="125" font-family="Arial" font-size="24" font-weight="bold" fill="#0088ff">A0</text>
+  <line x1="105" y1="130" x2="135" y2="135" stroke="#0088ff" stroke-width="4" stroke-dasharray="5,3" />
+  
+  <!-- A1 Label -->
+  <text x="300" y="125" font-family="Arial" font-size="24" font-weight="bold" fill="#ff8800">A1</text>
+  <line x1="295" y1="130" x2="265" y2="135" stroke="#ff8800" stroke-width="4" stroke-dasharray="5,3" />
+  
+  <!-- A2 Label -->
+  <text x="120" y="200" font-family="Arial" font-size="24" font-weight="bold" fill="#00cc44">A2</text>
+  <line x1="150" y1="200" x2="175" y2="200" stroke="#00cc44" stroke-width="4" stroke-dasharray="5,3" />
+  
+  <!-- A3 Label -->
+  <text x="120" y="280" font-family="Arial" font-size="24" font-weight="bold" fill="#dd0000">A3</text>
+  <line x1="150" y1="280" x2="175" y2="280" stroke="#dd0000" stroke-width="4" stroke-dasharray="5,3" />
+</svg>

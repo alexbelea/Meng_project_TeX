@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="diodeApertureDiagram.svg"
+   inkscape:export-filename="diodeApertureDiagram.png"
+   inkscape:export-xdpi="144"
+   inkscape:export-ydpi="144"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs16" />
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="2.9175"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg16" />
+  <!-- Background -->
+  <!-- Photodiodes -->
+  <!-- A0 - Top -->
+  <circle
+     cx="200"
+     cy="100"
+     r="25"
+     fill="#999"
+     stroke="#333"
+     stroke-width="2"
+     id="circle1" />
+  <circle
+     cx="200"
+     cy="100"
+     r="18"
+     fill="#6495ED"
+     stroke="#333"
+     stroke-width="1"
+     id="circle2" />
+  <!-- A1 - Left -->
+  <circle
+     cx="140"
+     cy="267.18079"
+     r="25"
+     fill="#999999"
+     stroke="#333333"
+     stroke-width="2"
+     id="circle3" />
+  <circle
+     cx="140"
+     cy="267.18079"
+     r="18"
+     fill="#6495ed"
+     stroke="#333333"
+     stroke-width="1"
+     id="circle4" />
+  <!-- A2 - Right -->
+  <circle
+     cx="260"
+     cy="267.18079"
+     r="25"
+     fill="#999999"
+     stroke="#333333"
+     stroke-width="2"
+     id="circle5" />
+  <circle
+     cx="260"
+     cy="267.18079"
+     r="18"
+     fill="#6495ed"
+     stroke="#333333"
+     stroke-width="1"
+     id="circle6" />
+  <!-- A3 - Bottom -->
+  <circle
+     cx="199.65723"
+     cy="171.80806"
+     r="25"
+     fill="#999999"
+     stroke="#333333"
+     stroke-width="2"
+     id="circle7" />
+  <circle
+     cx="199.65723"
+     cy="171.80806"
+     r="18"
+     fill="#6495ed"
+     stroke="#333333"
+     stroke-width="1"
+     id="circle8" />
+  <!-- Apertures (Black Rectangles) -->
+  <!-- A0 Aperture -->
+  <rect
+     x="150.68552"
+     y="59.940022"
+     width="100"
+     height="40"
+     fill="#222222"
+     id="rect8" />
+  <!-- A1 Aperture -->
+  <rect
+     x="99.880035"
+     y="229.15596"
+     width="40"
+     height="78.449013"
+     fill="#222222"
+     id="rect9"
+     style="stroke-width:1.25259" />
+  <rect
+     x="258.52786"
+     y="229.15938"
+     width="40"
+     height="78.449013"
+     fill="#222222"
+     id="rect9-0"
+     style="stroke-width:1.25259" />
+  <!-- A2 Aperture -->
+  <!-- A3 Aperture -->
+  <rect
+     x="150.34274"
+     y="170.01286"
+     width="100"
+     height="40"
+     fill="#222222"
+     id="rect11" />
+  <!-- Labels -->
+  <!-- A0 Label -->
+  <text
+     x="130"
+     y="90"
+     font-family="Arial"
+     font-size="24"
+     font-weight="bold"
+     fill="#0088ff"
+     id="text11">A0</text>
+  <line
+     x1="145"
+     y1="95"
+     x2="185"
+     y2="100"
+     stroke="#0088ff"
+     stroke-width="4"
+     stroke-dasharray="5,3"
+     id="line11" />
+  <!-- A1 Label -->
+  <text
+     x="95"
+     y="237.1808"
+     font-family="Arial"
+     font-size="24px"
+     font-weight="bold"
+     fill="#ff8800"
+     id="text12">A1</text>
+  <line
+     x1="110"
+     y1="242.1808"
+     x2="135"
+     y2="257.18079"
+     stroke="#ff8800"
+     stroke-width="4"
+     stroke-dasharray="5, 3"
+     id="line12" />
+  <!-- A2 Label -->
+  <text
+     x="290"
+     y="237.1808"
+     font-family="Arial"
+     font-size="24px"
+     font-weight="bold"
+     fill="#00cc44"
+     id="text13">A2</text>
+  <line
+     x1="288"
+     y1="242.1808"
+     x2="265"
+     y2="257.18079"
+     stroke="#00cc44"
+     stroke-width="4"
+     stroke-dasharray="5, 3"
+     id="line13" />
+  <!-- A3 Label -->
+  <text
+     x="229.65723"
+     y="216.80806"
+     font-family="Arial"
+     font-size="24px"
+     font-weight="bold"
+     fill="#dd0000"
+     id="text14">A3</text>
+  <line
+     x1="224.65723"
+     y1="211.80806"
+     x2="204.65723"
+     y2="181.80806"
+     stroke="#dd0000"
+     stroke-width="4"
+     stroke-dasharray="5, 3"
+     id="line14" />
+  <!-- Center Cross (for reference) -->
+</svg>

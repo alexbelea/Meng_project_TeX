@@ -2,16 +2,6 @@
 \subsection{Lifecycle}
 This section provides an overview of the Prototype Development Lifecycle.
 
-% Include a flowchart
-% \begin{figure}[H]
-%     \centering
-%     \scalebox{0.8}{ % Scale to 80% of original size
-%         \input{figures/methodology/your_flowchart_here}
-%     }
-%     \caption{System Design Overview Flowchart}
-%     \label{fig:decriptiveLabel44} % descriptive to call in text with \ref{fig:decriptiveLabel44}
-% \end{figure}
-
 \subsubsection*{Conceptualization and Requirements Definition}
 \begin{itemize}
   \item The prototype must have four photodiodes in an xy pattern with respective circuitry required to output ~0-5 Volts that will be read by an Arduino based Data Acquisition System (DAQ). The circuit must be able to react to light intensity changes, however the change will be at low frequency ( below 1Hz) as a satellite attitude is considered to change only gradually.
@@ -22,9 +12,9 @@ This section provides an overview of the Prototype Development Lifecycle.
 \end{itemize}
 %%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
 \subsubsection*{Theoretical Design}
-\begin{itemize}
-  \item Photodiodes were researched and several options were found, most of which were quite expensive, such as 2D PSD type sensors like the Hamamatsu S5990 but were both prohibitivly expensive and surface mount, which would have been harder to prototype but would allow for much higher resolutions, while also complicating the project. A decision was made to base the project on 1D photodiodes, and four Hamamatsu S5971 were purchased, which offered a good compromise in price and specifications: for under £10 a piece, the s5971 has the following specifications:
-\end{itemize}
+
+\paragraph{Photodiodes} were researched and several options were found, most of which were quite expensive, such as 2D PSD type sensors like the Hamamatsu S5990 but were both prohibitivly expensive and Surface Mount Device style (SMD), which would have been harder to prototype but would allow for much higher resolutions, while also complicating the project. A decision was made to base the project on 1D photodiodes, and four Hamamatsu S5971 were purchased, which offered a good compromise in price and specifications: for under £10 a piece, the S5971 has the following specifications:
+
 \begin{table}[h]
   \centering
   \caption{S5971 Photodiode Specifications}
@@ -60,10 +50,39 @@ This section provides an overview of the Prototype Development Lifecycle.
   \item[*3] $V_R$ = 10 V
   \end{tablenotes}
   \end{table}
+
+Although the higher versions such as S5972-3 have better specifications, such as frequency cutoff of 1GHz and lower Dark current, these were not needed for our project, higher frequency cut off not needed due the static nature of the light source and dark current, while it could affect a case where one of the diodes is fully in the dark, a voltage offeset would be noticeable, but with a voltage resolution restricted by the Arduino DAQ to 4.88mV/step, it was deemed acceptable:
+\begin{equation} \label{eq:darkCurrentOffset}
+  \begin{split}
+V_\text{offset-TIA} &= I_d \times R_f \\
+&= 0.07 \text{ nA} \times 1 \text{ M}\Omega \\
+&= 70 \text{ }\mu\text{V}
+  \end{split}
+\end{equation}
+\addequation{DC Offset Voltage at TIA Output Due to Dark Current}
+\begin{equation} \label{eq:totalDCoffset}
+  \begin{split}
+V_\text{offset-total} &= V_\text{offset-TIA} \times \text{Gain}_\text{post-amp} \\
+&= 70 \text{ }\mu\text{V} \times 16 \\
+&= 1.12 \text{ mV}
+  \end{split}
+\end{equation}
+\addequation{Total DC Offset After Post-Amplification}
+Equation \ref{eq:totalDCoffset} above shows the final dark current would be a maximum of 1.12mV which is below what the ADC can detect. 
+
+\paragraph{Sun Sensor Geometry and Aperture Design} was decided to be in a T shape, providing an x-y layout with two photodiodes in the x direction and two photodiodes in the y direction. Combined with an aperture design that covers one half of each diode, as represented in Figure \ref{fig:diodeApertureDiagram}.
+
+% Photodiode Aperture Diagram
+%
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.6\textwidth]{chapters/methodology/prototype/diodeApertureDiagram.png}
+    \caption{Rough Diagram of Photodiode Array with Apertures}
+    \label{fig:diodeApertureDiagram}
+\end{figure}
+
+
 \begin{itemize}
-  \item 
-  \item Model sun sensor geometry and aperture design
-  \item Determine optimal photodiode placement for coverage and accuracy
   \item Develop mathematical models for sun vector determination
   \item Simulate sensor performance under various lighting conditions
 \end{itemize}
