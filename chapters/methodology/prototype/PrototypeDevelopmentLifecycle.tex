@@ -189,14 +189,14 @@ The advantages in choosing this OpAmp is its ability to function on a Power Supp
 %
 %           ~~~   BreadBoard Testing subsection   ~~~
 %
-\subsubsection*{Breadboard Testing}
+\subsubsection*{BreadBoard Testing}
 
-Once the circuit design was completed as seen in Figure  \ref{fig:AltiumDis}, the components were placed on a breadboard to test the real circuit, as seen in Figure \ref{fig:BreadBoardPhoto}. 
-There were several iterations, at first with only the Transimpedance Amplificer Circuit (TIA) - a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. 
+Once the circuit design was completed as seen in Figure  \ref{fig:AltiumDis}, the components were placed on a BreadBoard to test the real circuit, as seen in Figure \ref{fig:BreadBoardPhoto}. 
+There were several iterations, at first with only the \ac{TIA}- a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. This is due to the low light of LEDs. A decision was made to add a secondary amplification circuit which raised the Voltage to a maximum 5V as designed. Further details on design in Section \ref{subsec:SignalConditioningCircuitry}. The final BreadBoard design can be found in Figure \ref{fig:BreadBoardPhoto}.
 
 
 
-% Breadboard photo
+% BreadBoard photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
   \centering
@@ -206,20 +206,6 @@ There were several iterations, at first with only the Transimpedance Amplificer 
 \end{figure}
 
 
-
-\begin{itemize}
-  \item Assemble basic circuit on breadboard
-  \item Test photodiode response characteristics
-  \item Verify analog front-end performance
-  \item Validate signal processing approach
-  \item Identify design weaknesses and optimization opportunities
-  \item Conduct functional testing
-  \item Measure photodiode response curves
-  \item Characterize sun angle determination accuracy
-  \item Test temperature sensitivity
-  \item Evaluate power consumption
-  \item Assess signal-to-noise ratio
-\end{itemize}
 
 \subsubsection*{Design Refinement}
 \begin{itemize}
@@ -240,7 +226,7 @@ There were several iterations, at first with only the Transimpedance Amplificer 
 \end{itemize}
 
 
-\subsubsection*{Breadboard Testing}
+\subsubsection*{BreadBoard Testing}
 % Stripboard photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
