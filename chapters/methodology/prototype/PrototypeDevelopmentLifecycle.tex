@@ -10,10 +10,82 @@ This section provides an overview of the Prototype Development Lifecycle.
   \item Interface requirements: the prototype electrical output needs to be compatible with the Arduino Analog to Digital Converter (ADC) input. Therefore, the signal shall not go below 0 Volts or exeed 5 volts. 
   \item Size and weight are not of high importance, but the device must fit in the testing equipment, which is the Renewable Energy Demonstrator arch. Preferably a height not higher than 5cm.
 \end{itemize}
-%%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
-\subsubsection*{Theoretical Design}
 
-\paragraph{Photodiodes} were researched and several options were found, most of which were quite expensive, such as 2D PSD type sensors like the Hamamatsu S5990 but were both prohibitivly expensive and Surface Mount Device style (SMD), which would have been harder to prototype but would allow for much higher resolutions, while also complicating the project. A decision was made to base the project on 1D photodiodes, and four Hamamatsu S5971 were purchased, which offered a good compromise in price and specifications: for under £10 a piece, the S5971 has the following specifications:
+\subsubsection*{Theoretical Design}
+The prototype will be composed of three parts: a stripboard containing the components for the amplification circuit,  a 3D printed Photodiode enclosure which will allow placing the photodiodes in the correct positions, as the photodiodes have the legs at a smaller distance than the stripboard, and need to be placed quite close to eachother, with the third part being the Arduino based DAQ. 
+% DIAGRAM MAYBE IN FRITZING???
+%
+% Reference in teh text above
+% \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{chapters/methodology/prototype/fritzingdiagram??.png}
+%   \caption{Rough Diagram of Photodiode Array with Apertures}
+%   \label{fig:diodeApertureDiagram}
+% \end{figure}
+The third part to the 
+
+
+\paragraph{Sun Sensor Geometry and Aperture Design} was decided to be in a T shape, providing an x-y layout with two photodiodes in the x direction and two photodiodes in the y direction. Combined with an aperture design that covers one half of each diode, as represented in Figure \ref{fig:diodeApertureDiagram}.
+
+% Photodiode Aperture Diagram
+%
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.6\textwidth]{chapters/methodology/prototype/diodeApertureDiagram.png}
+    \caption{Rough Diagram of Photodiode Array with Apertures}
+    \label{fig:diodeApertureDiagram}
+\end{figure}
+
+
+\subsubsection*{Component Selection}
+The components chosen for the design of the prototype are detailed below. They were first placed on a BreadBoard and tests were performed to ensure the functionality of the circuit before moving them to a stripboard which would ensure the components are phisically more stable and reduce the chance of faulty connectoins. Therefore, the same components were used for both BreadBoard and StripBoard prototyping. The circuit design and testing is gone into more detail in Section \ref{subsec:SignalConditioningCircuitry}. 
+
+% components for Amplification Circuit
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}
+    \caption{Components Used in Amplification Design}
+    \label{tab:components_list_stripboard}
+    
+    \begin{tabular}{lccc}  
+      \toprule
+      \textbf{Component Type} & \textbf{Comp. Part Name} & \textbf{Component Value} & \textbf{Amount} \\
+      \midrule
+      Op-Amp & TI LM324-N & -- & 2 \\
+      Photodiode & Hamamatsu S5971 & -- & 4 \\
+      Resistor & -- & 1 M$\Omega$ & 4 \\
+      Resistor & -- & 150 k$\Omega$ & 4 \\
+      Resistor & -- & 10 k$\Omega$ & 4 \\
+      Capacitor & -- & 1 $\mu$F & 4 \\
+      Stripboard & Veroboard & -- & 1 \\
+      Screw terminal block & -- & 2-input & 3 \\
+      \bottomrule
+    \end{tabular}
+    
+  \end{threeparttable}
+\end{table}
+
+% TABLE COMPONENTS DAQ
+\begin{table}[htbp]
+  \centering
+  \begin{threeparttable}
+    \caption{Components Used for DAQ System}
+    \label{tab:daq_components}
+    
+    \begin{tabular}{lccc}  
+      \toprule
+      \textbf{Component Type} & \textbf{Component Part Name} & \textbf{Component Value} & \textbf{Amount} \\
+      \midrule
+      Microcontroller & Arduino Uno & -- & 1 \\
+      Cable & USB cable & -- & 1 \\
+      Computer & Laptop/Python & -- & 1 \\
+      \bottomrule
+    \end{tabular}
+    
+  \end{threeparttable}
+\end{table}
+
+\paragraph{Photodiodes} were researched and several options were found, most of which were quite expensive, such as 2D PSD type sensors like the Hamamatsu S5990 but were both prohibitivly expensive and Surface Mount Device style (SMD), which would have been harder to prototype but would allow for much higher resolutions, while also complicating the project due to the more complex nature of PSDs. A decision was made to base the project on 1D photodiodes, and four Hamamatsu S5971 were purchased, which offered a good compromise in price and specifications: for under £10 a piece, the S5971 has the following specifications:
 
 \begin{table}[h]
   \centering
@@ -70,58 +142,77 @@ V_\text{offset-total} &= V_\text{offset-TIA} \times \text{Gain}_\text{post-amp} 
 \addequation{Total DC Offset After Post-Amplification}
 Equation \ref{eq:totalDCoffset} above shows the final dark current would be a maximum of 1.12mV which is below what the ADC can detect. 
 
-\paragraph{Sun Sensor Geometry and Aperture Design} was decided to be in a T shape, providing an x-y layout with two photodiodes in the x direction and two photodiodes in the y direction. Combined with an aperture design that covers one half of each diode, as represented in Figure \ref{fig:diodeApertureDiagram}.
+\paragraph{The Operational Amplifier (OpAmp)} choice was once again not a complicated choice due to the same arguments mentioned above re. photodiode selection: low frequency signal and reduced DAQ resolution. The LM324-N is a low-cost OpAmp which provides acceptable performance. 
+%
+%           ~~~   OPAMP SPECIFICATION TABLE    ~~~
+%
+\begin{table}[htbp]
+  \centering
+  \caption{Operational Amplifier Specifications}
+  \begin{tabular}{|l|c|}
+  \hline
+  \textbf{Parameter} & \textbf{Value} \\
+  \hline
+  DC Voltage Gain & 100 dB \\
+  \hline
+  Unity Gain Bandwidth & 1 MHz \\
+  \hline
+  Supply Voltage Range (Single) & 3 V to 32 V \\
+  \hline
+  Supply Voltage Range (Dual) & $\pm$1.5 V to $\pm$16 V \\
+  \hline
+  Supply Current & 700 $\mu$A \\
+  \hline
+  Input Bias Current & 45 nA \\
+  \hline
+  Input Offset Voltage & 2 mV \\
+  \hline
+  Input Offset Current & 5 nA \\
+  \hline
+  Input Common-Mode Voltage Range & Includes Ground \\
+  \hline
+  Differential Input Voltage Range & Equal to Supply Voltage \\
+  \hline
+  Output Voltage Swing & 0 V to V$^{+}$ - 1.5 V \\
+  \hline
+  \end{tabular}
+  \begin{tablenotes}
+  \small
+  \item Internally frequency compensated for unity gain
+  \item Temperature compensated
+  \end{tablenotes}
+\end{table}
+The advantages in choosing this OpAmp is its ability to function on a Power Supply, it is rather cheap while still offering 1MHz Unity Gain Bandwidth and is recommended for DC Gain which the type of signal our project aims to amplify.
 
-% Photodiode Aperture Diagram
+%%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
+
+%
+%           ~~~   BreadBoard Testing subsection   ~~~
+%
+\subsubsection*{Breadboard Testing}
+
+Once the circuit design was completed as seen in Figure  \ref{fig:AltiumDis}, the components were placed on a breadboard to test the real circuit, as seen in Figure \ref{fig:BreadBoardPhoto}. 
+There were several iterations, at first with only the Transimpedance Amplificer Circuit (TIA) - a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. 
+
+
+
+% Breadboard photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
-    \centering
-    \includegraphics[width=0.6\textwidth]{chapters/methodology/prototype/diodeApertureDiagram.png}
-    \caption{Rough Diagram of Photodiode Array with Apertures}
-    \label{fig:diodeApertureDiagram}
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/methodology/prototype/BreadBoardPhoto.jpg}
+  \caption{Photo Of BreadBoard Prototype}
+  \label{fig:BreadBoardPhoto}
 \end{figure}
 
 
-\begin{itemize}
-  \item Develop mathematical models for sun vector determination
-  \item Simulate sensor performance under various lighting conditions
-\end{itemize}
 
-\subsubsection*{Preliminary Design}
-\begin{itemize}
-  \item The design of the Prototype must have four photodiodes in an xy patern with respective apertures placed such that they cover opposite halfs of the photodides. This is to facilitate light location detection by the aperture shadowing the photodiode when the light is on one side but not the other.
-\end{itemize}
-
-\subsubsection*{Component Selection and Procurement}
-\begin{itemize}
-  \item Select appropriate photodiodes (spectral response, sensitivity)
-  \item Choose microcontroller/processor
-  \item Source analog-to-digital converters
-  \item Identify appropriate materials for aperture and housing
-  \item Procure test equipment for validation
-\end{itemize}
-
-\subsubsection*{Breadboard Testing}
 \begin{itemize}
   \item Assemble basic circuit on breadboard
   \item Test photodiode response characteristics
   \item Verify analog front-end performance
   \item Validate signal processing approach
   \item Identify design weaknesses and optimization opportunities
-\end{itemize}
-
-\subsubsection*{First Prototype Development}
-\begin{itemize}
-  \item Design printed circuit board (PCB)
-  \item Manufacture PCB
-  \item Design and fabricate aperture mask
-  \item Develop housing/enclosure
-  \item Assemble prototype components
-  \item Write initial firmware implementation
-\end{itemize}
-
-\subsubsection*{Initial Testing and Characterization}
-\begin{itemize}
   \item Conduct functional testing
   \item Measure photodiode response curves
   \item Characterize sun angle determination accuracy
@@ -140,59 +231,41 @@ Equation \ref{eq:totalDCoffset} above shows the final dark current would be a ma
   \item Improve firmware algorithms
 \end{itemize}
 
-\subsubsection*{Second Prototype Development}
+\subsubsection*{Stripboard Prototype Development}
+%Put picture of stripboard and maybe of any measurement if available
 \begin{itemize}
-  \item Implement design improvements
-  \item Manufacture revised PCB
+  \item Implementing design improvements was easy on a BreadBoard
   \item Fabricate improved aperture
   \item Enhance housing design
-  \item Update firmware with optimized algorithms
-  \item Assemble refined prototype
 \end{itemize}
+
+
+\subsubsection*{Breadboard Testing}
+% Stripboard photo
+%
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+  \centering
+  \includegraphics[width=0.7\textwidth]{chapters/methodology/prototype/StripboardPhoto.jpg}
+  \caption{Photo Of Stripboard Prototype}
+  \label{fig:StripboardPhoto}
+\end{figure}
 
 \subsubsection*{Comprehensive Testing}
 \begin{itemize}
   \item Laboratory performance testing (angular accuracy, resolution)
-  \item Environmental testing (thermal cycling, vibration)
-  \item Radiation testing (if applicable for space applications)
+  \item Improve Aperture
   \item Interface compatibility testing
-  \item Long-term stability assessment
 \end{itemize}
 
 \subsubsection*{Validation and Calibration}
 \begin{itemize}
-  \item Develop calibration procedures
+  \item Calibration procedure: match readings to simulation
   \item Create calibration fixtures
-  \item Perform sensor calibration
-  \item Document calibration coefficients
   \item Validate sensor performance against requirements
 \end{itemize}
 
-\subsubsection*{Documentation and Production Readiness}
-\begin{itemize}
-  \item Create detailed technical specifications
-  \item Document calibration procedures
-  \item Prepare assembly instructions
-  \item Write user manual/interface control document
-  \item Develop acceptance test procedures
-\end{itemize}
 
-\subsubsection*{Pre-production Prototype}
-\begin{itemize}
-  \item Build small batch of pre-production units
-  \item Conduct acceptance testing
-  \item Verify production processes
-  \item Validate consistency between units
-  \item Finalize design for production
-\end{itemize}
 
-\subsubsection*{Technology Transfer to Production}
-\begin{itemize}
-  \item Document manufacturing processes
-  \item Train production personnel
-  \item Establish quality control procedures
-  \item Define production testing requirements
-  \item Prepare for volume manufacturing
-\end{itemize}
+
 
 

@@ -13,6 +13,7 @@
 \usepackage[margin=2.5cm, top=1.5cm, includehead, headheight=14pt, headsep=10pt]{geometry} % Page margins
 %\usepackage{titlesec}           % For customizing section titles            
 \usepackage[numbers,sort&compress]{natbib} % For references in bib format
+\usepackage[nohyperlinks]{acronym}  % acronyms
 \usepackage{xcolor}             % make it pretty
 \usepackage{float}              % needed for placing images where you want them
 \usepackage{caption}
@@ -160,6 +161,12 @@
 
 
 \clearpage
+% Include list of Acronyms
+% To be used with acronyms package, call acronym \ac{} (first time prints)
+%  or \acf for full name and ACR in any locaiton
+%      \acp{} for plural , \acs{} only short (even if first time)
+\input{acronyms.tex}
+
 % Include chapters
 % Add your chapters here or inside the sub-files
 \input{chapters/abstract}
