@@ -259,7 +259,7 @@ The use of the Arduino \texttt{String} class is memory-intensive and can cause f
 \subsubsection{Python Script}
 The digitized signal must be interpreted and saved on the PC. This is done via a python script which listens to the Serial port from the arduino. The signal then also required cleaning from RF interference discovered during testing. In Figure~\ref{fig:pythonFlowchart} a flowchart is produced showing the way the script works: after initial setup that sets up the Serial Communication, the script waits for a "DAQ\_READY" signal from the Arduino. Once this is received, a csv file is created and the script sends a "START" signal which the Arduino interprets and starts sampling and sending the data. The script receives each line and saves it in the new CSV, and continues to record data until the Arduino sends a "RECORDING\_COMPLETE" signal - which will happen when the recordingDuration is reached. At this point the python script  performs the following post-processing steps:
 
-\paragraph{The filter\_and\_save\_data()} function' purpose is mainly to correctly interpret the CSV. It takes a csv with the raw voltage values, saves them into a Pandas DataFrame for easier manipulation and sends each channel to the apply\_lowpass\_filter() function which will be described below. filter\_and\_save\_data().
+\paragraph{The filter\_and\_save\_data()} function' purpose is mainly to correctly interpret the CSV. It takes a csv with the raw voltage values, saves them into a Pandas DataFrame for easier manipulation and sends each channel to the apply\_lowpass\_filter() function which will be described below. filter\_and\_save\_data() pseudocode is produced in Listing \ref{lst:pythonFilterAndSave}.
 
 % Flowchart of Python Script
 \begin{figure}[ptb] 
@@ -308,7 +308,7 @@ The digitized signal must be interpreted and saved on the PC. This is done via a
 END FUNCTION
 \end{lstlisting}
 
-\paragraph{The apply\_lowpass\_filter()} function was created and integrated into the script once it was observed that the RED testbench used was introducing noise as seen in Figure \ref{fig:sigNoise}. The benefit of using an already built testbench that could place the light at exact positions repeatedly, meant it would make sense to accept the noise and just filter the data, as the signal of interest was very low frequency while the noise was around 170kHz. The filter could be relativly simple, due to the large frequency difference beteween noise and signal. A 4th order filter was deemed acceptable and a low cut-off frequency of 2Hz was used for the static readings. This was found to be acceptable for the test involving light location at a frequency of 0.2Hz the transition of the light from one position to another was still visibly sharp. The post-processing is not the only reason light transition would not appear instantaneous on the Voltage graph, another reason is the amplification circuit which has a 1Hz cutoff frequency via the feedback capacitor on the post-amplification OpAmp circuit. 
+\paragraph{The apply\_lowpass\_filter()} function was created and integrated into the script once it was observed that the RED testbench used was introducing noise as seen in Figure \ref{fig:sigNoise}. The benefit of using an already built testbench that could place the light at exact positions repeatedly, meant it would make sense to accept the noise and just filter the data, as the signal of interest was very low frequency while the noise was around 170kHz. The filter could be relativly simple, due to the large frequency difference beteween noise and signal. A 4th order Butterworth IIR filter was deemed acceptable and a low cut-off frequency of 1Hz or 2Hz was used for the static readings. This was found to be acceptable for the test involving light location at a frequency of 0.2Hz the transition of the light from one position to another was still visibly sharp. The post-processing is not the only reason light transition would not appear instantaneous on the Voltage graph, another reason is the amplification circuit which has a 1Hz cutoff frequency via the feedback capacitor on the secondary-amplification OpAmp circuit. 
 The pseudocode of the function that creates the low-pass digital filter and filters the data is reproduced in Listing \ref{lst:pythonLowPassFilter}. The butter() function from the library signal is used, from the scipy package~\cite{RefWorks:butter} which is a free and open source library offered to the scientific comunity. Before feeding the cutoff frequency to the filter, it is normalized to the Nyquist rate, which means it is between 0 (DC) and 1 (Nyquist frequency), and therefore the filter can be applied no matter the sampling rate. As Schafer and Oppenheim explain in "Discrete-Time Signal Processing" Third Edition:
 "The frequency scaling or normalization in the transformation from $ X_s(j\Omega) \text{ to } X(e^{j\omega})$ is directly a result of the time normalization in the transformation from $x_s(t) \text{ to } x[n]$"~\cite[p.171]{RefWorks:oppenheim2013discrete-time}.
 When creating a digital filter, this normalization becomes crucial because in the continuous-time domain, frequencies are measured in Herz and in the discrete-time domain, frequencies become relative to the sampling rate.
@@ -319,7 +319,33 @@ The relationship between these two frequency domains is given by $\omega = \Omeg
     \item $\Omega$ is the analog frequency (radians/second)
     \item $T$ is the sampling period (seconds)
 \end{itemize}
-The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} using the scipy.signal.freqz() method. The actual implementation uses filtfilt() which applies the filter twice, effectively doubling the filter order~\cite{RefWorks:2025filtfilt}. This affects the transition steepness and phase response. The Discrete-Time Transfer Function is reproduced in Figure\ref{DTFT-TF}
+
+%%%%%%%%%%%%%%
+However, when implementing IIR filters like the Butterworth filter used for our purpose, the bilinear transformation is employed to convert from the continuous-time domain to the discrete-time domain. This transformation introduces frequency warping, where the relationship between the analog and digital frequencies becomes:
+
+$$\omega = 2 \arctan(\Omega T_d/2)$$
+
+where $T_d$ is the sampling period. This nonlinear relationship compresses the infinite analog frequency range $(-\infty, \infty)$ into the finite digital frequency range $(-\pi, \pi)$. The warping effect is more pronounced at higher frequencies, meaning that in our case it would not be noticeable \cite[p.529-530]{RefWorks:oppenheim2013discrete-time}.
+
+A critical property of the bilinear transformation is stability preservation. In the analog domain, a stable system has all poles in the left half of the s-plane reproduced in Figure \ref{fig:unitCircle}. The bilinear transformation maps the entire left half of the s-plane to the interior of the unit circle in the z-plane. This ensures that the 4-pole Butterworth filter, which is stable in the continuous-time domain, remains stable when converted to its discrete-time equivalent. 
+%%%%%%%%%%%%%%%%%
+% unit circle
+\begin{figure}[htbp] 
+  \centering
+  \includegraphics[width=0.7\textwidth]{chapters/methodology/ArduinoDAQ/oppenheimMappingCircle.png}
+  \caption{Mapping of the s-plane onto the z -plane using \\ the bilinear transformation~\cite[p.130]{RefWorks:oppenheim2013discrete-time}}
+  \label{fig:unitCircle}
+\end{figure}
+
+The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} using the scipy.signal\-.freqz() method. The actual implementation uses filtfilt() which applies the filter twice, effectively doubling the filter order~\cite{RefWorks:2025filtfilt}. This affects the transition steepness and phase response. The Discrete-Time Transfer Function is reproduced in Equation \ref{DTFT-TF}.
+% Filter Response equation
+\begin{equation} \label{DTFT-TF}
+  \begin{split}
+    H(e^{j\omega}) = \frac{b[0] + b[1]e^{-j\omega} + b[2]e^{-j2\omega} + b[3]e^{-j3\omega} + b[4]e^{-j4\omega}}{a[0] + a[1]e^{-j\omega} + a[2]e^{-j2\omega} + a[3]e^{-j3\omega} + a[4]e^{-j4\omega}}
+  \end{split}
+\end{equation}
+\addequation{Frequency Response of 4th-order Butterworth low-pass filter with 2.0 Hz cutoff}
+
 
 %% APPLY_LOW_PASS_FILTER ()  PseudoCODE
 \begin{lstlisting}[style=cstyle, caption=Python apply\_lowpass\_filter() PseudoCode, label=lst:pythonLowPassFilter]
@@ -340,14 +366,6 @@ The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} 
 
 \end{lstlisting}
 
-
-\begin{equation} \label{DTFT-TF}
-  \begin{split}
-    H(e^{j\omega}) = \frac{b[0] + b[1]e^{-j\omega} + b[2]e^{-j2\omega} + b[3]e^{-j3\omega} + b[4]e^{-j4\omega}}{a[0] + a[1]e^{-j\omega} + a[2]e^{-j2\omega} + a[3]e^{-j3\omega} + a[4]e^{-j4\omega}}
-  \end{split}
-\end{equation}
-\addequation{Frequency Response of 4th-order Butterworth low-pass filter with 2.0 Hz cutoff}
-
 % Filter Response (applied once)
 \begin{figure}[htbp] 
   \centering
@@ -357,8 +375,8 @@ The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} 
 \end{figure}
 
 \subsection{Testing Strategy}
-The testing was done incrementally with each new version of the program, many tests were carried out as the development was dependent on both C++ code on the Arduino and the Python script on the PC to somewhat work together. At first the C++ program was tested by listening to the output in the Serial Monitor of the Arduino IDE and sending commands the same way. Debug println() lines were used to ensure the loop on the Arduino was in the correct state. Once the C++ program seemed to somewhat work as intended, the Python script was implemented to send / receive. 
+The testing was done incrementally with each new version of the program, many tests were carried out as the development was dependent on both C++ code on the Arduino and the Python script on the PC to somewhat work together. At first the C++ program was tested by listening to the output in the Serial Monitor of the Arduino IDE and sending commands the same way. Debug Serial.println() lines were used to ensure the loop on the Arduino was in the correct state. Once the C++ program seemed to somewhat work as intended, the Python script was implemented to send / receive. 
 
 \subsection{Evaluation of design}
-It worked ok. [TO FINISHTO FINISHTO FINISHTO FINISHTO FINISH]
+The design was tested iterartivly while making changes to the code with a signal generator at first to simulate a stead known input signal and compare readings on the Arduino IDE Serial Monitor. Once the Python script was fully working, tests were performed again for the python script's ability to read the values sent correctly. An issue was identified where sometimes the Arduino would send the column headers not at the beggining of the CSV and these lines had to be cleaned manually. This could be due to Serial buffer issues but was not investigated. Later an attempt was made to perform the cleaning programatically by creating a function in the script to do so.
 
