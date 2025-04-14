@@ -24,12 +24,12 @@ polyimide. Then a convection of 22°C was applied to the side of the PCB
 to simulate the transfer of heat of the PCB from the shuttlecraft it is
 housed in, assumingly room temperature of the spacecraft is the same as
 on Earth, it would be 22°C. Each of the components have their respective
-temperatures when operating, this can be seen in Figure~\ref{fig:PCBparameters}Finally, two tests will be conducted using
+temperatures when operating, this can be seen in Figure~\ref{fig:PCBparameters}. Finally, two tests will be conducted using
 200°C and -200°C of radiation applied to the entire PCB model to
 simulate when the PCB is facing to the sun, and when the PCB is in the
 shadows of celestial bodies respectively.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/methodology/ThermalAnalysis/Fig1parameters.png}
     \caption{PCB model with Parameters applied}
@@ -41,19 +41,19 @@ shadows of celestial bodies respectively.
 
 \subsection{Finite Analysis Evaluation 1 - Under 200°C in space}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.95\textwidth]{chapters/methodology/ThermalAnalysis/Fig2under200C.jpg}
-    \caption{Results under 200°C radiation}
-    \label{fig:results_200C}
-\end{figure}
-
 The results for the PCB when facing towards the sun
 depicts the most heat being towards outside of the photodiodes area and
 the cooler parts are around the other components. As the figure~\ref{fig:results_200C}
 shows the maximum temperature experienced is 199.35°C and the minimum
 temperature is -31.168°C, this shows that the PCB can be operable when
 facing towards the Sun.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{chapters/methodology/ThermalAnalysis/Fig2under200C.jpg}
+    \caption{Results under 200°C radiation}
+    \label{fig:results_200C}
+\end{figure}
 
 
 
@@ -62,7 +62,7 @@ facing towards the Sun.
 
 The results for the PCB, when it is in the shadows of a celestial body, depicts the most heat coming from the photodiodes themselves which is to be expected as it creates the most heat in the PCB components followed by the amplifiers then connectors. As Figure~\ref{fig:results_minus_200C}  shows, the maximum temperature experienced is 136C and the minimum temperature is -173.83°C, this shows that the PCB can be operable when in the shadow of a celestial body.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/methodology/ThermalAnalysis/Fig3underneg200c.png}
     \caption{Results under -200°C radiation}
