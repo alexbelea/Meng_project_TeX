@@ -207,25 +207,21 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
 
 \subsubsection*{Design Refinement}
 \label{explainPostAmp}
-\paragraph{Secondary Amplification} was added to the circuit which was a major redesign for signal conditioning. This allows reading of the analog signal with the Arduino \ac{ADC},at the full range of 0V to 5V, as the Arduino \ac{ADC} is 10 bit. This gives a resolution of  $2^{10}=1024$ steps, otherwise the readings would be from 0 V to about 300 mV, with a much lower resolution between steps - the DAQ would be using a resolution of only the region covered between 0V and 0.3V, ie. $1024/16=64$ steps. Details regarding this can be found in Section \ref{secondAmp}.
-\paragraph{The Photodiodes} were first placed in a square pattern around the circuit,which helped BreadBoard prototyping but would have also simplified the Stripboard design. However, it was quickly determined that the photodides must be as close to eachother as possible, due to the light in the \ac{RED} being closer to a "single point" spreading out, as opposed to the light coming from the sun, which is assumed to be parallel - and the position relative of the photodiodes would not matter. This meant that soldering the photodides to the stripboard was not an option, due to the small distance between the photodiodes and the relatively large strips on the Verooboard stripboard. The decision was therefore made to move the photodiodes to their own 3D printed enclosure, which went through it's own redisign as described under Section \ref{subsec:enclosureDesign}.
+\paragraph{Secondary Amplification} was added to the circuit which was a major redesign for signal conditioning. This allows reading of the analog signal with the Arduino \ac{ADC},at the full range of 0V to 5V, as the Arduino \ac{ADC} is 10 bit. This gives a resolution of  $2^{10}=1024$ steps, otherwise the readings would be from 0 V to about 300 mV, with a much lower resolution between steps - the DAQ would be using a resolution of only the region covered between 0V and 0.3V, ie. $1024/16=64$ steps. Details regarding this can be found in Section \ref{secondAmp}. Further, the Secondary Amplifier circuit was modified with the addition of a feedback resistor to reduce noise, as described in Section \ref{secondAmp}.
+\paragraph{The Photodiodes} were first placed in a square pattern around the circuit,which helped BreadBoard prototyping and would have also simplified the Stripboard design. However, it was quickly determined that the photodides must be as close to eachother as possible, due to the light in the \ac{RED} testbench being closer to a "single point" spreading out, as opposed to the light coming from the sun, which is assumed to be parallel - in which case the distance relative between the photodiodes would not matter. More details about the lightsource on the \ac{RED} testbench in Section \ref{REDtestbench} . This meant that soldering the photodides to the stripboard was not an option, due to the small distance between the photodiodes, the diodes having 3 pins (anode, cathode and case) at small distances in triangle patern and the relatively large distance between strips on the Veroboard stripboard (2mm). The decision was therefore made to move the photodiodes to their own 3D printed enclosure, which went through it's own redisign as described under Section \ref{subsec:enclosureDesign}. This meant soldering wires to the photodiode pins and ensuring they do not shortcircuit using heat shrink tubing.
+\vspace{1em}
 
-
-
-%%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
-
-
-\subsubsection*{Stripboard Prototype Development}
-Developing the Stripboard was done in two stages to avoid making too many mistakes too hard to fix: the design was first done using the Software Fritzing which is a free and Open Source Software suite for \ac{EDA}. 
+%       ~~~     STRIPBOARD PROTOTYPE DEVELOPMENT ~~~~
+\noindent The {\bfseries Stripboard Prototype Development} was done in two stages to avoid making too many mistakes that would be too hard to fix: the design was first implemented using the Software Fritzing which is a free and Open Source Software suite for \ac{EDA} that allows planning on different BreadBoards and Stripboards. The final CAD Stripboard design is reproduced in Figure \ref{fig:StripboardFritzing}.
+When soldering the components to the actual stripboard, besides some errors such as soldering a jack on the wrong stips, and having to de-solder and re-solder, the stripboard prototyping was quite straight forward due to having tested the design on the BreadBoard and creating the plan in Fritzing as mentioned. However, during testing, the readings seemed off and upon further debugging it was found that some flux remained on the stripboard, causing unwanted conductance between strips, creating a parallel resistance with one of the feedback resistors, which was causing the incorrect amplification. After cleaning the stripboard with support from Dr. Carlos, who had solvent in his office, the Stripboard prototype functioned as intended. 
 % Stripboard KiCAD
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
   \centering
-  \includegraphics[width=0.7\textwidth]{chapters/methodology/prototype/StripboardPhotoFritzing.jpg}
+  \includegraphics[width=0.8\textwidth]{chapters/methodology/prototype/StripboardPhotoFritzing.jpg}
   \caption{Photo Of Stripboard Prototype on Fritzing}
   \label{fig:StripboardFritzing}
 \end{figure}
-
 % Stripboard photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
@@ -234,8 +230,19 @@ Developing the Stripboard was done in two stages to avoid making too many mistak
   \caption{Photo Of Stripboard Prototype}
   \label{fig:StripboardPhoto}
 \end{figure}
+\vspace{1em}
 
-
+%       ~~~     Aperture ~~~~
+\noindent The {\bfseries Aperture} on the 3D printed photodiode enclosure was harder to implement. Initially a 3D printed aperture was planned but this was not able to be produced. Another plan was to glue plexiglas to the enclosure and apply black electrical tape to it, an idea which was changed because the plexiglas available was considered too thick at 5mm. The worry was that light scattering in the plexiglas, refraction and especially lateral displacement due to the thickness,  especially at a larger angle such as when the light is close to the horizon tangent point. The difference in displacement between zenith and when close to horizon was a worry. A solution was found by purchasing a screen protector glass for mobile phones. This glass was very thin, at under 1mm, and is fabricated to be very clear and transparent so as not to affect the quality of the mobile phone screen it is meant to protect.
+The black electrical tape was then placed on top of this glas as seen in 
+% aperture photo
+%
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+  \centering
+  \includegraphics[width=0.4\textwidth]{chapters/methodology/prototype/aperture_photo.jpg}
+  \caption{Photo of aperture placement on screenprotector glass}
+  \label{fig:StripboardPhoto}
+\end{figure}
 
 \begin{itemize}
   \item Implementing design improvements was easy on a BreadBoard
