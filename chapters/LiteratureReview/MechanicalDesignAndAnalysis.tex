@@ -1,1 +1,27 @@
 \section{Mechanical Design and Analysis}
+Although the CubeSat specifications are strict in reference to size and shape of nanosatellites that aim to respect these specifications, it allows the freedom for designers to choose many characteristics. 
+Therefore, mechanical analysis is required, with a focus on thermal and structural characteristics. 
+To this end, Ullah, Rehman, Bari and Reyneri published a paper in 2017 raising the struggle of heat dissipation in CubeSats due to their small size not allowing the installation of heat-dissipating radiators. 
+The team considered all thermal resistances of the CubeSat panels either as separate layers or similar materials combined in their simulation. 
+They conducted both simulation and real measurements of the AraMiS-C1 satellite developed by the Torino Polytechnic and found that the simulated model correctly aligned with real world measurements. 
+They conclude that their model can therefore be used to model any microsatellite following the CubeSat standard. 
+They also concluded that the thermal resistance measured was exceptionally low and therefore could be safely used on satellites to be deployed\cite{RefWorks:ali2017thermal}.
+
+Similarly, Raslan, Michna and Ciarcia performed a thermal simulation of a CubeSat in a 2019 paper. 
+Their goal was to discover the required framework to maintain the thermal stability of a CubeSat in orbit, with the overarching goal of creating a CubeSat that will contain a mammalian tissue sample for gathering experimental data of the effects of microgravity and space radiation on the sample. 
+The CubeSat, therefore, must be able to maintain a very narrow range of temperatures without large fluctuations so that the experiment remains valid. 
+They aim to find external coating materials and attitude control that limit these fluctuations. 
+The mission will involve a 6U sized CubeSat containing a biohousing. 
+With a black-chrome plated metal coating in combination with solar panels on the sun exposed side the team was able to maintain 37 degrees with only 2 degrees deviation in the biohousing. 
+The other sides of the satellite all were covered in solar panels in the simulation. 
+They conclude that they have identified a suitable single-coat material that in combination with PID attitude control algorithms is able to maintain the temperature within an admissible range. 
+They also conclude that this can be done for a wide range of orbits and exposure time. 
+They point out future research will focus on finding other coat types that maintain temperature without attitude control as changing attitude to maintain temperature consumes satellite power, which is a valuable resource\cite{RefWorks:raslanthermal}.
+
+Concentrating on the structural resistance of the CubeSats, Dhariwal, Singh and Kushwaha performed a structural analysis using ANSYS software and released their findings in a 2023 paper analysing the structural behaviour of 1U CubeSats under various loads, static, modal random vibration, and shock loads. 
+The team claims their paper establishes a methodological framework for CubeSat structural analysis and can be used for future work. 
+They conclude that because the stress applied to the aluminium alloy 6061 used did not go above the yield strength, it is safe to assume the material operated safely and can be used on the CubeSats structure. 
+They also conclude that their analysis was accurate and point out a need for a physical test on a real 1U CubeSat structure\cite{RefWorks:dhariwal2023structural}.
+
+This review of carefully selected research papers serves as a robust foundation for the work that is to be conducted in this project. 
+The critical insights and methodology described for thermal and structural analysis of CubeSats by the teams' previous work, as well as CubeSat designs and PSD sensor work conducted as mentioned above, is important and helpful for the project's successful contribution to this research.

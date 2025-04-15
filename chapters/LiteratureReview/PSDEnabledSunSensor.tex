@@ -1,1 +1,33 @@
 \section{PSD Enabled Sun Sensor}
+The need for position estimation based on light sources preceded current requirements in microsatellites. 
+Qian, Wang, Busch-Vishniac and Buckman describe in 1993 a position sensitive detector (PSD) method using a single two-dimensional lateral-effect PSD capable of keeping track of multiple light sources at the same time. 
+Their method of tracking multiple light sources involves modulating each light source, LEDs, of interest to a different frequency. 
+They succeeded in correctly tracking two light sources modulated at 10kHz and the other at 5kHz. They point out that the light sources can correctly be tracked even in the presence of background light and that several light sources can be tracked, with the only restrictions being the bandwidth of the PSD and the sampling time of the sample and hold device being used. 
+Although their method of tracking several lights might be out of scope of a sun sensor, the methods of design may be of some use to the design of a PSD.
+
+Similarly, Guanghui and his colleagues developed the AirLink-E100 system which makes use of a PSD and describe it in a 2007 paper. 
+This system is not directly related to sun sensing; however, their finding may be of some use. 
+In a position sensor on earth, they point out, due to background light the PSD does not work with the precision necessary. 
+They introduce methods of achieving better precision using analogue and digital signal processing. 
+They modulate the light to be sensed, in this instance a laser, with a square wave, in essence turning the laser on and off. 
+This allows for sensing of the background noise (when the laser is off) and subtracting the noise from the next time period when the laser is on. 
+The authors conclude that this is a sound method of filtering out background noise in PSD devices where the light source can be modulated\cite{RefWorks:2007position}.
+
+Building on this and other work, Ortega, Lopez-Rodriguez, Ricart et al. describe in a 2010 paper a miniaturized two axis sensor with a $\pm$60° FOV, totalling 120°, and angle accuracy better than 0.15°. 
+Their method is directly aimed at sun sensing. 
+They not only design, fabricate and characterize the sensor, but also successfully integrate it in a Spanish nano-satellite NANOSAT-1B. 
+The team used monolithically integrated silicon photodiodes in a crystalline silicon substrate protected by a glass cover. 
+The entire size of the sensor is 3cm $\times$ 3cm and weighs in at just 24 grams. 
+The NANOSAT-1B which launched in 2009 contained three of these sensors\cite{RefWorks:ortega2010miniaturized}.
+
+Ortega et al.'s research directly aligns with the paper's objectives, rendering their work highly relevant, and was replicated by Dwik and Somasundaram's research modelling and simulating a PSD using MATLAB\cite{RefWorks:dwik*2019modeling}. 
+The authors point out the superiority of PSD over Charge-Coupled Devices (CCDs) because of the higher resolution and rapid response time. 
+The researchers modelled two-dimensional photodiode arrays providing four output currents using included photodiode element in MATLAB. 
+They also modelled simplified versions with single diode and one-dimensional array. 
+They conclude that a PSD using photodiodes is a viable method of detecting the location of a light source from the current change readings of the diodes. 
+They point out that for use in a fully working Acquisition, Tracking and Pointing (APT) system, further work is necessary that is not covered in their paper, such as signal conditioning.
+
+Furthering the previous work, Delgado et al. showed in a 2013 paper the design, fabrication and characterization of a solar sensor that takes advantage of subdivision of the field of view (FOV) into 4 quadrants. 
+The research team was able to develop high-precision sensors with an FOV of $\pm$60° and fine resolution of 0.05° while providing a coarse resolution of 0.5°. 
+This high precision is achieved by splitting the sensor into four sub sensors, each concentrating on a different range of angles. 
+They named the technology Sensosol and the paper states it will be used onboard the SeoSat satellite from Inta corporation\cite{RefWorks:2013sensosol:}.
