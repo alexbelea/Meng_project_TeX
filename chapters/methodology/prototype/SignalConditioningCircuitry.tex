@@ -2,7 +2,37 @@
 % TestingApparatus.tex
 \subsection{Signal Conditioning Circuitry} % \chapter{Methodology}>\section{Prototype}
 \label{subsec:SignalConditioningCircuitry}
-A photodiode produces a certain amount of current when light hits the depletion region. Therefore, a larger depletion region is desirable, to produce more current. [2021KeiserFibreOptics]
+
+\paragraph{Photodiodes} produce a certain amount of current when light hits the depletion region. Therefore, a larger depletion region is desirable, to capture more light and in turn produce more current. For this purpose the photodiode in our circuit is reverse-biased as can be seen in Figure \ref{fig:AltiumDis} \cite[p.155]{RefWorks:keiser2021fiber}. 
+
+%       ~~~   TIA SUB SUB SECTION   ~~~
+%
+\subsubsection{\acf{TIA}}
+A reverse-biased photodiode allows a current to flow from the cathode to anode which is connected to ground. This current is converted to a Voltage using a \ac{TIA} with the following relationship:
+\begin{equation} \label{eq:TIAoutput} % Voltage output TIA
+  \begin{split}
+  V_{\text{out}} = - I_{\text{ph}} \cdot R_f
+  \end{split}
+\end{equation}
+\addequation{Transimpedance Amplifier Output Voltage}
+\begin{equation} \label{eq:Photocurrent} % Current photodiode formula
+  \begin{split}
+  I_{\text{ph}} = P \cdot R_{\lambda}
+  \end{split}
+\end{equation}
+\addequation{Photocurrent as Function of Optical Power}
+
+Where $P$ is Light Power (W) and $R_{\lambda}$ is Responsivity (A/W).
+
+\begin{equation} \label{eq:TIAoutputWithValues}
+  \begin{split}
+  V_{\text{out}} = -(P \cdot 0.5 \text{ A/W}) \cdot 1 \text{ M}\Omega
+  \end{split}
+\end{equation}
+\addequation{TIA Output with Photodiode Response}
+
+The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:AltiumDis} that provides very high imput impedance (1G$\Omega$) and allows the amplification of the signal without disturbing the photodiode current, therefore not affecting the readings. The inverting input is used in this configuration, which converts the negative current flowing from the cathode to the anode of the photodiode, into a positive voltage.
+
 % Altium Diagram
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
@@ -11,30 +41,32 @@ A photodiode produces a certain amount of current when light hits the depletion 
     \caption{TIA and Post Amplification Circuit in Altium Designer}
     \label{fig:AltiumDis}
   \end{figure}
+%
+%       ~~~       SECONDARY AMPLIFICATION   ~~~
+%
+\subsubsection{Secondary Amplification }
+Testing showed that even using a 1M$\Omega$ resistor, the output voltage was too low (around 310mV) at our \ac{RED} testbench' \acp{LED} maximum brightness, as explained in Section \ref{explainPostAmp}. To raise the maximum Voltage to the desired maxium of the ADC of 5V, a higher feedback resistor could be used, however this would introduced noise and would require more complicated TIA with feedback capacitors. Due to the LM324-N having 4 \acp{OpAmp}, the decision was taken to implement a Secondary Amplification circuit. The non-inverting \ac{OpAmp} configuration was chosen to maintain the voltage positive, which also means there is no need for a dual power supply and keeps the Voltage positive for the Arduino ADC.
+A simple calculation was made to figure out the required Gain of the circuit:
+\begin{equation} \label{gainCalc}
+  A = \frac{\text{required Voltage}}{\text{measured}} = \frac{5\text{ V}}{0.31\text{ V}} = 16.1
+  \end{equation}
+\addequation{Secondary Amplification Gain Calculation}
 
-\subsubsection{Functional Requirements}
-% Contains a detailed list of what the system must do from the user's perspective. This includes user stories, use cases, and feature descriptions that clearly define system behaviors, inputs, outputs, and how users will interact with the system.
+Knowing the gain required, the feedback resistor was calculated by choosing a 10k$\Omega R_1$ and rearranging the gain equation:
 
-\subsubsection{Design Approach}
-% Outlines the overall strategy for designing the system, including architectural patterns, design principles, and key technology choices. This explains the rationale behind major design decisions and how they align with requirements.
+\begin{equation} \label{Feedback Resistor Calculation}
+  \begin{split}
+  A &= 1 + \frac{R_f}{R_1} \\
+  16 &= 1 + \frac{R_f}{10\text{ k}\Omega} \\
+  16 - 1 &= \frac{R_f}{10\text{ k}\Omega} \\
+  15 &= \frac{R_f}{10\text{ k}\Omega} \\
+  R_f &= 15 \times 10\text{ k}\Omega \\
+  R_f &= 150\text{ k}\Omega
+  \end{split}
+\end{equation}
+\addequation{Amplifier Feedback Resistor Calculation}
 
-\subsubsection{Technical Specifications}
-% Provides the detailed technical blueprint for implementation. Includes system architecture diagrams, data models, API definitions, algorithms, and specific technologies to be used. Translates the "what" into the "how" with precise technical parameters.
-
-\subsubsection{Implementation Plan}
-% Describes how the development will be executed, including task breakdown, timeline, resource allocation, and development methodology (Agile, Waterfall, etc.). Outlines milestones, dependencies, and critical path activities.
-
-
-\subsubsection{Testing Strategy}
-% Details the approach to validate that the system meets requirements. Includes test types (unit, integration, system, user acceptance), test environments, test data, automation approach, and quality metrics to ensure comprehensive coverage.
-
-
-\subsubsection{Deployment Process}
-% Specifies how the solution will be moved from development to production. Includes deployment steps, required environments, rollout strategy, rollback procedures, and post-deployment verification.
-
-\subsubsection{Evaluation }
-% Describes how system performance and user satisfaction will be measured. Includes success metrics, monitoring approach, feedback collection methods, and processes for incorporating learnings into future iterations.
-
+This provides a gain $A= 16$ which is very close to the Gain required in Equation \ref{gainCalc}. Once the design was tested on a BreadBoard, it was transfered to a stripboard as pictured in Figure \ref{fig:StripboardPhoto}.
 
 
 %

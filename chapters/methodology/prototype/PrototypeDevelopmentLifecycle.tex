@@ -141,7 +141,7 @@ V_\text{offset-total} &= V_\text{offset-TIA} \times \text{Gain}_\text{post-amp} 
 \addequation{Total DC Offset After Post-Amplification}
 Equation \ref{eq:totalDCoffset} above shows the final dark current would be a maximum of 1.12mV which is below what the ADC can detect. 
 
-\paragraph{The Operational Amplifier (OpAmp)} choice was once again not a complicated choice due to the same arguments mentioned above re. photodiode selection: low frequency signal and reduced DAQ resolution. The LM324-N is a low-cost OpAmp which provides acceptable performance. 
+\paragraph{\acf{OpAmp}} choice was once again not a complicated choice due to the same arguments mentioned above re. photodiode selection: low frequency signal and reduced DAQ resolution. The LM324-N is a low-cost \ac{OpAmp} which provides acceptable performance. 
 %
 %           ~~~   OPAMP SPECIFICATION TABLE    ~~~
 %
@@ -181,7 +181,7 @@ Equation \ref{eq:totalDCoffset} above shows the final dark current would be a ma
   \item Temperature compensated
   \end{tablenotes}
 \end{table}
-The advantages in choosing this OpAmp is its ability to function on a Power Supply, it is rather cheap while still offering 1MHz Unity Gain Bandwidth and is recommended for DC Gain which the type of signal our project aims to amplify. For example, the slew-rate characteristic is not mentioned on the datasheet because it is aimed at low frequency operation.
+The advantages in choosing this \ac{OpAmp} is its ability to function on a single pole Power Supply, it is rather cheap while still offering 1MHz Unity Gain Bandwidth and is recommended for DC Gain which the type of signal our project aims to amplify. For example, the slew-rate characteristic is not mentioned on the datasheet because it is aimed at low frequency operation.
 
 
 %
@@ -190,7 +190,7 @@ The advantages in choosing this OpAmp is its ability to function on a Power Supp
 \subsubsection*{BreadBoard Testing}
 
 Once the circuit design was completed as seen in Figure  \ref{fig:AltiumDis}, the components were placed on a BreadBoard to test the real circuit, as seen in Figure \ref{fig:BreadBoardPhoto}. 
-There were several iterations, at first with only the \ac{TIA} and one photodiode- a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. This is due to the low light power of LEDs. A decision was made to add a secondary amplification circuit which raised the Voltage to a maximum 5V as designed. Further details on design in Section \ref{subsec:SignalConditioningCircuitry}. The final BreadBoard design can be found in Figure \ref{fig:BreadBoardPhoto}.
+There were several iterations, at first with only the \ac{TIA} and one photodiode- a design that when tested, resulted in a low Voltage output when testing with only the \ac{LED} light from the \ac{RED} testbench. This is due to the low light power of \acp{LED}. A decision was made to add a secondary amplification circuit which raised the Voltage to a maximum 5V as designed. Further details on design in Section \ref{subsec:SignalConditioningCircuitry}. The final BreadBoard design can be found in Figure \ref{fig:BreadBoardPhoto}.
 
 
 
@@ -206,6 +206,7 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
 
 
 \subsubsection*{Design Refinement}
+\label{explainPostAmp}
 The major redesign was to add a second amplification circuit for signal conditioning to allow reading with the Arduino ADC making full use of the 5V range, as the Arduino ADC is a 10 bit ADC, making full use of the $2^{10}=1024$ steps, otherwise the readings would be from 0 V to about 300 mV, with a much lower resolution between steps - the DAQ would be using a resolution of only $1024/16=64$ steps. 
 
 
