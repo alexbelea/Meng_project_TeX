@@ -11,6 +11,6 @@ Interference structure of around 170kHz with 400mV peak-to-peak was detected on 
 \item \textbf{Control loop instability} --- PWM controller instability can cause oscillations.
 \item \textbf{Ground loops or poor PCB layout} --- Improper grounding or PCB layout can create noise paths.~\cite{RefWorks:giuliattini2006prediction}
 \end{enumerate}
-To avoid spending time diagnosing and trying to repair the testbench, an easier solution was reached: performing digital filtering of the acquired signal in post processing. Due to the signal of interest being close to DC - frequencies much lower than 1Hz, and the noise being high frequency, around 175kHz, a simple digital Butterworth filter with a cutoff frequency at around 1-2 Herz was found to be a good solution.
+To avoid spending time diagnosing and trying to repair the testbench, an easier solution was reached: performing digital filtering of the acquired signal in post processing. Due to the signal of interest being close to DC - frequencies much lower than 1Hz, and the noise being high frequency, around 175kHz, a simple digital Butterworth filter with a cutoff frequency at around 1-2 Hertz was found to be a good solution.
 
 The only remaining issue was that this noise would sometimes trigger the internal components of the testbench, unintentionally triggering the button press from the control interface that was changing the light position, but it happened so rare that it was not a major concern.
