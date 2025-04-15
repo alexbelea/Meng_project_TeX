@@ -25,14 +25,14 @@ The prototype will be composed of three parts: a stripboard containing the compo
 The third part to the 
 
 
-\paragraph{Sun Sensor Geometry and Aperture Design} was decided to be in a T shape, providing an x-y layout with two photodiodes in the x direction and two photodiodes in the y direction. Combined with an aperture design that covers one half of each diode, as represented in Figure \ref{fig:diodeApertureDiagram}.
+\paragraph{Sun Sensor Geometry and Aperture Design} was decided to be in a T shape, providing an x-y layout with two photodiodes in the x direction and two photodiodes in the y direction. Combined with an aperture design that covers one half of each diode, as represented in Figure \ref{fig:diodeApertureDiagram}. This configuration is similar to Ortega et al. in their paper attempting to miniaturize a two axis Sun Sensor\cite{RefWorks:ortega2010miniaturized}.
 
 % Photodiode Aperture Diagram
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
     \centering
     \includegraphics[width=0.6\textwidth]{chapters/methodology/prototype/diodeApertureDiagram.png}
-    \caption{Rough Diagram of Photodiode Array with Apertures}
+    \caption{Diagram of Photodiode Array with Apertures}
     \label{fig:diodeApertureDiagram}
 \end{figure}
 
@@ -44,9 +44,8 @@ The components chosen for the design of the prototype are detailed below. They w
 \begin{table}[htbp]
   \centering
   \begin{threeparttable}
-    \caption{Components Used in Amplification Design}
+    \caption{Electrical Components Used in Amplification Circuit}
     \label{tab:components_list_stripboard}
-    
     \begin{tabular}{lccc}  
       \toprule
       \textbf{Component Type} & \textbf{Comp. Part Name} & \textbf{Component Value} & \textbf{Amount} \\
@@ -182,9 +181,8 @@ Equation \ref{eq:totalDCoffset} above shows the final dark current would be a ma
   \item Temperature compensated
   \end{tablenotes}
 \end{table}
-The advantages in choosing this OpAmp is its ability to function on a Power Supply, it is rather cheap while still offering 1MHz Unity Gain Bandwidth and is recommended for DC Gain which the type of signal our project aims to amplify.
+The advantages in choosing this OpAmp is its ability to function on a Power Supply, it is rather cheap while still offering 1MHz Unity Gain Bandwidth and is recommended for DC Gain which the type of signal our project aims to amplify. For example, the slew-rate characteristic is not mentioned on the datasheet because it is aimed at low frequency operation.
 
-%%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
 
 %
 %           ~~~   BreadBoard Testing subsection   ~~~
@@ -192,7 +190,7 @@ The advantages in choosing this OpAmp is its ability to function on a Power Supp
 \subsubsection*{BreadBoard Testing}
 
 Once the circuit design was completed as seen in Figure  \ref{fig:AltiumDis}, the components were placed on a BreadBoard to test the real circuit, as seen in Figure \ref{fig:BreadBoardPhoto}. 
-There were several iterations, at first with only the \ac{TIA}- a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. This is due to the low light of LEDs. A decision was made to add a secondary amplification circuit which raised the Voltage to a maximum 5V as designed. Further details on design in Section \ref{subsec:SignalConditioningCircuitry}. The final BreadBoard design can be found in Figure \ref{fig:BreadBoardPhoto}.
+There were several iterations, at first with only the \ac{TIA} and one photodiode- a design that when tested, resulted in a low Voltage output when testing with only the LED light from the \ac{RED} testbench. This is due to the low light power of LEDs. A decision was made to add a secondary amplification circuit which raised the Voltage to a maximum 5V as designed. Further details on design in Section \ref{subsec:SignalConditioningCircuitry}. The final BreadBoard design can be found in Figure \ref{fig:BreadBoardPhoto}.
 
 
 
@@ -208,6 +206,12 @@ There were several iterations, at first with only the \ac{TIA}- a design that wh
 
 
 \subsubsection*{Design Refinement}
+The major redesign was to add a second amplification circuit for signal conditioning to allow reading with the Arduino ADC making full use of the 5V range, as the Arduino ADC is a 10 bit ADC, making full use of the $2^{10}=1024$ steps, otherwise the readings would be from 0 V to about 300 mV, with a much lower resolution between steps - the DAQ would be using a resolution of only $1024/16=64$ steps. 
+
+
+
+%%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
+
 \begin{itemize}
   \item Analyze test results
   \item Modify aperture design if needed
