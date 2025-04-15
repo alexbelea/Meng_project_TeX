@@ -208,29 +208,24 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
 \subsubsection*{Design Refinement}
 \label{explainPostAmp}
 \paragraph{Secondary Amplification} was added to the circuit which was a major redesign for signal conditioning. This allows reading of the analog signal with the Arduino \ac{ADC},at the full range of 0V to 5V, as the Arduino \ac{ADC} is 10 bit. This gives a resolution of  $2^{10}=1024$ steps, otherwise the readings would be from 0 V to about 300 mV, with a much lower resolution between steps - the DAQ would be using a resolution of only the region covered between 0V and 0.3V, ie. $1024/16=64$ steps. Details regarding this can be found in Section \ref{secondAmp}.
-\paragraph{The Photodiodes} were first placed in a square pattern around the circuit,which helped BreadBoard prototyping but would have also simplified the Stripboard design. However, it was quickly determined that the photodides must be as close to eachother as possible, due to the light in the \ac{RED} being closer to a "single point" spreading out, as opposed to the light coming from the sun, which is assumed to be parallel. This meant that soldering the photodides to the stripboard was not an option, due to the small distance between the photodiodes and the relatively large strips on the Verooboard stripboard. The decision was therefore made to move the photodiodes to their own 3D printed enclosure, which went through it's own redisign as described under Section  
+\paragraph{The Photodiodes} were first placed in a square pattern around the circuit,which helped BreadBoard prototyping but would have also simplified the Stripboard design. However, it was quickly determined that the photodides must be as close to eachother as possible, due to the light in the \ac{RED} being closer to a "single point" spreading out, as opposed to the light coming from the sun, which is assumed to be parallel - and the position relative of the photodiodes would not matter. This meant that soldering the photodides to the stripboard was not an option, due to the small distance between the photodiodes and the relatively large strips on the Verooboard stripboard. The decision was therefore made to move the photodiodes to their own 3D printed enclosure, which went through it's own redisign as described under Section \ref{subsec:enclosureDesign}.
 
 
 
 %%%%%%%%%%%%rewritten up to here ^&&&&&&&&&&&&&&&&& move this line lower when done
 
-\begin{itemize}
-  \item Optimize photodiode configuration
-  \item Update signal processing algorithms
-  \item Refine PCB layout
-  \item Improve firmware algorithms
-\end{itemize}
 
 \subsubsection*{Stripboard Prototype Development}
-%Put picture of stripboard and maybe of any measurement if available
-\begin{itemize}
-  \item Implementing design improvements was easy on a BreadBoard
-  \item Fabricate improved aperture
-  \item Enhance housing design
-\end{itemize}
+Developing the Stripboard was done in two stages to avoid making too many mistakes too hard to fix: the design was first done using the Software Fritzing which is a free and Open Source Software suite for \ac{EDA}. 
+% Stripboard KiCAD
+%
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+  \centering
+  \includegraphics[width=0.7\textwidth]{chapters/methodology/prototype/StripboardPhotoFritzing.jpg}
+  \caption{Photo Of Stripboard Prototype on Fritzing}
+  \label{fig:StripboardFritzing}
+\end{figure}
 
-
-\subsubsection*{BreadBoard Testing}
 % Stripboard photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
@@ -239,6 +234,18 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
   \caption{Photo Of Stripboard Prototype}
   \label{fig:StripboardPhoto}
 \end{figure}
+
+
+
+\begin{itemize}
+  \item Implementing design improvements was easy on a BreadBoard
+  \item Fabricate improved aperture
+  \item Enhance housing design
+\end{itemize}
+
+
+\subsubsection*{BreadBoard Testing}
+
 
 \subsubsection*{Comprehensive Testing}
 \begin{itemize}
