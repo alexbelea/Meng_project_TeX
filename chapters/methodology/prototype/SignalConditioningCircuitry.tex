@@ -45,7 +45,7 @@ The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:Altiu
 %       ~~~       SECONDARY AMPLIFICATION   ~~~
 %
 \subsubsection{Secondary Amplification}
-\label{secondAmp}
+\label{secondAmp}  
 Testing showed that even using a 1M$\Omega$ resistor, the output voltage was too low (around 310mV) at our \ac{RED} testbench' \acp{LED} maximum brightness, as explained in Section \ref{explainPostAmp}. To raise the maximum Voltage to the desired maxium of the ADC of 5V, a higher feedback resistor could be used, however this would introduced noise and would require more complicated TIA with feedback capacitors. Due to the LM324-N having 4 \acp{OpAmp}, the decision was taken to implement a Secondary Amplification circuit. The non-inverting \ac{OpAmp} configuration was chosen to maintain the voltage positive, which also means there is no need for a dual power supply and keeps the Voltage positive for the Arduino ADC.
 A simple calculation was made to figure out the required Gain of the circuit:
 \begin{equation} \label{gainCalc}
@@ -67,8 +67,21 @@ Knowing the gain required, the feedback resistor was calculated by choosing a 10
 \end{equation}
 \addequation{Amplifier Feedback Resistor Calculation}
 
-This provides a gain $A= 16$ which is very close to the Gain required in Equation \ref{gainCalc}. Once the design was tested on a BreadBoard, it was transfered to a stripboard as pictured in Figure \ref{fig:StripboardPhoto}.
+This provides a gain $A= 16$ which is very close to the Gain required in Equation \ref{gainCalc}. Further it must be stated that the resistors used have a tolerance of 10\% - therefore the actual final gain will fluctuate by that much. Once the design was tested on a BreadBoard, it was transfered to a stripboard as pictured in Figure \ref{fig:StripboardPhoto}.
+Later in the design during testing, a decision was made to add a $1\mu$F capacitor in parallel with the feedback resistor of the Secondary Amplifier. This creates a low-pass filter on the output as seen in Eq. \ref{Low Pass Filter Calculation}.
+\begin{equation} \label{Low Pass Filter Calculation}
+  \begin{split}
+    f_c &= \frac{1}{2\pi RC} \\
+    f_c &= \frac{1}{2\pi \cdot 150\text{ k}\Omega \cdot 1\text{ }\mu\text{F}} \\
+    f_c &= \frac{1}{2\pi \cdot 150 \cdot 10^3 \cdot 1 \cdot 10^{-6}\text{ s}} \\
+    f_c &= \frac{1}{2\pi \cdot 150 \cdot 10^{-3}\text{ s}} \\
+    f_c &= \frac{1}{0.942\text{ s}} \\
+    f_c &= 1.061\text{ Hz}
+  \end{split}
+\end{equation}
+\addequation{Secondary Amplification Low Pass Filter Calculation}
 
+This does mean that we are now restricting the design to not be able to show Voltage change rates at higher than 1Hz, and testing with a moving light source will have to be restricted to a frequency at least half of 1Hz. Otherwise, the rate of change of Voltage will appear gradual and not represent the real signal. 
 
 %
 % templates for figures, code, 
