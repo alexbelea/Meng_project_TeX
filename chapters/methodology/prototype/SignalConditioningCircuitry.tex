@@ -44,7 +44,8 @@ The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:Altiu
 %
 %       ~~~       SECONDARY AMPLIFICATION   ~~~
 %
-\subsubsection{Secondary Amplification }
+\subsubsection{Secondary Amplification}
+\label{secondAmp}
 Testing showed that even using a 1M$\Omega$ resistor, the output voltage was too low (around 310mV) at our \ac{RED} testbench' \acp{LED} maximum brightness, as explained in Section \ref{explainPostAmp}. To raise the maximum Voltage to the desired maxium of the ADC of 5V, a higher feedback resistor could be used, however this would introduced noise and would require more complicated TIA with feedback capacitors. Due to the LM324-N having 4 \acp{OpAmp}, the decision was taken to implement a Secondary Amplification circuit. The non-inverting \ac{OpAmp} configuration was chosen to maintain the voltage positive, which also means there is no need for a dual power supply and keeps the Voltage positive for the Arduino ADC.
 A simple calculation was made to figure out the required Gain of the circuit:
 \begin{equation} \label{gainCalc}
