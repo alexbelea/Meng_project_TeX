@@ -1,1 +1,37 @@
 \section{Photodiode Simulation and Signal Analysis}
+A paper by Fuada et al. released in 2017 investigates the received power characteristics of commercially available photodiodes used as receivers in visible light communication (VLC) systems with a line-of-sight (LOS) channel. 
+The authors used MATLAB simulation to analyse how various parameters affect the received power, including:
+\begin{itemize}
+\item Transmitter semi-angle (half power)
+\item Distance between transmitter and receiver
+\item Room size
+\item Receiver field-of-view (FOV)
+\item Optical filter gain
+\item Lens refractive index
+\end{itemize}
+
+They also point out 6 key considerations when choosing a photodiode for visible light communication (VLC) applications:
+\begin{enumerate}
+\item Surface area: A larger surface area (e.g. 10mm x 10mm) can support mobility in the VLC system, but this needs to be balanced against the impact on cut-off frequency and susceptibility to ambient light noise.
+\item Generated short current: The photodiode should generate sufficient current ($>$100\,$\mu$A) when exposed to light, as this affects the required gain and bandwidth of the amplifier circuit.
+
+\item Wavelength detection capabilities: The photodiode needs to be sensitive to the visible light spectrum (380nm to 780nm) for VLC applications.
+
+\item Cut-off frequency: A high cut-off frequency (in the GHz range) supports high-speed data transfer, but this often requires sacrificing a larger surface area.
+
+\item Rise time: Fast rise time (in the nanosecond range) is also desirable for high-speed VLC, but again this trades off with surface area.
+
+\item Dark current and junction capacitance: The photodiode should have low dark current and low junction capacitance to minimize noise and maximize response time.
+\end{enumerate}
+
+The paper notes that it is difficult to find a single commercially available photodiode that optimizes all 6 of these factors simultaneously. 
+This often requires making trade-offs or using custom photodiode designs for the specific VLC application.
+The results show that factors like distance, room size, FOV, and LED power have a linear relationship with the received power at the photodiode. 
+Additionally, the optical filter gain and lens index play an important role in determining the received power characteristics.
+The authors note that this study was limited to the LoS channel and does not take into consideration indirect illumination\cite{RefWorks:2017analysis}.
+
+Nathanael A. Fortune writes a paper in 2021 meant to help scientists with common signal processing tasks when handling experimental data. 
+The paper provides examples of using the Numerical Python (Numpy) and Scientific Python (SciPy) packages, as well as interactive Jupyter Notebooks, to accomplish tasks such as interpolation, smoothing, propagation of uncertainty, curve fitting, plotting functions and data, and determining the goodness of fit. 
+The goal is to enable an interactive, exploratory approach to data analysis while ensuring the original data is freely available and the resulting analysis is readily reproducible. 
+The paper includes sample Jupyter notebooks containing the Python code used to carry out these tasks, which can be used as templates for analysing new data\cite{RefWorks:fortune2021short}. 
+This paper should prove useful in the numerical simulation of the PSD sensor.
