@@ -1,0 +1,140 @@
+% State the theory
+\subsection{Theory and Concept}
+In order to encapsulate the real life behaviours required to simulate this system, the software model is designed to around a structure based on the classes “Planes”, “Areas”, and “Lines”. These classes contain methods related to each of their properties and stores data on their states.    
+
+% Ray projection
+The basis for the 3D geometry involves defining:
+\begin{itemize}
+    \item Each line by vectors representing position and normal direction, $ \vec{A} = (a,b,c)$ and $ \vec{u} = (\alpha, \beta, \gamma)$
+    \item Each plane by the vectors $\vec{P} = (l,m,n) $ and $ \vec{n} = (\lambda, \mu, \nu)$, respectively.
+\end{itemize}
+
+\subsubsection{Coordinate System}
+
+Each ray is initially defined in the local coordinate system of the source plane. This local frame is established by three orthonormal basis vectors:
+
+\begin{itemize}
+    \item $\vec{r}$ — right vector (local $x$-axis)
+    \item $\vec{u}$ — up vector (local $y$-axis)
+    \item $\vec{n}$ — normal vector (local $z$-axis)
+\end{itemize}
+
+These vectors form the columns of a rotation matrix $R$ which transforms local coordinates to global:
+
+\begin{equation}
+R = 
+\begin{bmatrix}
+\vec{r} & \vec{u} & \vec{n}
+\end{bmatrix}
+=
+\begin{bmatrix}
+r_x & u_x & n_x \\
+r_y & u_y & n_y \\
+r_z & u_z & n_z \\
+\end{bmatrix}
+\label{eq:rotation_matrix}
+\end{equation}
+
+A point $\vec{p}_\text{local} = \begin{bmatrix} x_l & y_l & z_l \end{bmatrix}^\top$ defined in local coordinates is converted to global coordinates via:
+
+\begin{equation}
+\vec{p}_\text{global} = \vec{p}_\text{plane} + R \cdot \vec{p}_\text{local}
+\label{eq:local_to_global}
+\end{equation}
+
+Where:
+\begin{itemize}
+    \item $\vec{p}_\text{plane}$ is the global position of the origin of the plane
+    \item $R$ rotates the local point into the global frame
+\end{itemize}
+
+This ensures that all rays originating from the source plane move coherently when the plane is rotated or translated.
+
+\subsubsection{Ray generation}
+Rays are randomly generated within the bounds of the source plane, whose position, size, and direction are defined in the configuration. The position of each ray is calculated using:
+
+% Ray generation equation
+\begin{equation}
+X_i \sim \mathcal{U}\left(-\frac{w}{2}, \frac{w}{2}\right), \quad
+Y_i \sim \mathcal{U}\left(-\frac{l}{2}, \frac{l}{2}\right), \quad
+\text{for } i = 1, \ldots, N
+\label{eq:RayGeneration}
+\addequation{Ray Generation}
+\end{equation}
+
+Ray projection, from a source plane to a sensor plane, is modelled using the parametric equation of a 3D line (\ref{eq:ray_projection}). This allows each ray to be described in terms of a parameter $t$, which enables the calculation of the intersection points between the light rays and the sensor plane. 
+
+\subsubsection{Line-Plane Intersection}
+% Intersection equation
+\begin{equation}
+\frac{x - a}{\alpha} = \frac{y - b}{\beta} = \frac{z - c}{\gamma} (=t)
+\label{eq:ray_projection}
+\addequation{Ray projection}
+\end{equation}
+
+Where the intersection coordinates $(x,y,z)$ occur within a target area, a hit occurs, representing illumination.
+
+For any given combination of source plane, and sensor plane, the $t$ parameter is calculated using the Line-Plane Intersection equation.
+
+\begin{equation}
+    t = \frac{\vec{n} \cdot \vec{P} - \vec{n} \cdot \vec{A}}{\vec{n} \cdot \vec{u}}
+    \label{eq:Line_Plane_Intersection}
+\end{equation}
+% comment
+
+\subsubsection{Arc movement}
+% Arc movement
+The simulation converts between spherical (polar) and Cartesian coordinate systems to define the movement of the source plane along an arc trajectory. This transformation enables position and orientation of the plane in 3D. 
+
+The spherical coordinates are expressed as ($r, \theta, \varphi$) and are converted to Cartesian as:
+\begin{align}
+x &= r \cdot \sin(\varphi) \cdot \cos(\theta) \\
+y &= r \cdot \sin(\varphi) \cdot \sin(\theta) \\
+z &= r \cdot \cos(\varphi)
+\end{align}
+
+This enables generation of plane positions around a defined arc, supporting vertical, horizontal, and rigid trajectory configurations.
+
+\paragraph{Movement types}
+\begin{itemize}
+    \item Azimuthal Scanning / Vertical Circles: The azimuthal angle $\theta$ remains fixed, while the elevation angle $\varphi$ is varied. 
+    \item Polar Scanning / Horizontal Circles: The elevation angle $\varphi$ remains fixed, while the azimuthal angle $\theta$ is varied. 
+    \item Rigid Arc: A semi-circlular path in the $xz-plane$ is generated, with the plane rigidly rotated to always face the origin. This mode uses the Rodrigues rotation formula to reorient the source plane toward the target, as it required rotation about an arbitary axis.  
+\end{itemize}
+
+\begin{equation}
+R = I + \sin\theta \cdot K + (1 - \cos\theta) \cdot K^2
+\label{eq:RodriguesMatrix}
+\addequation{Rodrigues Rotation Formula Matrix}
+\end{equation}
+\begin{equation}
+K = 
+\begin{bmatrix}
+0 & -k_z & k_y \\
+k_z & 0 & -k_x \\
+-k_y & k_x & 0
+\addequation{Skew-symmetric matrix}
+\end{bmatrix}
+\end{equation}
+
+For each position along the trajectory, the plane is rotated such that its normal direction vector $\vec{n}$ points towards to the origin, about which the sensor plane is defined.  
+
+\begin{table}[H]
+\centering
+\caption{Definition of vectors and symbols used in ray and plane calculations}
+\label{tab:symbols}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Description} \\
+\midrule
+$\vec{A} = (a, b, c)$ & Position vector of the ray origin \\
+$\vec{u} = (\alpha, \beta, \gamma)$ & Direction vector of the ray \\
+$\vec{P} = (l, m, n)$ & A known point on the target plane \\
+$\vec{n} = (\lambda, \mu, \nu)$ & Normal vector of the target plane \\
+$t$ & Ray parameter defining point along the ray path \\
+$r$ & Radius in spherical coordinates \\
+$\theta$ & Azimuthal angle in spherical coordinates \\
+$\varphi$ & Elevation angle in spherical coordinates \\
+\bottomrule
+\end{tabular}
+\end{table}
