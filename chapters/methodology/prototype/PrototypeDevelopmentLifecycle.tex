@@ -4,10 +4,10 @@ This section provides an overview of the Prototype Development Lifecycle.
 
 \subsubsection*{Conceptualization and Requirements Definition}
 \begin{itemize}
-  \item The prototype must have four photodiodes in an xy pattern with respective circuitry required to output ~0-5 Volts that will be read by an Arduino based Data Acquisition System (DAQ). The circuit must be able to react to light intensity changes, however the change will be at low frequency ( below 1Hz) as a satellite attitude is considered to change only gradually.
+  \item The prototype must have four photodiodes in an xy pattern with respective circuitry required to output ~0-5 Volts that will be read by an Arduino based \ac{DAQ}. The circuit must be able to react to light intensity changes, however the change will be at low frequency ( below 1Hz) as a satellite attitude is considered to change only gradually.
   \item While the prototype may not have a high accuracy, it is hoped that it will be enough to measure light position changes roughly, even if at a low accuracy of ~10° or ~20° but this will remain to be seen.  
   \item The prototype within the scope of this paper will show the ability to detect the position of light at normal room conditions, therefore it does not need to withstand temperature changes or radiation that a final product would require if deployed in space.
-  \item Interface requirements: the prototype electrical output needs to be compatible with the Arduino Analog to Digital Converter (ADC) input. Therefore, the signal shall not go below 0 Volts or exeed 5 volts. 
+  \item Interface requirements: the prototype electrical output needs to be compatible with the Arduino \ac{ADC} input. Therefore, the signal shall not go below 0 Volts or exeed 5 volts. 
   \item Size and weight are not of high importance, but the device must fit in the testing equipment, which is the Renewable Energy Demonstrator arch. Preferably a height not higher than 5cm.
 \end{itemize}
 
@@ -214,16 +214,16 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
 %       ~~~     STRIPBOARD PROTOTYPE DEVELOPMENT ~~~~
 \noindent The {\bfseries Stripboard Prototype Development} was done in two stages to avoid making too many mistakes that would be too hard to fix: the design was first implemented using the Software Fritzing which is a free and Open Source Software suite for \ac{EDA} that allows planning on different BreadBoards and Stripboards. The final CAD Stripboard design is reproduced in Figure \ref{fig:StripboardFritzing}.
 When soldering the components to the actual stripboard, besides some errors such as soldering a jack on the wrong stips, and having to de-solder and re-solder, the stripboard prototyping was quite straight forward due to having tested the design on the BreadBoard and creating the plan in Fritzing as mentioned. However, during testing, the readings seemed off and upon further debugging it was found that some flux remained on the stripboard, causing unwanted conductance between strips, creating a parallel resistance with one of the feedback resistors, which was causing the incorrect amplification. After cleaning the stripboard with support from Dr. Carlos, who had solvent in his office, the Stripboard prototype functioned as intended. 
-% Stripboard KiCAD
-%
+% 
+%  Stripboard KiCAD
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
   \centering
   \includegraphics[width=0.8\textwidth]{chapters/methodology/prototype/StripboardPhotoFritzing.jpg}
   \caption{Photo Of Stripboard Prototype on Fritzing}
   \label{fig:StripboardFritzing}
 \end{figure}
-% Stripboard photo
-%
+% 
+%  Stripboard photo
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
   \centering
   \includegraphics[width=0.7\textwidth]{chapters/methodology/prototype/StripboardPhoto.jpg}
@@ -234,39 +234,19 @@ When soldering the components to the actual stripboard, besides some errors such
 
 %       ~~~     Aperture ~~~~
 \noindent The {\bfseries Aperture} on the 3D printed photodiode enclosure was harder to implement. Initially a 3D printed aperture was planned but this was not able to be produced. Another plan was to glue plexiglas to the enclosure and apply black electrical tape to it, an idea which was changed because the plexiglas available was considered too thick at 5mm. The worry was that light scattering in the plexiglas, refraction and especially lateral displacement due to the thickness,  especially at a larger angle such as when the light is close to the horizon tangent point. The difference in displacement between zenith and when close to horizon was a worry. A solution was found by purchasing a screen protector glass for mobile phones. This glass was very thin, at under 1mm, and is fabricated to be very clear and transparent so as not to affect the quality of the mobile phone screen it is meant to protect.
-The black electrical tape was then placed on top of this glas as seen in 
+The black electrical tape was then placed on top of this glas as seen in Figure \ref{fig:aperturePhoto}. As can be seen the apertures are not fully straight. This is because they were placed by hand. 
 % aperture photo
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
   \centering
   \includegraphics[width=0.4\textwidth]{chapters/methodology/prototype/aperture_photo.jpg}
-  \caption{Photo of aperture placement on screenprotector glass}
-  \label{fig:StripboardPhoto}
+  \caption{Photo of aperture placement on screen protector glass}
+  \label{fig:aperturePhoto}
 \end{figure}
-
-\begin{itemize}
-  \item Implementing design improvements was easy on a BreadBoard
-  \item Fabricate improved aperture
-  \item Enhance housing design
-\end{itemize}
-
-
-\subsubsection*{BreadBoard Testing}
-
+%%%%%%%%%%%%%%%%%%%%%%%       HERE      %%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection*{Comprehensive Testing}
-\begin{itemize}
-  \item Laboratory performance testing (angular accuracy, resolution)
-  \item Improve Aperture
-  \item Interface compatibility testing
-\end{itemize}
 
-\subsubsection*{Validation and Calibration}
-\begin{itemize}
-  \item Calibration procedure: match readings to simulation
-  \item Create calibration fixtures
-  \item Validate sensor performance against requirements
-\end{itemize}
 
 
 

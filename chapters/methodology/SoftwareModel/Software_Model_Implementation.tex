@@ -1,0 +1,55 @@
+% State the theory
+\subsection{Implementation}
+
+The software model implements the theoretical foundation to provide a flexible framework for simulating ray projection and intersection calculations. The implementation follows a modular object-oriented approach with  components that can be configured to represent different experimental setups.
+
+\subsubsection{Architecture Overview}
+
+The architecture consists of several key components:
+\begin{itemize}
+\item Core geometric objects (Planes, Areas, Lines) that encapsulate the mathematical properties
+\item Simulation engine for trajectory generation and intersection testing
+\item Configuration system for experiment setup
+\item Visualisation  pipeline for result analysis
+\item User interface for interactive control
+\end{itemize}
+
+\subsubsection{Model Configuration}
+
+A .JSON file is used to allow for easy setup of different experimental scenarios without modifying code:
+
+\begin{itemize}
+\item Detailed definition of planes, including position, orientation, and dimensions
+\item Sensor and aperture areas with specific positions and sizes
+\item Trajectory specifications for various movement types
+\item Simulation parameters (number of rays, iterations)
+\item Visualisation options - Static, or animated plot 
+\item Debugging and performance settings
+\end{itemize}
+
+The \texttt{Config} class (Listing~\ref{lst}) loads and parses the configuration file, making parameters accessible throughout the application:
+\begin{lstlisting}[style=pythonstyle, caption=Model configuration - Config Class, label=lst:pythonCodeApp, language=Python ]
+    
+    class Config:
+        def init(self, file_path=None, data=None):
+        if data is not None:
+        self.load_from_dict(data)
+        elif file_path:
+        with open(file_path, "r") as f:
+        data = json.load(f)
+        self.load_from_dict(data)
+        else:
+        raise ValueError("Must provide either file_path or data")
+    
+    def load_from_dict(self, data):
+        self.planes = data["planes"]
+        self.sensor_areas = data["sensor_areas"]
+        self.aperture_areas = data["aperture_areas"]
+        self.arc_movement = data["arc_movement"]
+        self.simulation = data["simulation"]
+        self.intersection = data["intersection"]
+        self.visualization = data["visualization"]
+        self.debugging = data["debugging"]
+        self.performance = data["performance"]
+        self.output = data["output"]
+    \end{lstlisting}
