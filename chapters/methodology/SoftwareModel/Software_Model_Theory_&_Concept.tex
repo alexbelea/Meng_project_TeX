@@ -3,11 +3,24 @@
 In order to encapsulate the real life behaviours required to simulate this system, the software model is designed to around a structure based on the classes “Planes”, “Areas”, and “Lines”. These classes contain methods related to each of their properties and stores data on their states.    
 
 % Ray projection
-The basis for the 3D geometry involves defining:
-\begin{itemize}
-    \item Each line by vectors representing position and normal direction, $ \vec{A} = (a,b,c)$ and $ \vec{u} = (\alpha, \beta, \gamma)$
-    \item Each plane by the vectors $\vec{P} = (l,m,n) $ and $ \vec{n} = (\lambda, \mu, \nu)$, respectively.
-\end{itemize}
+The basis for the 3D geometry involves defining 3D vectors:
+
+\begin{table}[h]
+    \centering
+    \caption{Geometric Vector Definitions}
+    \label{tab:ray_projection_geometry}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{6cm}}
+    \toprule
+    \textbf{Component} & \textbf{Vectors} & \textbf{Description} \\
+    \midrule
+    Line (Ray) & $\vec{A} = (a,b,c)$ & Position vector defining a point on the line \\
+     & $\vec{u} = (\alpha, \beta, \gamma)$ & Direction vector defining the orientation of the line \\
+    \midrule
+    Plane & $\vec{P} = (l,m,n)$ & Position vector defining a point on the plane \\
+     & $\vec{n} = (\lambda, \mu, \nu)$ & Normal vector perpendicular to the plane surface \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
 
 \subsubsection{Coordinate System}
 
@@ -62,9 +75,17 @@ Y_i \sim \mathcal{U}\left(-\frac{l}{2}, \frac{l}{2}\right), \quad
 \addequation{Ray Generation}
 \end{equation}
 
-Ray projection, from a source plane to a sensor plane, is modelled using the parametric equation of a 3D line (\ref{eq:ray_projection}). This allows each ray to be described in terms of a parameter $t$, which enables the calculation of the intersection points between the light rays and the sensor plane. 
+Where:
+\begin{itemize}
+    \item $w$ is the source plane width$^{\dagger}$
+    \item $l$ is the source plane length$^{\dagger}$
+    \item $N$ is the number of positions (Number of Lines$^{\dagger}$)
+\end{itemize}
+
 
 \subsubsection{Line-Plane Intersection}
+Ray projection, from a source plane to a sensor plane, is modelled using the parametric equation of a 3D line (\ref{eq:ray_projection}). This allows each ray to be described in terms of a parameter $t$, which enables the calculation of the intersection points between the light rays and the sensor plane. 
+
 % Intersection equation
 \begin{equation}
 \frac{x - a}{\alpha} = \frac{y - b}{\beta} = \frac{z - c}{\gamma} (=t)

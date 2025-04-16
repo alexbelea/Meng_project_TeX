@@ -14,6 +14,128 @@ The architecture consists of several key components:
 \item User interface for interactive control
 \end{itemize}
 
+Where \texttt{Class} objects \texttt{Planes}, \texttt{Areas} represent:
+\begin{table}[h]
+    \centering
+    \caption{Optical Simulation Components}
+    \label{tab:optical_components}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{8cm}}
+    \toprule
+    \textbf{Component Type} & \textbf{Description} \\
+    \midrule
+    \multicolumn{2}{l}{\textbf{Planes}} \\
+    \midrule
+    Source Plane & Origin of light rays; can move along arc trajectories to simulate different lighting conditions \\
+    Sensor Plane & Fixed target plane where sensors are placed to detect light rays \\
+    Aperture Plane & Intermediate plane containing apertures that filter the light rays \\
+    \midrule
+    \multicolumn{2}{l}{\textbf{Areas}} \\
+    \midrule
+    Sensor Areas (A0, A1, A2, A3) & Specific regions on the sensor plane that record light ray hits; used to measure illumination patterns \\
+    Aperture Areas (Aperture\_A, Aperture\_B) & Openings on the aperture plane that allow light to pass through; used to restrict FOV \\
+    \bottomrule
+    \end{tabular}
+    \end{table}
+
+\subsubsection{Intersections}
+The intersection calculations are implemented in the intersectionCalculations.py module, with four main functions:
+\begin{lstlisting}[style=pythonstyle, caption=Ray-Plane Intersection Algorithm, label=lst:Ray-Plane Intersection Algorithm, language=Python ]
+    def direction_vectors(vectorA, vectorB):
+        """
+        Calculates the dot product between two vectors.
+        Used to check if ray direction and plane normal are parallel.
+        Args:
+            vectorA: First vector (Plane normal direction)
+            vectorB: Second vector (Ray normal direction)
+            
+        Returns:
+            Dot product of the two vectors
+        """
+        check_direction = np.multiply(vectorA, vectorB)
+        check_direction = np.sum(check_direction)
+
+    return check_direction
+
+    def compute_t(nP, nA, nU):
+        """
+        Computes the parameter t in the line equation.
+        Args:
+            nP: Dot product of plane normal and plane position
+            nA: Dot product of plane normal and line position
+            nU: Dot product of plane normal and line direction
+            
+        Returns:
+            Parameter t at which line intersects the plane
+        """
+    return (nP - nA) / nU
+
+    def calculate_intersection(line, t):
+        """
+        Calculates the intersection point using the line equation.
+        Args:
+            line: Line object with position and direction
+            t: Parameter value
+            
+        Returns:
+            3D coordinates of the intersection point
+        """
+        x = line.direction[0] * t + line.position[0]
+        y = line.direction[1] * t + line.position[1]
+        z = line.direction[2] * t + line.position[2]
+
+        coordinates = np.array([x,y,z])
+    return coordinates
+
+    def intersection_wrapper(sensorPlane, line1):
+        """
+        Coordinates the intersection calculation process.
+        Args:
+            sensorPlane: Plane object with position and normal
+            line1: Line object with position and direction
+            
+        Returns:
+            Intersection coordinates or None if no intersection exists
+        """
+        nU = direction_vectors(sensorPlane.direction, line1.direction)
+
+        if nU != 0:
+            nA = np.dot(sensorPlane.direction, line1.position)
+            nP = np.dot(sensorPlane.direction, sensorPlane.position)
+
+            x = compute_t(nP, nA, nU)
+            IntersectionCoordinates = calculate_intersection(line1, x)
+
+            return IntersectionCoordinates
+        else:
+            print(f" Intersection not possible for nU vector: {nU}")
+            return None
+\end{lstlisting}
+
+After calculating the intersection point, the system checks if the point falls within the specified areas on the planes. This is handled by the \verb|record_result| method in the \verb|Areas| class:
+
+\begin{lstlisting}[style=pythonstyle, caption=Area Intersection Testing, label=lst:Area_Intersection_Testing, language=Python ]
+    def record_result(self, cords):
+        """
+        Determines if an intersection point falls within the area boundaries.
+        Args:
+            cords: 3D coordinates of the intersection point
+            
+        Returns:
+            1 if point is within area (hit), 0 otherwise (miss)
+        """
+        # True if intersection x coordinate is within area boundary (x min and x max)
+        if (self.position[0] - (self.width / 2) <= cords[0] <= self.position[0] + (self.width / 2)
+                and  # True if intersection y coordinate is within area boundary (y min and y max)
+                self.position[1] - (self.length / 2) <= cords[1] <= self.position[1] + (self.length / 2)):
+            return 1
+        else:
+            return 0
+    \end{lstlisting}
+
+This process runs incrementally, checking whether the lines intersect with apertures, and if so, checking for intersection with sensors. If both conditions are met, then 'illumination' occurs. 
+
+\paragraph{Assumptions}
+
 \subsubsection{Model Configuration}
 
 A .JSON file is used to allow for easy setup of different experimental scenarios without modifying code:
@@ -27,8 +149,8 @@ A .JSON file is used to allow for easy setup of different experimental scenarios
 \item Debugging and performance settings
 \end{itemize}
 
-The \texttt{Config} class (Listing~\ref{lst:pythonConfigClass}) loads and parses the configuration file, making parameters accessible throughout the application:
-\begin{lstlisting}[style=pythonstyle, caption=Model configuration - Config Class, label=lst:pythonConfigClass, language=Python ]
+The \texttt{Config} class (Listing~\ref{lst:Model_Config_code}) loads and parses the configuration file, making parameters accessible throughout the application:
+\begin{lstlisting}[style=pythonstyle, caption=Model configuration - Config Class, label=lst:Model_Config_code, language=Python ]
     
     class Config:
         def init(self, file_path=None, data=None):
@@ -53,3 +175,63 @@ The \texttt{Config} class (Listing~\ref{lst:pythonConfigClass}) loads and parses
         self.performance = data["performance"]
         self.output = data["output"]
     \end{lstlisting}
+
+Additionally available to the user is an interface, allowing for easy manipulation of the parameters, and visual representation of the sensor positions. Figure~\ref{fig:Model Configuration Interface} 
+
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/methodology/SoftwareModel/images/Interface.png} % change {path}
+    \caption{Model Configuration Interface}       % change {caption}
+    \label{fig:Model Configuration Interface}            % change label - used for reference in text
+\end{figure}                             % for example: see in Figure~\ref{example label}
+
+
+\subsubsection{Model Output}
+The simulation calculates how many light rays (lines) emitted from a movable source plane are successfully transmitted through the apertures and reach specific sensor areas. This output is stored in CSV files.
+
+\paragraph{$results.csv$}
+
+This file records summary statistics for each simulated position during the arc movement, containing:
+
+\begin{table}[h]
+    \centering
+    \caption{Simulation Output: Summary of Each Arc Position}
+    \label{tab:simulation_results_csv}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{6cm}}
+    \toprule
+    \textbf{Field} & \textbf{Example} & \textbf{Description} \\
+    \midrule
+    sim & 0 & Simulation run index \\
+    idx & 4 & Arc position index (step in movement sequence) \\
+    hits & 6321 & Number of rays that reached any sensor area \\
+    misses & 3679 & Number of rays that missed all sensors \\
+    ray count & 10000 & Total rays emitted during this simulation run \\
+    sim title & Basic & Custom label identifying the simulation configuration \\
+    runtime & 1.2847 & Execution time (seconds) for this movement type \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+Providing overall results for any given simulation run.
+
+\paragraph{$sensor\_results.csv$}
+
+This file records individual sensor readings for each simulated position, containing:
+
+\begin{table}[h]
+    \centering
+    \caption{Sensor Output: Ray Hits Per Sensor at Each Arc Position}
+    \label{tab:sensor_results_csv}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\centering\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{6cm}}
+    \toprule
+    \textbf{Field} & \textbf{Example} & \textbf{Description} \\
+    \midrule
+    sim & 0 & Simulation run index \\
+    idx & 4 & Arc position index (step in movement sequence) \\
+    A0 & 2450 & Number of rays hitting Sensor A0 \\
+    A1 & 1783 & Number of rays hitting Sensor A1 \\
+    A2 & 1044 & Number of rays hitting Sensor A2 \\
+    A3 & 1044 & Number of rays hitting Sensor A3 \\
+    \bottomrule
+    \end{tabular}
+\end{table}

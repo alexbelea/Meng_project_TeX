@@ -6,12 +6,21 @@
 A Python model was constructed to provide a simulation of the movement and intersection of rays from a movable source to evaluate sensor performance and compare these results with practical experiments.
 The model allows for a number of configurable parameters:
 \begin{itemize}
-    \item Trajectory of the light source 3D space, which moves in configurable discrete increments.
-    \item Placement of any number of sensors and apertures, including their dimensions.
+    \item Trajectory of the light source in 3D space, which moves in configurable discrete increments.
+    \item Placement, dimensions, and quantity of any number of sensors and apertures.
     \item Output visualisation, as a static, or animated graphic.
 \end{itemize}
 Affording flexibility for the model to simulate any sensor topology under a variety of conditions.
 
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/methodology/SoftwareModel/images/Sensor plane.png} % change {path}
+    \caption{Sensor Toplogy}       % change {caption}
+    \label{fig:Sensor Topology}            % change label - used for reference in text
+\end{figure}                             % for example: see in Figure~\ref{example label}
+
+
 \input{chapters/methodology/SoftwareModel/Software_Model_Theory_&_Concept}
 \input{chapters/methodology/SoftwareModel/Software_Model_Implementation}
-\subsection{Results and Evaluation}
+\input{chapters/methodology/SoftwareModel/Software_Model_Evaluation_&_Results}
+
