@@ -65,7 +65,7 @@ In iteration 2 reduced iteration 1's size down to one of the segments which meas
 
 \paragraph{Refinements}
 
-To address dimensional incompatibility from previous iterations, The CAD model was revised. 
+To address dimensional incompatibility from previous iterations, the CAD model was revised. 
 In iteration 3, the extruded height was increased by [insert height dimension] to achieve a proper fit. 
 This adjustment was made while maintain the ease of fabrication and assembly.
 The final aperture design as depicted in \ref{fig:CADFinal} while also utilizing a rail system such as a T rail to allow, incorporates the necessary dimensional adjustments and structural refinements identified through the print-and-test iterations. 
@@ -90,16 +90,16 @@ These improvements were made to improve the design for stability.
 \paragraph{Fused Deposition Modelling (FDM)}
 
 Fused deposition modelling is a popular Additive manufacturing (AM) Method because of its fast production, cost efficiency, and ease of access. 
-Broad material adaptation and capability to produce complex components (Rajan et al., 2022). 
+Broad material adaptation and capability to produce complex components \cite{RefWorks:RefID:89-rajan2022fused}. 
 It works by using a material extrusion process, where a continuous filament of thermoplastic or composite material is used to construct 3D parts. 
-The polymer filament is forced over the nozzle and fed over the build plate or preciously solidified substance, and the product is built through a layer-by-layer method while maintaining a steady speed and pressure (Lee, An and Chua, 2017). 
+The polymer filament is forced over the nozzle and fed over the build plate or preciously solidified substance, and the product is built through a layer-by-layer method while maintaining a steady speed and pressure \cite{RefWorks:RefID:86-lee2017fundamentals}. 
 
 \paragraph{Stereolithography (SLA)}
 
-Stereolithography (shown in figure) is a 3D printing technology that uses liquid photopolymer that polymerises when exposed to a laser. 
+Stereolithography is a 3D printing technology that uses liquid photopolymer that polymerises when exposed to a laser. 
 The worktable moves up and down after being immersed in resin.  
 The photopolymer hardens after being selectively irradiated with a laser beam. 
-The printed object becomes a detailed physical model from the bottom up (Yankov and Nikolova, 2017).
+The printed object becomes a detailed physical model from the bottom up \cite{RefWorks:RefID:63-yankov2017comparison}.
 
 \begin{figure}[htbp]
     \centering
@@ -109,15 +109,15 @@ The printed object becomes a detailed physical model from the bottom up (Yankov 
 \end{figure}
 
 \paragraph{Selective Laser Sintering (SLS)}
-Carl Deckard developed selective laser sintering (SLS) in 1987, and it is among the best powder-based AM methods (Tiwar et al., 2015). 
-The solid structure is created in this method by sintered powder particles using a laser source (Geng et al., 2019). 
+Carl Deckard developed selective laser sintering (SLS) in 1987, and it is among the best powder-based AM methods \cite{tiwari2015selection}. 
+The solid structure is created in this method by sintered powder particles using a laser source \cite{RefWorks:geng2019mechanical}. 
 This SLS process uses two chambers: the building chamber is used for printing, and the feed chamber loads the powder onto the bed using a roller. 
 First, a roller in the feed chamber distributes the powder evenly onto the constructed chamber base plate. 
 The building chamber is heated to a temperature below melting point before the carbon dioxide (CO2) laser is shone on the powder to cure it. 
 Next, the building chamber descends a little, and the feed chamber applies the powder over the printed layers. 
 After construction is finished, the extra powders that served as a supporting framework in the building chamber are removed, and the extra material is recycled. 
-This process for creating high-density prototype goods is flexible and economical (Niu et al., 2018). 
-However, compared to the SLS method, the operation cost is expensive, and the product quality is bad because of the high power of the laser input (De Leon et al., 2016).
+This process for creating high-density prototype goods is flexible and economical \cite{RefWorks:niu2018review}. 
+However, compared to the SLS method, the operation cost is expensive, and the product quality is bad because of the high power of the laser input \cite{RefWorks:RefID:84-de2016high}.
 
 \subsubsection{Justification for FDM printing}
 For this project, FDM was decided as the main manufacturing method for our CAD design this is due to benefits such as: 
@@ -125,26 +125,26 @@ For this project, FDM was decided as the main manufacturing method for our CAD d
 \paragraph{Accessibility and Affordability}
 
 In addition to its low cost and ease of use, FDM's ability to produce complicated geometries reinforces its standing as the leading option for small-scale prototyping. 
-The capacity to create elaborate designs with different layer heights can greatly improve the precision of microscopic features, which is critical in applications like microfluidics and biomedical devices (Ameen, 2024). 
-SLA may provide better surface smoothness and precision, but it is more expensive and requires more post-processing, making it less accessible for rapid prototyping (Altuğ, 2022). 
+The capacity to create elaborate designs with different layer heights can greatly improve the precision of microscopic features, which is critical in applications like microfluidics and biomedical devices \cite{RefWorks:RefID:61-ameen2024exploring}. 
+SLA may provide better surface smoothness and precision, but it is more expensive and requires more post-processing, making it less accessible for rapid prototyping \cite{RefWorks:altuğ2022comparison}. 
 While SLA and SLS are valuable alternatives, FDM's capabilities make it an indispensable tool for designers and engineers looking for fast and cost-effective solutions in their projects.
 
 \paragraph{Post-processing Requirements}
 
 Furthermore, the environmental impact of 3D printing processes is becoming a more essential factor for designers and engineers. 
-While FDM uses recyclable thermoplastic materials, other techniques, such as SLA, frequently rely on resins, which may offer disposal issues due to their chemical makeup (Yankov and Nikolova, 2017). 
+While FDM uses recyclable thermoplastic materials, other techniques, such as SLA, frequently rely on resins, which may offer disposal issues due to their chemical makeup \cite{RefWorks:yankov2017comparison}. 
 As the industry progresses towards more sustainable practices, optimising material selection not only lowers costs but also reduces environmental footprints, making FDM a more appealing alternative in this aspect. 
 Furthermore, developments in biodegradable filaments are increasing FDM's attractiveness, allowing for prototypes that line with eco-friendly goals while maintaining performance and quality. 
 Thus, FDM's mix of cost, adaptability, and low environmental effect places it at the forefront of the growing additive manufacturing industry.
 
 \subsubsection{Material Selection}
 \paragraph{Overview of Material Properties}
-The material properties of 3D printed parts are critical for their performance in various applications, for FDM printing, there are various filament materials such as acrylonitrile butadiene styrene (ABS), Polylactic acid (PLA), Polyetheretherketone (PEEK), polypropylene (PP), and Thermoplastic Polyurethane (TPU) (Rajan et al., 2022).
+The material properties of 3D printed parts are critical for their performance in various applications, for FDM printing, there are various filament materials such as acrylonitrile butadiene styrene (ABS), Polylactic acid (PLA), Polyetheretherketone (PEEK), polypropylene (PP), and Thermoplastic Polyurethane (TPU) \cite{RefWorks:RefID:89-rajan2022fused}.
 
 \paragraph{Cost Considerations}
 
 When selecting materials for 3d printing, cost is a significant factor. 
-PLA is one of the most cost-effective option available as its one of the more widely used filaments in FDM due to its thermal and rheological properties (Rajan et al., 2022), which make it easier to manufacture parts.
+PLA is one of the most cost-effective option available as its one of the more widely used filaments in FDM due to its thermal and rheological properties \cite{RefWorks:RefID:89-rajan2022fused}, which make it easier to manufacture parts.
 
 \subsubsection{3D Printer Selection and Specifications}
 The Creality Ender 3 SE(\ref{fig:NassPrint}) was selected as the Fused Deposition Modelling (FDM) printer for this project due to its efficiency and reliability. 
@@ -159,7 +159,7 @@ Its single-extrusion design, coupled with an automated Z-offset levelling system
 
 The layout of the FDM process is shown in Fig. Here the filament is stored in the spool roller and is connected directly to the extrusion head i.e. extrusion head. 
 This head will move in X and Z-directions while the build plate will move in the Y-direction. 
-Electric motors will control the position of the moveable liquefier (Mohd Pu'ad et al., 2020). 
+Electric motors will control the position of the moveable liquefier \cite{RefWorks:RefID:85-mohd2020review}. 
 Generally, for this process material filaments are used for both the supporting and built material of the print.
 
 \begin{figure}[htbp]
@@ -196,7 +196,7 @@ After this step, slicing is performed using the Software Ultimaker Cura and the 
 \paragraph{Infill Pattern}
 
 The infill pattern offers internal support to the 3D print as it develops each layer. 
-Printing layers without an infill pattern would be time-consuming and result in material slumping over empty areas (Srinivasan et al., 2020). 
+Printing layers without an infill pattern would be time-consuming and result in material slumping over empty areas \cite{RefWorks:RefID:88-srinivasan2020impact}. 
 The figure below displays several infill patterns, including triangular, grid, cubic, honeycomb, concentric, rectilinear, rectangular, octet, and wiggly. 
 For this project, the cubic infill pattern was selected due to its advantages that align with our project's requirements. 
 Firstly, the cubic pattern provides reliable mechanical properties ensuring robust structural support and strength, which is necessary for the housing component of the design. 
@@ -214,8 +214,8 @@ These benefits make the cubic infill pattern an ideal choice for achieving the d
 
 \paragraph{Infill Density}
 
-Mechanical performance of 3D-printed components is largely determined by the infill density, which dictates the amount of material used internally (Rajan et al., 2022).
-Groza and Shackelford (Srivatsan, 2012) categorise infill patterns into three distinct types, each impacting the mechanical properties and print efficiency of 3D-printed components. 
+Mechanical performance of 3D-printed components is largely determined by the infill density, which dictates the amount of material used internally \cite{RefWorks:RefID:89-rajan2022fused}.
+Groza and Shackelford \cite{srivatsan2012materials} categorise infill patterns into three distinct types, each impacting the mechanical properties and print efficiency of 3D-printed components. 
 The `solid normal' infill, characterised by its dense interior, yields robust mechanical performance. 
 Conversely, the `sparse' infill pattern prioritises reduced printing time and material consumption by incorporating gaps and utilising a unidirectional raster. 
 The `sparse double dense' infill, while also focusing on minimising printing time and material usage, employs a crosshatch raster pattern. 
@@ -225,14 +225,14 @@ However, for the fabrication of the testing rig aperture in this project, a 15\%
 
  Printing speed is the nozzle's pass-through speediness on the build platform when printing. 
  The printing speed determines how long the product takes to produce. 
- In addition, the printing speed has a maximum effect on the deformation of the product since, during production, this quick printing could produce significant residual stresses(Rajan et al.,2022). 
+ In addition, the printing speed has a maximum effect on the deformation of the product since, during production, this quick printing could produce significant residual stresses\cite{RefWorks:RefID:89-rajan2022fused}. 
  For this project a nozzle speed of 180 mm/s was chosen, as it showed the best performance than other nozzle speeds when doing test calibrations. 
 
 \paragraph{Operating Temperature}
 
 Rajan et al. (2022) emphasise the vital role of operating temperatures in 3D printing, particularly nozzle temperature (extrusion temperature) and bed temperature (build platform temperature). 
 Prior to printing, the nozzle is heated to a temperature sufficient to melt the filament, allowing extrusion. 
-Simultaneously, the build platform is heated to a bed temperature that promotes good adhesion and reduces warping during printing.
+Simultaneously, the build platform is heated to a bed temperature that promotes good adhesion and reduces warping during printing \cite{RefWorks:RefID:89-rajan2022fused}.
 
 \paragraph{Nozzle Temperature}
 
@@ -263,7 +263,7 @@ There were two main challenges that we came across during the printing process, 
 
 For the bed adhesion issue shown in \ref{fig:Fail1}, we found that the source of the issue was temperature related. 
 Firstly, the build plate temperature was 45$^{\circ}$C which was lower than that what is recommended when printing with PLA which ranges from 50$^{\circ}$C - 70$^{\circ}$C. 
-Additionally the extrusion temperature was 190$^{\circ}$C which is on the lower end of the recommended range which is typically 190$^{\circ}$C - 220$^{\circ}$C (Unionfab2025) after some testing to find the ideal which was found to be at 60$^{\circ}$C.
+Additionally the extrusion temperature was 190$^{\circ}$C which is on the lower end of the recommended range which is typically 190$^{\circ}$C - 220$^{\circ}$C \cite{RefWorks:RefID:91-unionfab2025ultimate} after some testing to find the ideal which was found to be at 60$^{\circ}$C.
 So, after some readjustments to the build plate and extrusion temperature, a first layer was able to stick to the build plate without any warping happening shown in \ref{fig:Fail2}.
 Although the first layer print worked, there was still warping on the corners of the prints, as well as some 'wisping' on the surface, so research was conducted to find a solution, which was to use a brim on the print shown \ref{fig:Brim}.
 This is an extra layer of material printed around the base of the print object. 
