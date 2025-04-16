@@ -14,7 +14,7 @@ This iterative process approach allowed for the systematic refinement
 
 \paragraph{Intial Concept Development}
 
-An initial sketch design of the aperture consisted of a rectangle geometry “T-shaped” array of holes for the photodiodes to sit in with the main body being 105 mm long, 114 mm wide, and 1.5 mm gap in-between for a stripboard to be fitted in, these initial sketches can be seen in \ref{app:AppendixE}.
+An initial sketch design of the aperture consisted of a rectangle geometry “T-shaped” array of holes for the photodiodes to sit in with the main body being 105 mm long, 114 mm wide, and 1.5 mm gap in-between for a stripboard to be fitted in, these initial sketches can be seen in Appendix~\ref{app:AppendixE}.
 
 \paragraph{CAD Software Selection and Workflow} 
 
@@ -25,7 +25,7 @@ The software's simulation tools also enabled design optimisation for effective p
 \subsubsection{Design Iterations and Refinements}
 \paragraph{Intial Design}
 
-For the initial design first made an outlined shape of the box with withe measurements of 115mm x 114mm and thickness of 1.5mm as can be seen in \ref{fig:CAD1}.
+For the initial design first made an outlined shape of the box with withe measurements of 115mm x 114mm and thickness of 1.5mm as can be seen in Figure~\ref{fig:CAD1}.
 For the photo diode array used hole tool provided in fusion 360 and based the measurement values on the manufacturers datasheet for the photodiodes used for this project.
 
 
@@ -40,7 +40,7 @@ For the photo diode array used hole tool provided in fusion 360 and based the me
 
 \paragraph{Iteration 1}
 
-Following the intial design sketches and CAD model, the first iteration of the enclosure was created as can be seen in \ref{fig:CAD2}.
+Following the intial design sketches and CAD model, the first iteration of the enclosure was created as can be seen in Figure~\ref{fig:CAD2}.
 The design focused on ensuring that the photodiodes were securely mounted and that the enclosure provided adequate protection for the electronic components. 
 Iteration 1 involved a design refinement to facilitate modularity and interchangeability of photodiode array segments. 
 Fusion 360's pattern tool was employed to replicate the photodiode hole arrangement across four distinct segments, ensuring consistent alignment and ease of component replacement.
@@ -54,7 +54,7 @@ Fusion 360's pattern tool was employed to replicate the photodiode hole arrangem
 
 \paragraph{Iteration 2}
 
-In iteration 2 reduced iteration 1's size down to one of the segments which measured out at 52mm length, 57mm and 10mm height with the focus being the housing for the photodiode array, shown in \ref{fig:CAD3}
+In iteration 2 reduced iteration 1's size down to one of the segments which measured out at 52mm length, 57mm and 10mm height with the focus being the housing for the photodiode array, shown in Figure~\ref{fig:CAD3}
 
 \begin{figure}[htbp]
     \centering
@@ -68,7 +68,7 @@ In iteration 2 reduced iteration 1's size down to one of the segments which meas
 To address dimensional incompatibility from previous iterations, the CAD model was revised. 
 In iteration 3, the extruded height was increased by [insert height dimension] to achieve a proper fit. 
 This adjustment was made while maintain the ease of fabrication and assembly.
-The final aperture design as depicted in \ref{fig:CADFinal} while also utilizing a rail system such as a T rail to allow, incorporates the necessary dimensional adjustments and structural refinements identified through the print-and-test iterations. 
+The final aperture design as depicted in Figure~\ref{fig:CADFinal} while also utilizing a rail system such as a T rail to allow, incorporates the necessary dimensional adjustments and structural refinements identified through the print-and-test iterations. 
 This design ensures proper mounting and functionality within the testing rig. 
 With the final, validated design, the CAD model was prepared for the final 3D printing fabrication, ensuring optimal orientation to accurately replicate the refined dimensions.
 
@@ -147,7 +147,7 @@ When selecting materials for 3d printing, cost is a significant factor.
 PLA is one of the most cost-effective option available as its one of the more widely used filaments in FDM due to its thermal and rheological properties \cite{RefWorks:RefID:89-rajan2022fused}, which make it easier to manufacture parts.
 
 \subsubsection{3D Printer Selection and Specifications}
-The Creality Ender 3 SE(\ref{fig:NassPrint}) was selected as the Fused Deposition Modelling (FDM) printer for this project due to its efficiency and reliability. 
+The Creality Ender 3 SE(Figure~\ref{fig:NassPrint}) was selected as the Fused Deposition Modelling (FDM) printer for this project due to its efficiency and reliability. 
 Its single-extrusion design, coupled with an automated Z-offset levelling system, significantly reduces recalibration requirements, ensuring consistent print quality and minimising downtime. 
 
 \begin{figure}[htbp]
@@ -173,7 +173,7 @@ Generally, for this process material filaments are used for both the supporting 
 This FDM technique generally consist of three sections being the pre-processing, production and post processing. 
 In the pre-processing stage the product is created using CAD Software and saved in STL format. 
 Before slicing the file, key parameters such as slicing settings, build orientation and machine temperature are considered. 
-These crucial parameters Influence the final products mechanical properties. \ref{fig:FDMparameters} shows the necessary process parameters. 
+These crucial parameters Influence the final products mechanical properties. Figure~\ref{fig:FDMparameters} shows the necessary process parameters. 
 After this step, slicing is performed using the Software Ultimaker Cura and the tool path is generated as G-code which is a computer numerical control code used to manage the extrusion process.
 
 \begin{figure}[htbp]
@@ -261,14 +261,14 @@ There were two main challenges that we came across during the printing process, 
 
 \paragraph{Bed Adhesion}
 
-For the bed adhesion issue shown in \ref{fig:Fail1}, we found that the source of the issue was temperature related. 
+For the bed adhesion issue shown in Figure~\ref{fig:Fail1}, we found that the source of the issue was temperature related. 
 Firstly, the build plate temperature was 45$^{\circ}$C which was lower than that what is recommended when printing with PLA which ranges from 50$^{\circ}$C - 70$^{\circ}$C. 
 Additionally the extrusion temperature was 190$^{\circ}$C which is on the lower end of the recommended range which is typically 190$^{\circ}$C - 220$^{\circ}$C \cite{RefWorks:RefID:91-unionfab2025ultimate} after some testing to find the ideal which was found to be at 60$^{\circ}$C.
-So, after some readjustments to the build plate and extrusion temperature, a first layer was able to stick to the build plate without any warping happening shown in \ref{fig:Fail2}.
+So, after some readjustments to the build plate and extrusion temperature, a first layer was able to stick to the build plate without any warping happening shown in Figure~\ref{fig:Fail2}.
 Although the first layer print worked, there was still warping on the corners of the prints, as well as some 'wisping' on the surface, so research was conducted to find a solution, which was to use a brim on the print shown \ref{fig:Brim}.
 This is an extra layer of material printed around the base of the print object. 
 This increased the surface area contact with the build plate, improving adhesion and stability during printing. 
-These methods significantly reduced bed adhesion issues, leading to more successful and reliable prints as can be seen in \ref{fig:BedAdImproved}
+These methods significantly reduced bed adhesion issues, leading to more successful and reliable prints as can be seen in Figure~\ref{fig:BedAdImproved}
 
 \begin{figure}[htbp]
     \centering
@@ -309,7 +309,7 @@ These methods significantly reduced bed adhesion issues, leading to more success
 \paragraph{Dimensional Inaccuracy}
 
 Another one of the issues encountered in this project was the dimensional inaccuracies specifically the hole sizes for the test rig in which the CAD model did not translate entirely to the 3D printed part.  
-After doing some fault finding it was found that over time as the printing process continued some of the printed layers had begun to cool, thus shrinking down the holes made for the photodiode array, causing them to not fit as can be seen in \ref{fig:DimInaccuracy}.  
+After doing some fault finding it was found that over time as the printing process continued some of the printed layers had begun to cool, thus shrinking down the holes made for the photodiode array, causing them to not fit as can be seen in Figure~\ref{fig:DimInaccuracy}.  
 To address dimensional inaccuracies between printed apertures and electronic components, an iterative calibration process was conducted using Ultimaker Cura's hole expansion feature. 
 This technique, which involves adjusting the horizontal dimensions of the print, is essential for several reasons. 
 Primarily, it compensates for material shrinkage, a common occurrence during FDM printing, ensuring dimensional accuracy. 
