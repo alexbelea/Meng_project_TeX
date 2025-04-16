@@ -203,7 +203,11 @@ There were several iterations, at first with only the \ac{TIA} and one photodiod
   \label{fig:BreadBoardPhoto}
 \end{figure}
 
-
+%       ~~~     RED mention  ~~~~
+\subsubsection{\acf{RED}}  % some of this could be   IN RESULTS!!!
+The \ac{RED} device borrowed from the EPS team \cite{RefWorks:shopov2022renewable} had to be modified to be used as our testbench providing illumination from desired angles in a repeatable fashion. Details on the modification can be found in \ref{REDtestbench}. After modifying it to move the light in our desired location on the hemispheric plane both azimuth and elevation angles could be controlled, it was discovered that the servomotors in the \ac{RED} were not always delivering the correct angles as requested in the code. It was discovered that "helping" the arch move towards the desired location, such as 90\textdegree from 0\textdegree by pushing with our hand, allowed the arch to move to the correct position. The reasons for this could be several, such as servomotors with insufficient torque, or damaged gear train. Due to time limitations it was decided not to further debug the device, instead a decision was made to use a protractor and manually "help" the arch when needed to reach the requred angle.
+A further issue with the \ac{RED} device was that it would "randomly" change the location, which was only meant to be triggered by a button press. The reason for this was likely the same reason our recorded signals had a lot of noise: interference from the \ac{RED} power source. However this was rare enough that it did not impede our testing. A  debouncing technique in software could likely have fixed this issue, if it was going to be fixed.
+Further, while overall the \ac{RED} was very useful for our project, the servomotor issues causing the arch to not reach the correct angle easily and further affected by some control deadband - an inability of the servomotors to reliably make small changes in angle, meant that certain tests could not be performed, such as taking measurements at every 5\textdegree in order to record readings across the whole hemispere, which would allow creating a \ac{LUT} that would be used to correctly read the location of the light.
 
 \subsubsection*{Design Refinement}
 \label{explainPostAmp}
@@ -244,10 +248,13 @@ The black electrical tape was then placed on top of this glas as seen in Figure 
   \label{fig:aperturePhoto}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%       HERE      %%%%%%%%%%%%%%%%%%%%%%%
+\vspace{1em}
+
+
 
 \subsubsection*{Comprehensive Testing}
 
-
+Afther all th
 
 
 

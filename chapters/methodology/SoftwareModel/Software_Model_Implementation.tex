@@ -27,8 +27,8 @@ A .JSON file is used to allow for easy setup of different experimental scenarios
 \item Debugging and performance settings
 \end{itemize}
 
-The \texttt{Config} class (Listing~\ref{lst}) loads and parses the configuration file, making parameters accessible throughout the application:
-\begin{lstlisting}[style=pythonstyle, caption=Model configuration - Config Class, label=lst:pythonCodeApp, language=Python ]
+The \texttt{Config} class (Listing~\ref{lst:pythonConfigClass}) loads and parses the configuration file, making parameters accessible throughout the application:
+\begin{lstlisting}[style=pythonstyle, caption=Model configuration - Config Class, label=lst:pythonConfigClass, language=Python ]
     
     class Config:
         def init(self, file_path=None, data=None):

@@ -1,10 +1,22 @@
 % SystemLimitationsAndConsiderations.tex
 \section{System Limitations And Considerations}
 This section discusses the limitations and future work.
+\subsection{\acf{RED} testbench limitations and impact}
+The Renewable Energy Demonstrator (RED) device borrowed from the EPS team \cite{RefWorks:shopov2022renewable} proved to be valuable as a testbench for our project, but several limitations affected our ability to gather comprehensive data for accurate sun vector determination.
+\subsubsection{Servo Motor Limitations}
+There were at least two issues with the Servo Motors which reduced our ability to gether data:
+\begin{itemize}
+    \item Inablity to reach the target angles requested in code without phisical intervention, presumably due to insufficient torque or gearing issues.
+    \item Control deadband did not allow us to gather a large enough sample (small-angle adjustment) to create a \ac{LUT} that would allow the prediction of light position by extrapolation.
+\end{itemize}
 
+When attempting to move from 0\textdegree{} to 90\textdegree{}, for example, the servomotors would often stall, requiring manual assistance to ``help'' the arch reach the desired position. This introduced inconsistency in our testing methodology and required manual adjustment using protractors.
 
+\subsubsection{Signal Interference Issues}
 
-\subsection{Angle accuracy}
+The \ac{RED}'s Power Supply interference make the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}.
+
+\subsection{Aperture placement accuracy}
 % Your content here
 
 % \subsection{}
