@@ -14,7 +14,7 @@ When attempting to move from 0\textdegree{} to 90\textdegree{}, for example, the
 
 \subsubsection{Signal Interference Issues}
 
-The \ac{RED}'s Power Supply interference made the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}, detailed in Section \ref{subsub:DAQpython}. Further, arch position changing without pressing the button likely due to noise in the \ac{RED} from the Power Supply made testing slighlty more annoying, but it was not happening often enough to disrupt testing too much, it was considered an acceptable quirk.
+The \ac{RED}'s Power Supply interference made the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}, detailed in Section \ref{LowPassFilter}. Further, arch position changing without pressing the button likely due to noise in the \ac{RED} from the Power Supply made testing slighlty more annoying, but it was not happening often enough to disrupt testing too much, it was considered an acceptable quirk.
 
 \subsubsection{Impact on Look-Up Table development}
 
