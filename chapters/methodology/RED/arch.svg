@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 800 900"
+   version="1.1"
+   id="svg33"
+   sodipodi:docname="arch.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview33"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.2966667"
+     inkscape:cx="585.34704"
+     inkscape:cy="537.14653"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg33" />
+  <!-- Styles -->
+  <style
+     id="style1">
+    .box {
+      fill: #f0f8ff;
+      stroke: #3498db;
+      stroke-width: 2;
+      rx: 10;
+      ry: 10;
+    }
+    .decision {
+      fill: #e8f6f3;
+      stroke: #16a085;
+      stroke-width: 2;
+    }
+    .text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      text-anchor: middle;
+      fill: #333;
+    }
+    .arrow {
+      stroke: #7f8c8d;
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrowhead);
+    }
+    .comment {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      fill: #777;
+      text-anchor: middle;
+    }
+    .highlight {
+      font-weight: bold;
+      fill: #e74c3c;
+    }
+  </style>
+  <!-- Arrow marker definition -->
+  <defs
+     id="defs1">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="7"
+       refX="9"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#7f8c8d"
+         id="polygon1" />
+    </marker>
+  </defs>
+  <!-- Title -->
+  <!-- Setup section -->
+  <rect
+     x="266.83804"
+     y="50.77121"
+     width="200"
+     height="60"
+     class="box"
+     id="rect1" />
+  <text
+     x="366.83804"
+     y="85.77121"
+     class="text"
+     id="text2">Start</text>
+  <!-- Initialize components -->
+  <rect
+     x="266.83804"
+     y="150.77121"
+     width="200"
+     height="100"
+     class="box"
+     id="rect2" />
+  <text
+     x="366.83804"
+     y="185.77121"
+     class="text"
+     style="font-size:13px"
+     id="text3">Initialize:</text>
+  <text
+     x="366.83804"
+     y="210.77121"
+     class="text"
+     style="font-size:13px"
+     id="text4">- Servos (arch_left, arch_right)</text>
+  <text
+     x="366.83804"
+     y="230.77121"
+     class="text"
+     style="font-size:13px"
+     id="text5">- LCD Display</text>
+  <!-- Set initial position -->
+  <rect
+     x="266.83804"
+     y="290.77121"
+     width="200"
+     height="60"
+     class="box"
+     id="rect5" />
+  <text
+     x="366.83804"
+     y="325.77121"
+     class="text"
+     id="text6">Set initial position (preset 3)</text>
+  <!-- Main loop start -->
+  <rect
+     x="266.83804"
+     y="390.77121"
+     width="200"
+     height="60"
+     class="box"
+     id="rect6" />
+  <text
+     x="366.83804"
+     y="425.77121"
+     class="text"
+     id="text7">Main Loop Start</text>
+  <!-- Read button state -->
+  <rect
+     x="266.83804"
+     y="490.77121"
+     width="200"
+     height="60"
+     class="box"
+     id="rect7" />
+  <text
+     x="366.83804"
+     y="525.77118"
+     class="text"
+     id="text8">Read button state</text>
+  <!-- Button pressed? -->
+  <polygon
+     points="500,650 400,710 300,650 400,590 "
+     class="decision"
+     id="polygon8"
+     transform="translate(-33.161954,0.77120823)" />
+  <text
+     x="366.83804"
+     y="650.77118"
+     class="text"
+     id="text9">Button pressed?</text>
+  <!-- Move to next preset -->
+  <rect
+     x="516.83807"
+     y="620.77118"
+     width="200"
+     height="60"
+     class="box"
+     id="rect9" />
+  <text
+     x="616.83807"
+     y="655.77118"
+     class="text"
+     id="text10">Move to next preset position</text>
+  <!-- Update display -->
+  <rect
+     x="516.83807"
+     y="700.77118"
+     width="200"
+     height="60"
+     class="box"
+     id="rect10" />
+  <text
+     x="616.83807"
+     y="735.77118"
+     class="text"
+     id="text11">Update LCD display</text>
+  <!-- Signal LED Arduino -->
+  <rect
+     x="516.83807"
+     y="780.77118"
+     width="200"
+     height="60"
+     class="box"
+     id="rect11" />
+  <text
+     x="616.83807"
+     y="815.77118"
+     class="text"
+     id="text12">Signal LED Arduino</text>
+  <!-- Loop back -->
+  <rect
+     x="266.83804"
+     y="780.77118"
+     width="200"
+     height="60"
+     class="box"
+     id="rect12" />
+  <text
+     x="366.83804"
+     y="815.77118"
+     class="text"
+     id="text13">Continue Loop</text>
+  <!-- Arrows -->
+  <path
+     d="m 366.83805,110.77121 v 40"
+     class="arrow"
+     id="path13" />
+  <path
+     d="m 366.83805,250.77121 v 40"
+     class="arrow"
+     id="path14" />
+  <path
+     d="m 366.83805,350.77121 v 40"
+     class="arrow"
+     id="path15" />
+  <path
+     d="m 366.83805,450.77121 v 40"
+     class="arrow"
+     id="path16" />
+  <path
+     d="m 366.83805,550.77121 v 40"
+     class="arrow"
+     id="path17" />
+  <path
+     d="m 466.83805,650.77121 h 50"
+     class="arrow"
+     id="path18" />
+  <text
+     x="491.83804"
+     y="635.77118"
+     class="comment"
+     id="text18">Yes</text>
+  <path
+     d="m 616.83805,680.77121 v 20"
+     class="arrow"
+     id="path19" />
+  <path
+     d="m 616.83805,760.77121 v 20"
+     class="arrow"
+     id="path20" />
+  <path
+     d="m 516.83805,810.77121 h -50"
+     class="arrow"
+     id="path21" />
+  <path
+     d="m 366.83805,710.77121 v 70"
+     class="arrow"
+     id="path22" />
+  <text
+     x="376.83804"
+     y="750.77118"
+     class="comment"
+     id="text22">No</text>
+  <path
+     d="M 264.19984,821.8718 C 12.851259,723.31845 161.02389,409.71188 258.45422,413.67818"
+     class="arrow"
+     id="path23" />
+  <text
+     x="165.57735"
+     y="605.88434"
+     class="comment"
+     id="text23">Loop back</text>
+  <!-- Function call highlights -->
+  <text
+     x="669.67871"
+     y="669.8457"
+     class="comment"
+     id="text24">moveToPreset()</text>
+  <text
+     x="668.90747"
+     y="751.77374"
+     class="comment"
+     id="text25">updateDisplay()</text>
+  <text
+     x="663.89465"
+     y="832.15936"
+     class="comment"
+     id="text26">signalLedArduino()</text>
+  <!-- Preset explanation -->
+  <text
+     x="106.83804"
+     y="200.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text27">5 preset positions</text>
+  <text
+     x="106.83804"
+     y="220.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text28">for servo angles:</text>
+  <text
+     x="106.83804"
+     y="240.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text29">Pos 1: 20°</text>
+  <text
+     x="106.83804"
+     y="260.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text30">Pos 2: 50°</text>
+  <text
+     x="106.83804"
+     y="280.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text31">Pos 3: 90° (center)</text>
+  <text
+     x="106.83804"
+     y="300.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text32">Pos 4: 130°</text>
+  <text
+     x="106.83804"
+     y="320.77121"
+     class="comment"
+     style="text-anchor:start"
+     id="text33">Pos 5: 160°</text>
+</svg>
