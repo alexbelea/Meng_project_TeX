@@ -35,3 +35,9 @@ main.tex
 
 then you just would have to drag and drop any files you modify
 in the repo to overleaf and Ctrl+S (and keep the repo uptodate for the rest of us!)
+
+command to see number of words:
+
+texcount -inc main.tex (in terminal)
+
+and look for line "Words in text: "

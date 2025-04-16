@@ -8,7 +8,7 @@
     \label{fig:RED_testbench_flowchart}
 \end{figure}
 
-For testing the capability of the Sun Sensor to correctly detect the location of the light source, a test bench was required that could reliably place the location of the light at a precise location repeatedly. For this purpose we used a project built by our colleagues in the \acf{EPS} year 2021/22 who createad just such a device intended for demonstrating renewable energy creation live and interacte~\cite{RefWorks:shopov2022renewable}. Their device was able to demonstrate the energy levels created by a Photovoltaic (PV) cell by light emited at different angles. The light emission would change location based on time of day and the PV cell readings would show the difference in energy. Futher the PV cell was controllable by a joystick to point the PV Cell at the optimum angle for the highest energy capture. For our project, the arch and LED strip were used for outputing light from different angles. The photovoltaic cell was removed together with the servomotor to make space for our \ac{PSD} device.  The \ac{RED} device was composed of two separate Arduino microcontrollers:
+For testing the capability of the Sun Sensor to correctly detect the location of the light source, a test bench was required that could reliably place the location of the light at a precise location repeatedly. For this purpose we used a project built by our colleagues in the \acf{EPS} year 2021/22 who createad just such a device intended for demonstrating renewable energy creation live and interacte~\cite{RefWorks:shopov2022renewable}. Their device was able to demonstrate the energy levels created by a \ac{PV} cell by light emited at different angles. The light emission would change location based on time of day and the PV cell readings would show the difference in energy. Futher the PV cell was controllable by a joystick to point the PV Cell at the optimum angle for the highest energy capture. For our project, the arch and LED strip were used for outputing light from different angles. The photovoltaic cell was removed together with the servomotor to make space for our \ac{PSD} device.  The \ac{RED} device was composed of two separate Arduino microcontrollers:
 \begin{itemize}
     \item Arduino Uno - for controlling the Arch 
     \item Arduino Nano - for controlling the LED Strip
@@ -49,16 +49,37 @@ The flowchart shows the basic operation is reproduced in Figure \ref{fig:REDarch
     \label{tab:arch-led-positions}
 \end{table}
 
+
+  
+The angles chosen to record data were randomly selected, and for simplicity and ease of measurement (manually with protractor) the altitude and azimuth were identical. These were then reproduced in simulation as per Section \ref{sec:softwareModel}. The simplicity was also intended to avoid confusion between team members working on separate parts of the project.
+
+\subsection{Arch Movement Reprogramming}
 %%%%%%%%%%%%%%%%%
 % ARCH Flowchart
 \begin{figure}[htbp] 
-    \centering
-    \includegraphics[width=0.95\textwidth]{chapters/methodology/RED/arch_flow.png}
-    \caption{Flowchart of the C++ program on the Arduino Controlling the Arch and other peripherals}
-    \label{fig:REDarchflowchart}
-  \end{figure}
-  
-The angles chosen to record data were randomly selected, and for simplicity and ease of measurement (manually with protractor) the altitude and azimuth were identical. These were then reproduced in simulation as per Section \ref{sec:softwareModel}. The simplicity was also intended to avoid confusion between team members working on separate parts of the project.
+  \centering
+  \includegraphics[width=0.95\textwidth]{chapters/methodology/RED/arch_flow.png}
+  \caption{Flowchart of the C++ program on the Arduino Controlling the Arch and other peripherals}
+  \label{fig:REDarchflowchart}
+\end{figure}
+The main Arduino microcontroller code that controls most features including the LCD display, buttons, arch servomotors had to be modified as well to fit our testbench purposes. The original code \cite{RefWorks:shopov2022renewable} was quite useful as it initialized all components and provided a guide to quickly and easily write a new program that allows for much simpler behaviour, including removal of the PV panel servomotor which had been taken out to provide space for our device. The code is available in Appendix \ref{app:AppendixF} and a Flowchart is in Figure \ref{fig:REDarchflowchart}. The functions signalLedArduino() and updateDisplay() had been reused, as well as the setup() - but with many unneeded functions removed such as extra servomotor and \ac{PV} panel readings. The loop() function - which runs automatically in a loop after setup() at arduino start, was also compltely modified from a much more comlex logit to a simple logic that upon button press does the following:
+\begin{itemize}
+  \item increase current index by 1
+  \item call the change\_state() function 
+  \item update LCD display with new angles
+  \item signal RGB arduino to change state as well
+\end{itemize}
+
+The index refers to one of the 5 positions as mentioned in Table \ref{tab:arch-led-positions}. 
+
+And the change\_state() function does the following when called:
+\begin{itemize}
+  \item Reset Arch position to zero
+  \item Wait for Arch to reach zero
+  \item Write the angles of the new state to the motors
+\end{itemize}
+
+The Arduino loops in this state and upon button press updates the location of the light. This resulted in a very simple testbench to use allowing us to concetrate on the light sensor device without too much worry about the testbench. Without this testbench available to us, it would have been much harder to get consistent readings of ligh sources, therefore gratitude is expressed to the RED team.
 
 %           ~~~   RED NOISE   ~~~
 %
