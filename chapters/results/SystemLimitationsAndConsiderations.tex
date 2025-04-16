@@ -7,14 +7,28 @@ The Renewable Energy Demonstrator (RED) device borrowed from the EPS team \cite{
 There were at least two issues with the Servo Motors which reduced our ability to gether data:
 \begin{itemize}
     \item Inablity to reach the target angles requested in code without phisical intervention, presumably due to insufficient torque or gearing issues.
-    \item Control deadband did not allow us to gather a large enough sample (small-angle adjustment) to create a \ac{LUT} that would allow the prediction of light position by extrapolation.
+    \item Control deadband did not allow us to gather a large enough sample (small-angle adjustment) to create a \ac{LUT} that would allow the prediction of light position by interpolation.
 \end{itemize}
 
 When attempting to move from 0\textdegree{} to 90\textdegree{}, for example, the servomotors would often stall, requiring manual assistance to ``help'' the arch reach the desired position. This introduced inconsistency in our testing methodology and required manual adjustment using protractors.
 
 \subsubsection{Signal Interference Issues}
 
-The \ac{RED}'s Power Supply interference make the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}.
+The \ac{RED}'s Power Supply interference made the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}, detailed in Section \ref{subsub:DAQpython}. Further, arch position changing without pressing the button likely due to noise in the \ac{RED} from the Power Supply made testing slighlty more annoying, but it was not happening often enough to disrupt testing too much, it was considered an acceptable quirk.
+
+\subsubsection{Impact on Look-Up Table development}
+
+The most significant impact to the project caused by these issues with the \ac{RED} are that we were unable to generate a \ac{LUT} or a "Sensor Response Surface" plot using the prototype, as the angle precision from the arch was not good enough. Originally, our plan included:
+
+\begin{itemize}
+    \item Taking measurements at fine angular increments (every 5\textdegree{}) across the hemisphere
+    \item Mapping between sensor readings and light source position
+    \item Using said mapping to develop interpolation algorithms for positions between measured points
+    \item Validating position determination accuracy across the sensor's field of view
+\end{itemize}
+
+The compbination of these limitations of the \ac{RED} testbench made it impractical to gather the comprehensive dataset required to fulfill these goals, as withouht a reliable dataset across the entire \ac{FOV} it is not possible to predict the location of light.
+This limitations ultimatly directly affected the ability to detect the light position, and we could only take some readings and compare them to the simulated environment.
 
 \subsection{Aperture placement accuracy}
 % Your content here

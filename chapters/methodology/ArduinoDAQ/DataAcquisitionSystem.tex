@@ -257,6 +257,7 @@ The use of the Arduino \texttt{String} class is memory-intensive and can cause f
 %   Python Script section
 %
 \subsubsection{Python Script}
+\label{subsub:DAQpython}
 The digitized signal must be interpreted and saved on the PC. This is done via a python script which listens to the Serial port from the arduino. The signal then also required cleaning from RF interference discovered during testing. In Figure~\ref{fig:pythonFlowchart} a flowchart is produced showing the way the script works: after initial setup that sets up the Serial Communication, the script waits for a "DAQ\_READY" signal from the Arduino. Once this is received, a csv file is created and the script sends a "START" signal which the Arduino interprets and starts sampling and sending the data. The script receives each line and saves it in the new CSV, and continues to record data until the Arduino sends a "RECORDING\_COMPLETE" signal - which will happen when the recordingDuration is reached. At this point the python script  performs the following post-processing steps:
 
 \paragraph{The filter\_and\_save\_data()} function' purpose is mainly to correctly interpret the CSV. It takes a csv with the raw voltage values, saves them into a Pandas DataFrame for easier manipulation and sends each channel to the apply\_lowpass\_filter() function which will be described below. filter\_and\_save\_data() pseudocode is produced in Listing \ref{lst:pythonFilterAndSave}.
