@@ -33,6 +33,14 @@ This limitations ultimatly directly affected the ability to detect the light pos
 \subsection{Aperture placement accuracy}
 
 Another big limitatino on accuracy of the readings will be the manually placed apertures. As shown earlier in Figure \ref{fig:aperturePhoto}, the apertures are far from perfectly in the middle. This will have a huge impact on the accuracy of the readings especially when compared to a simulated environment which have perfectly placed apertures. Howver, if we had been able to create a \ac{LUT} using the real measurements with aperture as-is, the results could have theoretically been used to read the location of light. Unfortunately, as stated above, that was also impossible due to the limitations of the testbench. These two main factors were the main cause of not being able to perform a calibration and perform actual readings to test the ability to read light locations. 
+
+\subsection{Model Limitations and Future Work}
+\begin{itemize}
+    \item The vertical scale differs between plots figure~\ref{fig:Model and Physical Results Comparison}: simulated hits are relative percentages, while the experimental data reflects voltage. A calibration factor could be introduced in future to improve this correspondence.
+    \item Minor asymmetries in the experimental data may arise from mechanical inaccuracies or misalignment, which are not currently modelled.
+    \item Future improvements may incorporate ray divergence, non-ideal optics, or sensor sensitivity profiles to further refine realism.
+\end{itemize}
+
 % Your content here
 
 % \subsection{}

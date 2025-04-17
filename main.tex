@@ -31,6 +31,8 @@
 \usepackage{pdflscape}
 % rotate the page of content between:
 
+\lstset{inputencoding=utf8} 
+
 % \begin{landscape}
 % %  something here
 % \end{landscape}
@@ -98,6 +100,20 @@
     showtabs=false,                  
     tabsize=2,
     language=Python
+}
+
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\footnotesize,
+    showstringspaces=false,
+    breaklines=true,
+    frame=none,
+    backgroundcolor=\color{backcolour},
+    morestring=[b]",
+    stringstyle=\color{codepurple},
+    morecomment=[l]{//},
+    commentstyle=\color{codegreen},
+    morekeywords={true, false, null},
+    keywordstyle=\color{magenta}
 }
 
 % C code listing style
@@ -223,6 +239,9 @@
 \label{app:AppendixG}
 \input{appendix/AppendixG.tex}
 
+\chapter{Appendix Software Model Code}
+\label{app:Software Model - Code}
+\input{appendix/AppendixH.tex}
 
 
 
