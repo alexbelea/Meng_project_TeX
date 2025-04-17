@@ -263,9 +263,9 @@ The digitized signal must be interpreted and saved on the PC. This is done via a
 \paragraph{The filter\_and\_save\_data()} function' purpose is mainly to correctly interpret the CSV. It takes a csv with the raw voltage values, saves them into a Pandas DataFrame for easier manipulation and sends each channel to the apply\_lowpass\_filter() function which will be described below. filter\_and\_save\_data() pseudocode is produced in Listing \ref{lst:pythonFilterAndSave}.
 
 % Flowchart of Python Script
-\begin{figure}[ptb] 
+\begin{figure}[h] 
   \centering
-  \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/python_serial_receive.jpg}
+  \includegraphics[width=0.97\textwidth]{chapters/methodology/ArduinoDAQ/python_serial_receive.jpg}
   \caption{Python Script Flowchart}
   \label{fig:pythonFlowchart}
 \end{figure}

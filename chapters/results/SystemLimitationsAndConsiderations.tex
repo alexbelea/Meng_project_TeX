@@ -6,7 +6,7 @@ The Renewable Energy Demonstrator (RED) device borrowed from the EPS team \cite{
 \subsubsection{Servo Motor Limitations}
 There were at least two issues with the Servo Motors which reduced our ability to gether data:
 \begin{itemize}
-    \item Inablity to reach the target angles requested in code without phisical intervention, presumably due to insufficient torque or gearing issues.
+    \item Inability to reach the target angles requested in code without physical intervention, presumably due to insufficient torque or gearing issues.
     \item Control deadband did not allow us to gather a large enough sample (small-angle adjustment) to create a \ac{LUT} that would allow the prediction of light position by interpolation.
 \end{itemize}
 
@@ -14,7 +14,7 @@ When attempting to move from 0\textdegree{} to 90\textdegree{}, for example, the
 
 \subsubsection{Signal Interference Issues}
 
-The \ac{RED}'s Power Supply interference made the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relativly easy to filter using the scipy.signal library \cite{RefWorks:butter}, detailed in Section \ref{LowPassFilter}. Further, arch position changing without pressing the button likely due to noise in the \ac{RED} from the Power Supply made testing slighlty more annoying, but it was not happening often enough to disrupt testing too much, it was considered an acceptable quirk.
+The \ac{RED}'s Power Supply interference made the signal very noisy. However due to the nature of the high frequency noise and low frequency signal, it meant that it was relatively easy to filter using the scipy.signal library \cite{RefWorks:butter}, detailed in Section \ref{LowPassFilter}. Further, arch position changing without pressing the button likely due to noise in the \ac{RED} from the Power Supply made testing slightly more annoying, but it was not happening often enough to disrupt testing too much, it was considered an acceptable quirk.
 
 \subsubsection{Impact on Look-Up Table development}
 
@@ -27,16 +27,16 @@ The most significant impact to the project caused by these issues with the \ac{R
     \item Validating position determination accuracy across the sensor's field of view
 \end{itemize}
 
-The compbination of these limitations of the \ac{RED} testbench made it impractical to gather the comprehensive dataset required to fulfill these goals, as without a reliable dataset across the entire \ac{FOV} it is not possible to predict the location of light.
-These limitations ultimatly directly affected the ability to detect the light position, and we could only take some readings and compare them to the simulated environment. These comparison were ultimatly close, therefore it is believed that with better testbench accuracy, the \ac{LUT} and ability to "read" new light positions would be possible.
+The combination of these limitations of the \ac{RED} testbench made it impractical to gather the comprehensive dataset required to fulfil these goals, as without a reliable dataset across the entire \ac{FOV} it is not possible to predict the location of light.
+These limitations ultimately directly affected the ability to detect the light position, and we could only take some readings and compare them to the simulated environment. These comparison were ultimately close, therefore it is believed that with better testbench accuracy, the \ac{LUT} and ability to "read" new light positions would be possible.
 
 \subsection{Aperture placement accuracy}
 
-Another big limitation on accuracy of the readings will be the manually placed apertures. As shown earlier in Figure \ref{fig:aperturePhoto}, the apertures are far from perfectly in the middle. This will have a huge impact on the accuracy of the readings especially when compared to a simulated environment which have perfectly placed apertures. Howver, if we had been able to create a \ac{LUT} using the real measurements with aperture as-is, the results could have theoretically been used to read the location of light. Unfortunately, as stated above, that was also impossible due to the limitations of the testbench. These two main factors were the main cause of not being able to perform a calibration and perform actual readings to test the ability to read light locations. 
+Another big limitation on accuracy of the readings will be the manually placed apertures. As shown earlier in Figure \ref{fig:aperturePhoto}, the apertures are far from perfectly in the middle. This will have a huge impact on the accuracy of the readings especially when compared to a simulated environment which have perfectly placed apertures. However, if we had been able to create a \ac{LUT} using the real measurements with aperture as-is, the results could have theoretically been used to read the location of light. Unfortunately, as stated above, that was also impossible due to the limitations of the testbench. These two main factors were the main cause of not being able to perform a calibration and perform actual readings to test the ability to read light locations. 
 
 \subsection{Model Limitations and Future Work}
 \begin{itemize}
-    \item The vertical scale differs between plots figure~\ref{fig:Model and Physical Results Comparison}: simulated hits are relative percentages, while the experimental data reflects voltage. A calibration factor could be introduced in future to improve this correspondence.
+    \item The vertical scale differs between plots figure~\ref{fig:ModelandPhysicalResultsComparison}: simulated hits are relative percentages, while the experimental data reflects voltage. A calibration factor could be introduced in future to improve this correspondence.
     \item Minor asymmetries in the experimental data may arise from mechanical inaccuracies or misalignment, which are not currently modelled.
     \item Future improvements may incorporate ray divergence, non-ideal optics, or sensor sensitivity profiles to further refine realism.
 \end{itemize}
