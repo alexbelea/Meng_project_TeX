@@ -8,7 +8,7 @@
 %       ~~~   TIA SUB SUB SECTION   ~~~
 %
 \subsubsection{\acf{TIA}}
-A reverse-biased photodiode allows a current to flow from the cathode to anode which is connected to ground. This current is converted to a Voltage using a \ac{TIA} with the following relationship derived as in Appendix Figure \ref{fig:Vo_deriv}:
+A reverse-biased photodiode allows a current to flow from the cathode to anode which is connected to ground. A adding a resistor in seried with the photodiode and measuring the voltage across the resistor would be a form of I-to-V conversion, however it would distort the reading due to non-zero impedance to to the input current \cite[p.233]{RefWorks:horowitz2015theart}. This current is instead converted to a Voltage using a \ac{TIA} with the following relationship derived as in Appendix Figure \ref{fig:Vo_deriv}:
 \begin{equation} \label{eq:TIAoutput} % Voltage output TIA
   \begin{split}
   V_{\text{out}} = - I_{\text{ph}} \cdot R_f
@@ -31,8 +31,59 @@ Where $P$ is Light Power (W) and $R_{\lambda}$ is Responsivity (A/W).
 \end{equation}
 \addequation{TIA Output with Photodiode Response}
 
-The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:AltiumDis} that provides very high imput impedance (1G$\Omega$) and allows the amplification of the signal without disturbing the photodiode current, therefore not affecting the readings. The inverting input is used in this configuration, which converts the negative current flowing from the cathode to the anode of the photodiode, into a positive voltage.
+The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:AltiumDis} that provides very high imput impedance (1G$\Omega$) and allows the amplification of the signal without disturbing the photodiode current, therefore not affecting the readings. The gain of the circuit is simply $A=-Rf$ \cite[p.535]{RefWorks:horowitz2015theart}. The inverting input is used in this configuration, which converts the negative current flowing from the cathode to the anode of the photodiode, into a positive voltage. A \ac{TIA} usually requires a feedback capacitor in parallel with the feedback resistor, this is because the photodiode capacitance forms a low-pass filter with the feedback resistor. However, for our purpose this was not necessary due to the DC-like signal. The low-pass filter forming for our 1M$\Omega$ resistor and 3pF terminal capacitance of the photodiode:
+\begin{equation} \label{eq:LPfilterCRf}
+f_c = \frac{1}{2\pi RC} = \frac{1}{2\pi \cdot 1\text{ M}\Omega \cdot 3\text{ pF}} = 53,051\text{ Hz}
+\end{equation}
+\addequation{Low-Pass filter formed from Photodiode capacitance and Rf}
+This shows a low-pass filter of around 53kHz is formed, which can be ignored for our DC current.
+\paragraph{An \ac{OpAmp}} circuit introduces a \textbf{phase-shift}, and with two \acp{OpAmp} the phase-shift would be disturbed even more in an AC circuit. However as the signal we are dealing with is DC, phase shift can be ignored, it would just show up as a certain ammount of delay in the signal amplitude change when the light position changes.
 
+\subsection{OpAmp Noise}
+Operational Amplifiers introduce some noise that must be taken into account. Previously we discussed the photodiode dark current, which was decided could be ignored as it was below our ADC resolution of 4.88mV.
+
+The \textbf{Short Circuit Noise Current} at input can be calculated as such (at 298K) \cite[p.439]{RefWorks:horowitz2015theart}:
+
+%% EQUATIONS
+\begin{equation} \label{Thermal Current Noise}
+  \begin{split}
+  i_{n,thermal} &= \sqrt{\frac{4kT}{R_f}} \\
+  i_{n,thermal} &= 1.28 \times 10^{-10} \cdot R_f^{-\frac{1}{2}} \\
+  i_{n,thermal} &= 0.128\text{ pA}/\sqrt{\text{Hz}} \\
+  \end{split}
+  \end{equation}
+  \addequation{Thermal Current Noise Calculation for Feedback Resistor}
+  % END OF EQUATION
+This would give an input noise of 0.128pA at 1Hz.
+
+The \textbf{Johnson-Nyquist Noise} at input from the feedback resistor is:
+\begin{equation} \label{JohnsNoiseRf}
+  \begin{split}
+  e_n &= \sqrt{4kTR} \\
+  e_n &= \sqrt{4 \times 1.38 \times 10^{-23} \times 298 \times 1 \times 10^6} \\
+  e_n &= \sqrt{1.64 \times 10^{-14}} \\
+  e_n &= 1.28 \times 10^{-7} \text{ V}/\sqrt{\text{Hz}} \\
+  e_n &= 128 \text{ nV}/\sqrt{\text{Hz}} \\
+  \end{split}
+  \end{equation}
+  \addequation{Johnson Noise from TIA feedback resistor}
+
+
+Multiplying the Johnson by the gain of the circuit:
+%1
+\begin{equation} \label{Amplified Voltage Noise}
+  \begin{split}
+    e_{n,\text{out}} &= e_n \times \text{Gain} \\
+    &= 128\,\text{nV}/\sqrt{\text{Hz}} \times 1 \times 10^6 \\
+    &= 128\,\text{nV} \times 10^6\,\text{nV}/\sqrt{\text{Hz}} \\
+    &= 128\,\text{mV}/\sqrt{\text{Hz}}
+  \end{split}
+\end{equation}
+\addequation{Amplified Voltage Noise with Gain of $10^6$}
+
+We see that the noise is dominated by the Johnson Noise of 0.128V.  While this is significant, in real test results it did not affect our readings, presumably because we added both a feedback capacitor on the secondary amplifier and futher digital low pass filtering after sampling the signal. 
+
+%Again, the resulting value is insignificant for our project. Therefore it was decided that the noise values can be ignored.
 % Altium Diagram
 %
 \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
