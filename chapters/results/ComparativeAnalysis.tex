@@ -1,6 +1,40 @@
 % PrototypeComparison.tex
 \section{Comparative Analysis}
- This section compares the simulation with the prototype results.
+
+To assess the accuracy of the developed simulation model, results from a full simulation run were compared against experimental data collected using the same sensor topology and an equivalent arc motion sequence.
+
+Figure~\ref{fig:Model and Physical Results Comparison} presents a side-by-side comparison:
+\begin{itemize}
+    \item \textbf{Left:} Simulated illumination per sensor, expressed as the percentage of total emitted rays that intersected with each sensor area, plotted against the arc rotation angle.
+    \item \textbf{Right:} Experimentally measured voltages from each physical sensor during the emitter's arc sweep. Signals have been filtered to reduce noise and highlight the response envelope.
+\end{itemize}
+ 
+ \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/results/images/Comparison_plot.png} % change {path}
+    \caption{Model and Physical Results Comparison}       % change {caption}
+    \label{fig:Model and Physical Results Comparison}            % change label - used for reference in text
+\end{figure}
+
+
+\subsection*{Key Observations}
+\begin{enumerate}
+    \item \textbf{Overall Response Pattern:} Both plots show a clear progression of peak response across the sensor array. Sensor A2 activates first, followed by A1, A0, and then A3 — consistent with the expected spatial sequence during the rotation.
+    
+    \item \textbf{Peak Alignment:} The positions of the peak responses in the simulated and experimental plots align closely, suggesting that the source plane's movement and orientation in the simulation accurately reflect real-world conditions.
+    
+    \item \textbf{Response Smoothness:} The transition between sensor activations is smooth in both data sets. This indicates realistic spatial spreading of rays in the simulation, and good agreement with physical measurements.
+\end{enumerate}
+
+\subsection*{Interpretation}
+This result provides strong validation for:
+\begin{itemize}
+    \item The geometric modelling of planes, areas, and ray emission in the simulation framework.
+    \item The arc rotation logic, particularly the ``rigid arc'' strategy where the plane consistently faces the origin.
+    \item The accuracy of the designed sensor layout and aperture configuration.
+\end{itemize}
+
+
 \subsection{Breadboard vs. Stripboard Results}
 % Your content here
 
@@ -14,6 +48,8 @@ The performance ...
 \subsection{Design Evolution Assessment}
 % Your content here
 The what now?
+
+
 
 
 % Example figure jpg
