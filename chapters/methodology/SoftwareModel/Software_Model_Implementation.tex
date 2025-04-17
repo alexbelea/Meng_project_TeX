@@ -8,9 +8,10 @@ The software model implements the theoretical foundation to provide a flexible f
 The architecture consists of several key components:
 \begin{itemize}
 \item Core geometric objects (Planes, Areas, Lines) that encapsulate the mathematical properties
+\item Source Plane movement comprising translations and rotations
 \item Simulation engine for trajectory generation and intersection testing
 \item Configuration system for experiment setup
-\item Visualisation  pipeline for result analysis
+\item Visualisation for result analysis
 \item User interface for interactive control
 \end{itemize}
 
@@ -36,6 +37,52 @@ Where \texttt{Class} objects \texttt{Planes}, \texttt{Areas} represent:
     \bottomrule
     \end{tabular}
     \end{table}
+
+\subsubsection{Arc Rotation}
+To accurately simulate the interaction between the dynamic source plane and fixed sensor regions, the software model incorporates \textbf{three distinct rotation strategies}. These allow for controlled variation in the position and orientation of the source plane and facilitate flexible experimental scenarios.
+Each strategy modles a different type of scanning behaviour and is implemented modularly within the \texttt{arcRotation.py} and \texttt{main.py} modules.
+
+\paragraph{Rigid Arc}
+
+In this strategy:
+\begin{itemize}
+    \item The source plane moves along a semicircular arc in the X-Z plane (constant radius).
+    \item At each step, the plane is rotated to face the global origin $(0,0,0)$ on the sensor plane.
+    \item This simulates the rotation relative to unidirectional light emission source, like the Sun. 
+    \item All positions are precalculated, then rotated by 'tilt angles' in the X-axis. Visualised in figure~\ref{fig:Ridig Arc Scanning Mode}   
+\end{itemize} 
+
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/methodology/SoftwareModel/images/Rigid Arc.png} % change {path}
+    \caption{Rigid Arc Scanning Mode - Tilt Angles Left (0°) Right (0°,45°) }       % change {caption}
+    \label{fig:Ridig Arc Scanning Mode}            % change label - used for reference in text
+\end{figure}   
+
+\paragraph{Horizontal Circles}
+
+This method generates a set of circular paths in the XY plane, each at a different Z height ($\varphi$) angles:
+
+\begin{itemize}
+    \item At each Z-level (elevation), the plane performs a full 360° rotation around the Z-axis, visualised in left figure~\ref{fig:Horizontal and Vertical Scanning Modes}
+    \item Simulating scanning the sensor area from different elevation angles, while keeping the plane parallel to the XY plane. 
+\end{itemize}
+
+\paragraph{Vertical Circles}
+
+In this mode, the source moves along vertical arcs (meridians), while scanning across azimuthal ($\theta$) angles:
+
+\begin{itemize}
+    \item At each azimuthal angle, the plane performs a 180° rotation around the Z-axis visualised in right figure~\ref{fig:Horizontal and Vertical Scanning Modes}.
+    \item This movement style traces vertical circles, like longitude lines on a globe.
+\end{itemize}
+
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/methodology/SoftwareModel/images/Other movements.png} % change {path}
+    \caption{Horizontal and Vertical Scanning Modes}       % change {caption}
+    \label{fig:Horizontal and Vertical Scanning Modes}            % change label - used for reference in text
+\end{figure}  
 
 \subsubsection{Intersections}
 The intersection calculations are implemented in the intersectionCalculations.py module, with four main functions:
@@ -135,6 +182,41 @@ After calculating the intersection point, the system checks if the point falls w
 This process runs incrementally, checking whether the lines intersect with apertures, and if so, checking for intersection with sensors. If both conditions are met, then 'illumination' occurs. 
 
 \paragraph{Assumptions}
+The development of the software model and simulation framework involved several assumptions to enable tractable, consistent, and focused analysis. These assumptions are the basis for the implementation and set the boundary conditions for interpreting results.
+
+\paragraph{Geometric}
+\begin{itemize}
+    \item Planes are rectangular and rigid: All $Plane$ and $Area$ objects are assumed to be flat rectangular surfaces.
+    \item Local coordinate frames $(right, up, normal)$ are assumed to form an orthonormal basis derived via the $right-hand$ rule using a predefined $world_up$ vector.
+    \item Plane local coordinates are recalculated from the center position and orientation at each step using fixed width and length.
+\end{itemize}
+
+\paragraph{Line Emission and Direction}
+\begin{itemize}
+    \item Lines are emitted orthogonally to the source plane’s surface (i.e., in the direction of the plane’s normal vector).
+
+    \item All lines are assumed to be infinite in length, with intersection checked against finite planes.
+    
+    \item Initial emission points for all lines are randomly distributed within the local bounds of the source plane.
+\end{itemize}
+
+\paragraph{Rotation and Arc Movement}
+\begin{itemize}
+    \item In rigid arc mode, the plane always faces the global origin regardless of position.
+
+    \item For vertical and horizontal circle modes:
+    \item Planes move along spherical arcs with constant radius.
+    \item Primary and secondary rotation matrices are sequentially applied using defined axes.
+    \item Rotations are idealised and simplistic: Instantaneous and discrete.
+\end{itemize}
+
+\paragraph{Intersection Physics and Hit Detection}
+\begin{itemize}
+    \item Intersection detection assumes ideal mathematical planes: Thickness, reflectivity, or surface texture are not modelled.
+    \item A line is marked as a hit only if the intersection point lies within both the aperture area and a defined sensor area.
+    \item No consideration is given to beam divergence, attenuation, or scattering.
+    \item No physical laws (e.g., Snell’s law) are implemented — the model uses only geometric approximation.
+\end{itemize}
 
 \subsubsection{Model Configuration}
 
