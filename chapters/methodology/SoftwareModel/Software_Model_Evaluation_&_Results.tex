@@ -1,7 +1,7 @@
 \subsection{Data Analysis and Evaluation}
 After the ray-tracing simulation completes, the data generated is analysed to evaluate the performance of the sensor topology. 
 
-This component evaluates the performance of the system at each step along the trajectory of the source plane. The analysis uses data stored in the $results.csv$ and $sensor\_results.csv$ output files to calculate and visualise hit efficiency. 
+This component evaluates the performance of the system at each step along the trajectory of the source plane. The analysis uses data stored in the $results-\\.csv$ and $sensor\_results.csv$ output files to calculate and visualise hit efficiency. 
 
 \subsubsection{Result Analysis Function: \texttt{plot\_hit\_percentage()}}
 
@@ -38,15 +38,15 @@ Each output is a 3D surface plot, Figure~\ref{fig:Sensor Surface Output Plot}, w
     \item The $y$-axis represents the \textbf{tilt angle} (vertical angular sweep),
     \item The $z$-axis shows the \textbf{number of ray hits} for each sensor.
 \end{itemize}
-
-\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
-    \centering
-    \includegraphics[width=0.9\textwidth]{chapters/methodology/SoftwareModel/images/Sensor Surface Plots.png} % change {path}
-    \caption{\texttt{sensor\_surface\_plots()} Output Plot}       % change {caption}
-    \label{fig:Sensor Surface Output Plot}            % change label - used for reference in text
-\end{figure}  
-
 This visualisation allows for an evaluation of the angular coverage of each sensor and the orthogonality of the measurements.
+\begin{landscape}
+    \begin{figure}[p] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+        \centering
+        \includegraphics[width=1\textwidth]{chapters/methodology/SoftwareModel/images/Sensor Surface Plots.png} % change {path}
+        \caption{\texttt{sensor\_surface\_plots()} Output Plot}       % change {caption}
+        \label{fig:Sensor Surface Output Plot}            % change label - used for reference in text
+    \end{figure}
+\end{landscape}
 
 \subsubsection{Model Testing}
 To validate the functionality of the model test configurations were created. Each test scenario targets a specific feature or behaviour of the ray-plane interaction system, ensuring that the model behaves as expected.
