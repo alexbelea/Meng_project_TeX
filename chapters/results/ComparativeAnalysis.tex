@@ -10,11 +10,10 @@ Figure~\ref{fig:Model and Physical Results Comparison} presents a side-by-side c
 \end{itemize}
 \subsection*{Key Observations}
 \begin{enumerate}
-    \item \textbf{Overall Response Pattern:} Both plots show a clear progression of peak response across the sensor array. Sensor A2 activates first, followed by A1, A0, and then A3 — consistent with the expected spatial sequence during the rotation.
+    \item \textbf{Overall Response Pattern:} Both plots show a clear progression of peak response across the sensor array. Sensor A2 activates first, followed by A1, A0, and then A3, which is consistent with the expected sequence during the rotation.
     
-    \item \textbf{Peak Alignment:} The positions of the peak responses in the simulated and experimental plots align closely, suggesting that the source plane's movement and orientation in the simulation accurately reflect real-world conditions.
-    
-    \item \textbf{Response Smoothness:} The transition between sensor activations is smooth in both data sets. This indicates realistic spatial spreading of rays in the simulation, and good agreement with physical measurements.
+    \item \textbf{Peak Alignment:} The positions of the peak responses in the simulated and experimental plots align closely, suggesting that the source plane's movement and orientation in the simulation accurately reflects the RED testbench's real process.
+
 \end{enumerate}
  \begin{landscape}
     \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
@@ -24,6 +23,9 @@ Figure~\ref{fig:Model and Physical Results Comparison} presents a side-by-side c
         \label{fig:Model and Physical Results Comparison}            % change label - used for reference in text
     \end{figure}
  \end{landscape}
+
+The simulation and hardware behave in the same way, sensors are gradually illuminated and fade out as expected. The simulation appears to be handling the geometry correctly, and the physical sensor design works as intended.
+
 
 \subsection*{Interpretation}
 This result provides strong validation for:
