@@ -1,4 +1,25 @@
 \chapter{Future Work}
-Mention: methods to avoid detecting sun reflections off the moon and earth (such as light intensity or light source width if possible).
+%Mention: methods to avoid detecting sun reflections off the moon and earth (such as light intensity or light source width if possible).
 
-Unfortunately, there was no other easily available method of fabricating the apertures, such as having the apertures printed on glass with a fully opaque ink. Another method considered and attempted was to 3D print the apertures, but this would have resulted in the apertures having a thickness that would have changed the way the light enters, depending on the angle of the light.
+%Unfortunately, there was no other easily available method of fabricating the apertures, such as having the apertures printed on glass with a fully opaque ink. Another method considered and attempted was to 3D print the apertures, but this would have resulted in the apertures having a thickness that would have changed the way the light enters, depending on the angle of the light.
+
+\paragraph{Enhanced Aperture Design and Manufacturing}
+
+The current prototype utilized manually placed apertures, resulting in alignment inconsistencies that affected measurement accuracy. 
+Future iterations should explore precision manufacturing techniques such as photolithography or laser etching to create apertures with consistent placement and sharper edges. 
+Additionally, testing alternative aperture geometries could optimize the sensor's field of view and accuracy across different incident angles.
+
+\paragraph{Advanced Calibration Techniques}
+
+Development of a comprehensive Look-Up Table (LUT) and interpolation algorithm would enable more precise attitude determination. 
+Future work should include deploying the sensor on a high-precision platform to map responses across the entire field of view, generating a detailed calibration map.
+
+\paragraph{Enviromnetla Qualification and Testing}
+
+While thermal simulations suggested the viability of the design in space conditions, physical testing in thermal vacuum chambers would validate the sensor's performance under actual space-like conditions. 
+Radiation testing would also be necessary to assess component degradation over an extended mission lifetime.
+
+\paragraph{Discrimination capabilities}
+
+Methods to avoid detecting sun reflections from the Earth, Moon, or spacecraft components should be investigated. 
+Possibilities include implementing intensity thresholds, spectral filtering, or temporal signature analysis to distinguish direct solar illumination from reflected sources.
