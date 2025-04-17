@@ -8,7 +8,7 @@
 %       ~~~   TIA SUB SUB SECTION   ~~~
 %
 \subsubsection{\acf{TIA}}
-A reverse-biased photodiode allows a current to flow from the cathode to anode which is connected to ground. A adding a resistor in seried with the photodiode and measuring the voltage across the resistor would be a form of I-to-V conversion, however it would distort the reading due to non-zero impedance to to the input current \cite[p.233]{RefWorks:horowitz2015theart}. This current is instead converted to a Voltage using a \ac{TIA} with the following relationship derived as in Appendix Figure \ref{fig:Vo_deriv}:
+A reverse-biased photodiode allows a current to flow from the cathode to anode which is connected to ground. A adding a resistor in series with the photodiode and measuring the voltage across the resistor would be a form of I-to-V conversion, however it would distort the reading due to non-zero impedance to to the input current \cite[p.233]{RefWorks:horowitz2015theart}. This current is instead converted to a Voltage using a \ac{TIA} with the following relationship derived as in Appendix Figure \ref{fig:Vo_deriv}:
 \begin{equation} \label{eq:TIAoutput} % Voltage output TIA
   \begin{split}
   V_{\text{out}} = - I_{\text{ph}} \cdot R_f
@@ -31,13 +31,13 @@ Where $P$ is Light Power (W) and $R_{\lambda}$ is Responsivity (A/W).
 \end{equation}
 \addequation{TIA Output with Photodiode Response}
 
-The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:AltiumDis} that provides very high imput impedance (1G$\Omega$) and allows the amplification of the signal without disturbing the photodiode current, therefore not affecting the readings. The gain of the circuit is simply $A=-Rf$ \cite[p.535]{RefWorks:horowitz2015theart}. The inverting input is used in this configuration, which converts the negative current flowing from the cathode to the anode of the photodiode, into a positive voltage. A \ac{TIA} usually requires a feedback capacitor in parallel with the feedback resistor, this is because the photodiode capacitance forms a low-pass filter with the feedback resistor. However, for our purpose this was not necessary due to the DC-like signal. The low-pass filter forming for our 1M$\Omega$ resistor and 3pF terminal capacitance of the photodiode:
+The \ac{TIA} circuit makes use of an \ac{OpAmp} as seen in Figure \ref{fig:AltiumDis} that provides very high input impedance (1G$\Omega$) and allows the amplification of the signal without disturbing the photodiode current, therefore not affecting the readings. The gain of the circuit is simply $A=-Rf$ \cite[p.535]{RefWorks:horowitz2015theart}. The inverting input is used in this configuration, which converts the negative current flowing from the cathode to the anode of the photodiode, into a positive voltage. A \ac{TIA} usually requires a feedback capacitor in parallel with the feedback resistor, this is because the photodiode capacitance forms a low-pass filter with the feedback resistor. However, for our purpose this was not necessary due to the DC-like signal. The low-pass filter forming for our 1M$\Omega$ resistor and 3pF terminal capacitance of the photodiode:
 \begin{equation} \label{eq:LPfilterCRf}
 f_c = \frac{1}{2\pi RC} = \frac{1}{2\pi \cdot 1\text{ M}\Omega \cdot 3\text{ pF}} = 53,051\text{ Hz}
 \end{equation}
 \addequation{Low-Pass filter formed from Photodiode capacitance and Rf}
 This shows a low-pass filter of around 53kHz is formed, which can be ignored for our DC current.
-\paragraph{An \ac{OpAmp}} circuit introduces a \textbf{phase-shift}, and with two \acp{OpAmp} the phase-shift would be disturbed even more in an AC circuit. However as the signal we are dealing with is DC, phase shift can be ignored, it would just show up as a certain ammount of delay in the signal amplitude change when the light position changes.
+\paragraph{An \ac{OpAmp}} circuit introduces a \textbf{phase-shift}, and with two \acp{OpAmp} the phase-shift would be disturbed even more in an AC circuit. However as the signal we are dealing with is DC, phase shift can be ignored, it would just show up as a certain amount of delay in the signal amplitude change when the light position changes.
 
 \subsection{OpAmp Noise}
 Operational Amplifiers introduce some noise that must be taken into account. Previously we discussed the photodiode dark current, which was decided could be ignored as it was below our ADC resolution of 4.88mV.
@@ -81,7 +81,7 @@ Multiplying the Johnson by the gain of the circuit:
 \end{equation}
 \addequation{Amplified Voltage Noise with Gain of $10^6$}
 
-We see that the noise is dominated by the Johnson Noise of 0.128V.  While this is significant, in real test results it did not affect our readings, presumably because we added both a feedback capacitor on the secondary amplifier and futher digital low pass filtering after sampling the signal. 
+We see that the noise is dominated by the Johnson Noise of 0.128V.  While this is significant, in real test results it did not affect our readings, presumably because we added both a feedback capacitor on the secondary amplifier and further digital low pass filtering after sampling the signal. 
 
 %Again, the resulting value is insignificant for our project. Therefore it was decided that the noise values can be ignored.
 % Altium Diagram
@@ -97,7 +97,7 @@ We see that the noise is dominated by the Johnson Noise of 0.128V.  While this i
 %
 \subsubsection{Secondary Amplification}
 \label{secondAmp}  
-Testing showed that even using a 1M$\Omega$ resistor, the output Voltage was too low (around 310mV) at our \ac{RED} testbench' \acp{LED} maximum brightness, as explained in Section \ref{explainPostAmp}. To raise the maximum Voltage to the desired maxium of the ADC of 5V, a higher feedback resistor could be used, however this would introduced noise and would require more complicated TIA with feedback capacitors. Due to the LM324-N having 4 \acp{OpAmp}, the decision was taken to implement a Secondary Amplification circuit. The non-inverting \ac{OpAmp} configuration was chosen to maintain the voltage positive, which also means there is no need for a dual power supply and keeps the Voltage positive for the Arduino ADC.
+Testing showed that even using a 1M$\Omega$ resistor, the output Voltage was too low (around 310mV) at our \ac{RED} testbench' \acp{LED} maximum brightness, as explained in Section \ref{explainPostAmp}. To raise the maximum Voltage to the desired maximum of the ADC of 5V, a higher feedback resistor could be used, however this would introduced noise and would require more complicated TIA with feedback capacitors. Due to the LM324-N having 4 \acp{OpAmp}, the decision was taken to implement a Secondary Amplification circuit. The non-inverting \ac{OpAmp} configuration was chosen to maintain the voltage positive, which also means there is no need for a dual power supply and keeps the Voltage positive for the Arduino ADC.
 A simple calculation was made to figure out the required Gain of the circuit:
 \begin{equation} \label{gainCalc}
   A = \frac{\text{required Voltage}}{\text{measured}} = \frac{5\text{ V}}{0.31\text{ V}} = 16.1
@@ -118,7 +118,7 @@ Knowing the gain required, the feedback resistor was calculated by choosing a 10
 \end{equation}
 \addequation{Amplifier Feedback Resistor Calculation}
 
-This provides a gain $A= 16$ which is very close to the Gain required in Equation \ref{gainCalc}. Further it must be stated that the resistors used have a tolerance of 10\% - therefore the actual final gain will fluctuate by that much. Once the design was tested on a BreadBoard, it was transfered to a stripboard as pictured in Figure \ref{fig:StripboardPhoto}.
+This provides a gain $A= 16$ which is very close to the Gain required in Equation \ref{gainCalc}. Further it must be stated that the resistors used have a tolerance of 10\% - therefore the actual final gain will fluctuate by that much. Once the design was tested on a BreadBoard, it was transferred to a stripboard as pictured in Figure \ref{fig:StripboardPhoto}.
 Later in the design during testing, a decision was made to add a $1\mu$F capacitor in parallel with the feedback resistor of the Secondary Amplifier. This creates a low-pass filter on the output as seen in Eq. \ref{Low Pass Filter Calculation}.
 \begin{equation} \label{Low Pass Filter Calculation}
   \begin{split}

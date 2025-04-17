@@ -7,7 +7,7 @@
 % \end{lstlisting}
 
 % % for figures
-% \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+% \begin{figure}[htbp] %h-ere t-op b-ottom p-page (separate) -good to allow all htbp to give the compiler more options
 %     \centering
 %     \includegraphics[width=0.6\textwidth]{figures/methodology/system_architecture.jpg}
 %     \caption{System Architecture Diagram}
@@ -29,7 +29,7 @@
 \subsection{Functional Requirements}
 % Your content here
 The output signal from the photodiode array amplifier is required to be converted to digital form for post-processing. This requirement is filled by designing a Digital Acquisition System (DAQ) capable of recording the signal from the four photodiode circuits simultaneously.
-The choice of design was conceived by analyzing the analog signal and determining some basic requirements of the Analog to Digital Converter (ADC) the DAQ must possess. 
+The choice of design was conceived by analysing the analog signal and determining some basic requirements of the Analog to Digital Converter (ADC) the DAQ must possess. 
 %
 % ANALOG SIGNAL CHARACTERISTICS
 %
@@ -53,16 +53,16 @@ The choice of design was conceived by analyzing the analog signal and determinin
 
 The output of the DAQ is to be saved in Comma Separated Values (CSV) file format, with columns as follows: Sample(nr.), Time(ms), A0(V), A1(V), A2(V), A3(V). This allows for easy post-processing and plotting.
 \subsection{Design Approach}
-The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultanously and in sync, meant two things: the Sampling Rate could be quite low due to Nyquist theorem telling us that the sampling rate must be at least twice the frequency of the signal being sampled, in order to maintain the original signal without aliasing~\cite[p. 146]{RefWorks:oppenheim2013discrete-time}. Therefore a low performing ADC is acceptable for a signal changing at under 1Hz. And secondly, the DAQ must support sampling from at least four analog inputs. These requirements meant that a cheap Arduino based DAQ could fit perfectly the needs of the project: it is powered by the Atmega328P which has an included ADC of 15 ksps~\cite[p.205]{RefWorks:atmel2015atmega328p}. And the Arduino Nano has four analog inputs. 
+The characteristics of the signal being low frequency, combined with the requirement to read all four signals simultaneously and in sync, meant two things: the Sampling Rate could be quite low due to Nyquist theorem telling us that the sampling rate must be at least twice the frequency of the signal being sampled, in order to maintain the original signal without aliasing~\cite[p. 146]{RefWorks:oppenheim2013discrete-time}. Therefore a low performing ADC is acceptable for a signal changing at under 1Hz. And secondly, the DAQ must support sampling from at least four analog inputs. These requirements meant that a cheap Arduino based DAQ could fit perfectly the needs of the project: it is powered by the Atmega328P which has an included ADC of 15 ksps~\cite[p.205]{RefWorks:atmel2015atmega328p}. And the Arduino Nano has four analog inputs. 
 \subsubsection{Arduino Programming}
 The Arduino-based DAQ will require both a C++ program written for the Arduino itself, as well as a program or script on the PC receiving the digitized signal, this is because the Arduino lacks both the memory requirements and capability to store the recorded digitized signal to some internal memory.
-\paragraph{The Arduino C++ Program} must be able to listen to commands from the user on the PC receiving, start a recording, and immediatly transmit to the PC over serial communication. 
+\paragraph{The Arduino C++ Program} must be able to listen to commands from the user on the PC receiving, start a recording, and immediately transmit to the PC over serial communication. 
 
 \subsection{Technical Specifications}
 
 
 \subsubsection{Arduino Code}
-The Arduino Code which uses the Arduino ADC is formed of the setup() function triggered once at the start/reset of the device and a standard contnuous loop triggered after setup comletes. Inside the loop, two if statements check for instructions from the PC script. The recording time limit is hardcoded as a global function. Figure~\ref{fig:arduinoPseudoCodeFlowchart} shows the algorithm as a Flowchart that checks for Serial data in, waits for a command to start recording, and if recording time has reached the preset limit, it stops recoring, sends the last values to the Python script on the PC and a "recording\_stopped" command. A FSM diagram is also available in Figure~\ref{fig:arduinoFSM}. The pseudocode used while designing the Arduino side of the DAQ system, is available in Listing~\ref{lst:arduinoPseudoCode}. The final code is available in Appendix \ref{subsec:arduinoCppcode}.
+The Arduino Code which uses the Arduino ADC is formed of the setup() function triggered once at the start/reset of the device and a standard continuous loop triggered after setup completes. Inside the loop, two if statements check for instructions from the PC script. The recording time limit is hardcoded as a global function. Figure~\ref{fig:arduinoPseudoCodeFlowchart} shows the algorithm as a Flowchart that checks for Serial data in, waits for a command to start recording, and if recording time has reached the preset limit, it stops recording, sends the last values to the Python script on the PC and a "recording\_stopped" command. A FSM diagram is also available in Figure~\ref{fig:arduinoFSM}. The pseudocode used while designing the Arduino side of the DAQ system, is available in Listing~\ref{lst:arduinoPseudoCode}. The final code is available in Appendix \ref{subsec:arduinoCppcode}.
 \paragraph{The Atmega328P} does not have a separate ADC clock input, therefore the CPU clock is used by first dividing by a default rate of 128, this divider is changed to 16 by changing bits 2-0 to 100, as per~\cite[p.219]{RefWorks:atmel2015atmega328p}. This increases the clock speed available to the ADC for a higher sampling rate. This results in a 1MHz clock signal to the ADC (16MHz/16) which seemed needed when dealing with multiplexing four analog inputs to a single ADC. The process is as follows:
 
 
@@ -144,11 +144,11 @@ Effective data rate across all channels:
 \end{split}
 \end{equation}
 \addequation{Total Effective Data Rate}
-In real testing the actual sampling rate was closer to 330Hz for 5 second recordings or 100Hz for a 2 minute recording - after some investigation the only explanation was the relativly small size of the transmission buffer implemented by the Serial C++ library. The buffer is of only 64 bytes, and when it fills, the function Serial.write() (used by println() ) will block the write untill there is space in the buffer[ref:arduino.cc/serial.write]. As our line of text is quite long "498,5000,0.059,0.054,0.073" for example has 26 characters (last line of a 5 second recording). For larger recording length, where the first and second column, Sample and Time, can get quite large, the sampling rate decreased considerably, but was kept constant (around 10ms for a 2 minute recording). Presumably due to optimization in the Arduino Serial Hardware/Software or compiler, it remains constant at 10ms. However this was not investigated further as for our near-DC signal, even 10ms was a fast enough sampling rate for our DC-like signal.
+In real testing the actual sampling rate was closer to 330Hz for 5 second recordings or 100Hz for a 2 minute recording - after some investigation the only explanation was the relatively small size of the transmission buffer implemented by the Serial C++ library. The buffer is of only 64 bytes, and when it fills, the function Serial.write() (used by println() ) will block the write until there is space in the buffer[ref:arduino.cc/serial.write]. As our line of text is quite long "498,5000,0.059,0.054,0.073" for example has 26 characters (last line of a 5 second recording). For larger recording length, where the first and second column, Sample and Time, can get quite large, the sampling rate decreased considerably, but was kept constant (around 10ms for a 2 minute recording). Presumably due to optimization in the Arduino Serial Hardware/Software or compiler, it remains constant at 10ms. However this was not investigated further as for our near-DC signal, even 10ms was a fast enough sampling rate for our DC-like signal.
 
 
 % Flowchart Arduino Code
-\begin{figure}[p] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+\begin{figure}[p] %h-ere t-op b-ottom p-page (separate) -good to allow all htbp to give the compiler more options
     \centering
     \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/flowchart_Arduino_code.png}
     \caption{Flowchart Arduino DAQ C++ program}
@@ -156,7 +156,7 @@ In real testing the actual sampling rate was closer to 330Hz for 5 second record
 \end{figure}
 
 % FSM Arduino LOOP
-\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separte) -good to allow all htbp to give the compiler more options
+\begin{figure}[htbp] %h-ere t-op b-ottom p-page (separate) -good to allow all htbp to give the compiler more options
   \centering
   \includegraphics[width=0.95\textwidth]{chapters/methodology/ArduinoDAQ/arduino_loop_FSM.png}
   \caption{FSM Arduino C++ LOOP}
@@ -173,7 +173,7 @@ In real testing the actual sampling rate was closer to 330Hz for 5 second record
   // Initialize analog inputs
   // Setup ADC
 
-  // Infrom PC listening on Serial Connection: Arduino is ready to record
+  // Inform PC listening on Serial Connection: Arduino is ready to record
   Serial.print("Arduino_DAQ_Ready")
   // enter the loop 
   void loop(){
@@ -309,8 +309,8 @@ The digitized signal must be interpreted and saved on the PC. This is done via a
 END FUNCTION
 \end{lstlisting}
 
-\paragraph{The apply\_lowpass\_filter()} function was created and integrated into the script once it was observed that the RED testbench used was introducing noise as seen in Figure \ref{fig:sigNoise}. The benefit of using an already built testbench that could place the light at exact positions repeatedly, meant it would make sense to accept the noise and just filter the data, as the signal of interest was very low frequency while the noise was around 170kHz. The filter could be relativly simple, due to the large frequency difference beteween noise and signal. A 4th order Butterworth IIR filter was deemed acceptable and a low cut-off frequency of 1Hz or 2Hz was used for the static readings. This was found to be acceptable for the test involving light location at a frequency of 0.2Hz the transition of the light from one position to another was still visibly sharp. The post-processing is not the only reason light transition would not appear instantaneous on the Voltage graph, another reason is the amplification circuit which has a 1Hz cutoff frequency via the feedback capacitor on the secondary-amplification OpAmp circuit. \label{LowPassFilter}
-The pseudocode of the function that creates the low-pass digital filter and filters the data is reproduced in Listing \ref{lst:pythonLowPassFilter}. The butter() function from the library signal is used, from the scipy package~\cite{RefWorks:butter} which is a free and open source library offered to the scientific comunity. Before feeding the cutoff frequency to the filter, it is normalized to the Nyquist rate, which means it is between 0 (DC) and 1 (Nyquist frequency), and therefore the filter can be applied no matter the sampling rate. As Schafer and Oppenheim explain in "Discrete-Time Signal Processing" Third Edition:
+\paragraph{The apply\_lowpass\_filter()} function was created and integrated into the script once it was observed that the RED testbench used was introducing noise as seen in Figure \ref{fig:sigNoise}. The benefit of using an already built testbench that could place the light at exact positions repeatedly, meant it would make sense to accept the noise and just filter the data, as the signal of interest was very low frequency while the noise was around 170kHz. The filter could be relatively simple, due to the large frequency difference between noise and signal. A 4th order Butterworth IIR filter was deemed acceptable and a low cut-off frequency of 1Hz or 2Hz was used for the static readings. This was found to be acceptable for the test involving light location at a frequency of 0.2Hz the transition of the light from one position to another was still visibly sharp. The post-processing is not the only reason light transition would not appear instantaneous on the Voltage graph, another reason is the amplification circuit which has a 1Hz cut-off frequency via the feedback capacitor on the secondary-amplification OpAmp circuit. \label{LowPassFilter}
+The pseudocode of the function that creates the low-pass digital filter and filters the data is reproduced in Listing \ref{lst:pythonLowPassFilter}. The butter() function from the library signal is used, from the scipy package~\cite{RefWorks:butter} which is a free and open source library offered to the scientific community. Before feeding the cut-off frequency to the filter, it is normalized to the Nyquist rate, which means it is between 0 (DC) and 1 (Nyquist frequency), and therefore the filter can be applied no matter the sampling rate. As Schafer and Oppenheim explain in "Discrete-Time Signal Processing" Third Edition:
 "The frequency scaling or normalization in the transformation from $ X_s(j\Omega) \text{ to } X(e^{j\omega})$ is directly a result of the time normalization in the transformation from $x_s(t) \text{ to } x[n]$"~\cite[p.171]{RefWorks:oppenheim2013discrete-time}.
 When creating a digital filter, this normalization becomes crucial because in the continuous-time domain, frequencies are measured in Herz and in the discrete-time domain, frequencies become relative to the sampling rate.
 The relationship between these two frequency domains is given by $\omega = \Omega T$, where:
@@ -326,7 +326,7 @@ However, when implementing IIR filters like the Butterworth filter used for our 
 
 $$\omega = 2 \arctan(\Omega T_d/2)$$
 
-where $T_d$ is the sampling period. This nonlinear relationship compresses the infinite analog frequency range $(-\infty, \infty)$ into the finite digital frequency range $(-\pi, \pi)$. The warping effect is more pronounced at higher frequencies, meaning that in our case it would not be noticeable \cite[p.529-530]{RefWorks:oppenheim2013discrete-time}.
+where $T_d$ is the sampling period. This non-linear relationship compresses the infinite analog frequency range $(-\infty, \infty)$ into the finite digital frequency range $(-\pi, \pi)$. The warping effect is more pronounced at higher frequencies, meaning that in our case it would not be noticeable \cite[p.529-530]{RefWorks:oppenheim2013discrete-time}.
 
 A critical property of the bilinear transformation is stability preservation. In the analog domain, a stable system has all poles in the left half of the s-plane reproduced in Figure \ref{fig:unitCircle}. The bilinear transformation maps the entire left half of the s-plane to the interior of the unit circle in the z-plane. This ensures that the 4-pole Butterworth filter, which is stable in the continuous-time domain, remains stable when converted to its discrete-time equivalent. 
 %%%%%%%%%%%%%%%%%
@@ -358,7 +358,7 @@ The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} 
     // calculate Nyquist Frequency and Normalized cut_off
     nyquist = 0.5 * sampling_rate;
     norm_cutoff = cutoff_freq / nyquist;
-    // generate numerator b and denominator a polinomials 
+    // generate numerator b and denominator a polynomials 
     b, a = signal.butter(filter_order, norm_cutoff, filterType = LOW);
     // filter the data
     filtered_data = filter(b,a,data);
@@ -379,5 +379,5 @@ The filter Frequency Response was reproduced in Figure~\ref{fig:filterResponse} 
 The testing was done incrementally with each new version of the program, many tests were carried out as the development was dependent on both C++ code on the Arduino and the Python script on the PC to somewhat work together. At first the C++ program was tested by listening to the output in the Serial Monitor of the Arduino IDE and sending commands the same way. Debug Serial.println() lines were used to ensure the loop on the Arduino was in the correct state. Once the C++ program seemed to somewhat work as intended, the Python script was implemented to send / receive. 
 
 \subsection{Evaluation of design}
-The design was tested iterartivly while making changes to the code with a signal generator at first to simulate a stead known input signal and compare readings on the Arduino IDE Serial Monitor. Once the Python script was fully working, tests were performed again for the python script's ability to read the values sent correctly. An issue was identified where sometimes the Arduino would send the column headers not at the beggining of the CSV and these lines had to be cleaned manually. This could be due to Serial buffer issues but was not investigated. Later an attempt was made to perform the cleaning programatically by creating a function in the script to do so.
+The design was tested iteratively while making changes to the code with a signal generator at first to simulate a stead known input signal and compare readings on the Arduino IDE Serial Monitor. Once the Python script was fully working, tests were performed again for the python script's ability to read the values sent correctly. An issue was identified where sometimes the Arduino would send the column headers not at the beginning of the CSV and these lines had to be cleaned manually. This could be due to Serial buffer issues but was not investigated. Later an attempt was made to perform the cleaning programmatically by creating a function in the script to do so.
 
